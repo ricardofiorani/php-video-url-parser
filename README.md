@@ -1,2 +1,2 @@
 # videoParser
-Simple Video Parser
+Simple Video Parser in PHP
