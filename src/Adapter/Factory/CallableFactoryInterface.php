@@ -6,7 +6,7 @@
  * Time: 14:57
  */
 
-namespace RicardoFiorani\Container\Factory;
+namespace RicardoFiorani\Adapter\Factory;
 
 
 use RicardoFiorani\Adapter\VideoAdapterInterface;
@@ -15,8 +15,8 @@ interface CallableFactoryInterface
 {
     /**
      * @param string $url
-     * @param string $patternMatched
+     * @param string $regex
      * @return VideoAdapterInterface
      */
-    public function __invoke($url, $patternMatched);
+    public function __invoke($url, $regex);
 }

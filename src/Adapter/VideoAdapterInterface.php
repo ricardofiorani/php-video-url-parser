@@ -12,9 +12,9 @@ namespace RicardoFiorani\Adapter;
 interface VideoAdapterInterface
 {
     /**
-     * @param string $rawUrl
+     * @param string $url
      */
-    public function __construct($rawUrl);
+    public function __construct($url, $regex);
 
     /**
      * Returns the service name (ie: "Youtube" or "Vimeo")
@@ -33,6 +33,12 @@ interface VideoAdapterInterface
      * @return bool
      */
     public function hasThumbnail();
+
+    /**
+     * Returns all thumbnails available sizes
+     * @return array
+     */
+    public function getThumbNailSizes();
 
     /**
      * @param string $size

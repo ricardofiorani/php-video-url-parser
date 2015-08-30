@@ -6,12 +6,13 @@
  * Time: 14:56
  */
 
-namespace RicardoFiorani\Container;
+namespace RicardoFiorani\Adapter\Vimeo;
 
 
-use RicardoFiorani\Adapter\VideoAdapterInterface;
+use RicardoFiorani\Adapter\AbstractServiceAdapter;
+use RicardoFiorani\Exception\InvalidThumbnailSizeException;
 
-class VimeoVideoContainer implements VideoAdapterInterface
+class VimeoServiceAdapter extends AbstractServiceAdapter
 {
 
     const THUMBNAIL_SMALL = 'thumbnail_small';
@@ -19,15 +20,34 @@ class VimeoVideoContainer implements VideoAdapterInterface
     const THUMBNAIL_LARGE = 'thumbnail_large';
 
 
-    /**
-     * @var string
-     */
-    public $rawUrl;
+    public function __construct($url, $regex)
+    {
+        $match = array();
+        preg_match($regex, $url, $match);
+        /*Gets the Video ID*/
+        $videoId = $match[2];
+        if (empty($videoId)) {
+            $videoId = $match[1];
+        }
 
-    /**
-     * @var string
-     */
-    public $videoId;
+        $this->setVideoId($videoId);
+
+        /*Sends the video ID to the API to get the thumbnails and other infos*/
+        $hash = unserialize(@file_get_contents("http://vimeo.com/api/v2/video/$videoId.php"));
+        $data = $hash[0];
+
+
+        $this->setThumbnails(array(
+            self::THUMBNAIL_SMALL => $data[self::THUMBNAIL_SMALL],
+            self::THUMBNAIL_MEDIUM => $data[self::THUMBNAIL_MEDIUM],
+            self::THUMBNAIL_LARGE => $data[self::THUMBNAIL_LARGE],
+        ));
+
+        $this->setTitle($data['title']);
+        $this->setDescription($data['description']);
+
+        return parent::__construct($url, $regex);
+    }
 
     /**
      * @var string
@@ -44,13 +64,6 @@ class VimeoVideoContainer implements VideoAdapterInterface
      */
     public $thumbnails;
 
-    /**
-     * @param string $rawUrl
-     */
-    public function __construct($rawUrl)
-    {
-        $this->setRawUrl($rawUrl);
-    }
 
     /**
      * Returns the service name (ie: "Youtube" or "Vimeo")
@@ -61,14 +74,6 @@ class VimeoVideoContainer implements VideoAdapterInterface
         return 'Vimeo';
     }
 
-    /**
-     * Returns the input URL
-     * @return string
-     */
-    public function getRawUrl()
-    {
-        return $this->rawUrl;
-    }
 
     /**
      * Returns if the service has a thumbnail image
@@ -79,30 +84,6 @@ class VimeoVideoContainer implements VideoAdapterInterface
         return false == empty($this->thumbnails);
     }
 
-    /**
-     * @param string $rawUrl
-     */
-    public function setRawUrl($rawUrl)
-    {
-        $this->rawUrl = $rawUrl;
-    }
-
-
-    /**
-     * @return string
-     */
-    public function getVideoId()
-    {
-        return $this->videoId;
-    }
-
-    /**
-     * @param string $videoId
-     */
-    public function setVideoId($videoId)
-    {
-        $this->videoId = $videoId;
-    }
 
     /**
      * @return string
@@ -159,7 +140,11 @@ class VimeoVideoContainer implements VideoAdapterInterface
      */
     public function getThumbnail($size)
     {
-        return $this->thumbnails($size);
+        if (false == in_array($size, $this->getThumbNailSizes())) {
+            throw new InvalidThumbnailSizeException();
+        }
+
+        return $this->thumbnails[$size];
     }
 
     /**
@@ -170,4 +155,19 @@ class VimeoVideoContainer implements VideoAdapterInterface
     {
         return "http://player.vimeo.com/video/$videoId?byline=0&amp;portrait=0&amp" . ($autoplay ? '&amp&autoplay=1' : '');
     }
+
+    /**
+     * Returns all thumbnails available sizes
+     * @return array
+     */
+    public function getThumbNailSizes()
+    {
+        return array(
+            self::THUMBNAIL_SMALL,
+            self::THUMBNAIL_MEDIUM,
+            self::THUMBNAIL_LARGE,
+        );
+    }
+
+
 }
