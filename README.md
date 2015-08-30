@@ -7,7 +7,7 @@ such as Thumnail's, Video Title, Video Description.
 Install the latest version with
 
 ```bash
-$ composer require ricardofiorani/ricardofiorani/php-video-url-parser
+$ composer require ricardofiorani/php-video-url-parser
 ```
 
 ## Basic Usage
