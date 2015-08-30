@@ -118,7 +118,12 @@ echo $video->getEmbedCode(500,500);
 
 ```
 
+### Currently Suported Services
+* Youtube
+* Vimeo
+
 # TODO List goals for release 1.0:
 
 * Fix the Exceptions Messages
 * Create PHPUnit Tests
+* Add more Services
