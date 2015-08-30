@@ -51,15 +51,74 @@ echo $video->getLargestThumbnail();
 ## Registering your own service video (it's easy !)
 If you want to register an implementation of some service your class just needs to implement the "RicardoFiorani\Adapter\VideoAdapterInterface" or extend the RicardoFiorani\Adapter\AbstractServiceAdapter
 
-A Fully functional example can be found [Here](https://github.com/ricardofiorani/php-video-url-parser/tree/master/example/RegisteringANewService.md)
+A Fully functional example can be found [Here](https://github.com/ricardofiorani/php-video-url-parser/tree/master/example/RegisteringANewService.md).
 
+PS: If you've made your awesome implementation of some well known service, feel free to send a Pull Request. All contributions are welcome :)
+
+## Using your own framework's template engine
+In this project I've used a simple renderer (wich just does an echo of an iframe) but you can use your own implementation. It must follow the RicardoFiorani\Renderer\EmbedRendererInterface and just like that. 
+
+Here's an example:
+### My Example Renderer Class
+```php
+namespace MyVendor\MyRenderer;
+
+
+class MyOwnRenderer implements \RicardoFiorani\Renderer\EmbedRendererInterface
+{
+
+    /**
+     * @param string $embedUrl
+     * @param integer $height
+     * @param integer $width
+     * @return string
+     */
+    public function render($embedUrl, $height, $width)
+    {
+        //Just for example porpoises
+        return "Hell yeah baby, you've rendered: ".addslashes($embedUrl);
+        
+        //A functional example would be like
+        //return '<iframe width="' . $width . '" height="' . $height . '" src="' . addslashes($embedUrl) . '" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
+    }
+}
+```
+### My Example Renderer Factory Class
+```php
+namespace MyVendor\MyRenderer\Factory;
+
+class MyOwnRendererFactory implements RendererFactoryInterface
+{
+    /**
+     * @return EmbedRendererInterface
+     */
+    public function __invoke()
+    {
+        $renderer = new MyOwnRenderer();
+    }
+}
+```
+### Registering my renderer 
+
+```php
+<?php
+use RicardoFiorani\Detector\VideoServiceDetector;
+
+require __DIR__ . '/vendor/autoload.php';
+
+$vsd = new VideoServiceDetector();
+
+//This is where the magic os done
+$vsd->setRenderer('MyOwnRenderer', 'MyVendor\\MyRenderer\\Factory\\MyOwnRendererFactory');
+
+$video = $vsd->parse('https://www.youtube.com/watch?v=PkOcm_XaWrw');
+
+//This will output "Hell yeah baby, you've rendered: http://www.youtube.com/embed/PkOcm_XaWrw"
+echo $video->getEmbedCode(500,500);
+
+```
 
 # TODO List goals for release 1.0:
 
-Create examples showing how to use this:
-    -Examples must show how to create and register a new ServiceAdapter
-    -Examples must show how to set a Third Party Renderer such as Twig, Smarty, Mustache or Blade
-    
-Fix the Exceptions Messages
-
-Create PHPUnit Tests
+* Fix the Exceptions Messages
+* Create PHPUnit Tests

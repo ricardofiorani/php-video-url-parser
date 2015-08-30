@@ -13,12 +13,6 @@ use RicardoFiorani\Renderer\EmbedRendererInterface;
 
 interface VideoAdapterInterface
 {
-    /**
-     * @param string $url
-     * @param string $pattern
-     * @param EmbedRendererInterface $renderer
-     */
-    public function __construct($url, $pattern, EmbedRendererInterface $renderer);
 
     /**
      * Returns the service name (ie: "Youtube" or "Vimeo")
@@ -83,13 +77,14 @@ interface VideoAdapterInterface
     /**
      * @param integer $width
      * @param integer $height
+     * @param bool $autoplay
      * @return string
      */
-    public function getEmbedCode($width, $height);
+    public function getEmbedCode($width, $height, $autoplay = false);
 
     /**
      * @return bool
      */
-    public function isEmbedable();
+    public function isEmbeddable();
 
 }

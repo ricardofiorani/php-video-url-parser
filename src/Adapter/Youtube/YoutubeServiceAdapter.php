@@ -135,7 +135,7 @@ class YoutubeServiceAdapter extends AbstractServiceAdapter
     /**
      * @return bool
      */
-    public function isEmbedable()
+    public function isEmbeddable()
     {
         return true;
     }

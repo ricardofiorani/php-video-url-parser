@@ -9,7 +9,7 @@
 namespace RicardoFiorani\Adapter;
 
 
-use RicardoFiorani\Exception\NotEmbedableException;
+use RicardoFiorani\Exception\NotEmbeddableException;
 use RicardoFiorani\Renderer\EmbedRendererInterface;
 
 abstract class AbstractServiceAdapter implements VideoAdapterInterface
@@ -115,16 +115,17 @@ abstract class AbstractServiceAdapter implements VideoAdapterInterface
     /**
      * @param int $width
      * @param int $height
+     * @param bool $autoplay
      * @return string
-     * @throws NotEmbedableException
+     * @throws NotEmbeddableException
      */
-    public function getEmbedCode($width, $height)
+    public function getEmbedCode($width, $height, $autoplay = false)
     {
-        if (false == $this->isEmbedable()) {
-            throw new NotEmbedableException();
+        if (false == $this->isEmbeddable()) {
+            throw new NotEmbeddableException();
         }
 
-        return $this->getRenderer()->render($this->getEmbedUrl(), $width, $height);
+        return $this->getRenderer()->render($this->getEmbedUrl($autoplay), $width, $height);
     }
 
 
