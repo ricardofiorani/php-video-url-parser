@@ -22,14 +22,16 @@ class YoutubeServiceAdapter extends AbstractServiceAdapter
     const THUMBNAIL_MAX_QUALITY = 'maxresdefault';
 
 
-    public function __construct($url,$regex){
-        preg_match($regex, $url, $match);
+    public function __construct($url, $pattern)
+    {
+        preg_match($pattern, $url, $match);
         $videoId = $match[2];
         if (empty($videoId)) {
             $videoId = $match[1];
         }
-        $this->videoId($videoId);
-        return parent::__construct($url,$regex);
+        $this->setVideoId($videoId);
+
+        return parent::__construct($url, $pattern);
     }
 
     /**

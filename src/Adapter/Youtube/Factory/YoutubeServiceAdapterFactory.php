@@ -17,13 +17,13 @@ class YoutubeServiceAdapterFactory implements CallableFactoryInterface
 
     /**
      * @param string $url
-     * @param string $regex
+     * @param string $pattern
      * @return YoutubeServiceAdapter
      */
-    public function __invoke($url, $regex)
+    public function __invoke($url, $pattern)
     {
-        $youtubeVideoAdapter = new YoutubeServiceAdapter($url, $regex);
+        $adapter = new YoutubeServiceAdapter($url, $pattern);
 
-        return $youtubeVideoAdapter;
+        return $adapter;
     }
 }

@@ -15,8 +15,8 @@ interface CallableFactoryInterface
 {
     /**
      * @param string $url
-     * @param string $regex
+     * @param string $pattern
      * @return VideoAdapterInterface
      */
-    public function __invoke($url, $regex);
+    public function __invoke($url, $pattern);
 }

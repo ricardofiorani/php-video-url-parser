@@ -16,12 +16,13 @@ class VimeoServiceAdapterFactory implements CallableFactoryInterface
 {
     /**
      * @param string $url
-     * @param string $regex
+     * @param string $pattern
      * @return VimeoServiceAdapter
      */
-    public function __invoke($url, $regex)
+    public function __invoke($url, $pattern)
     {
-        $vimeoAdapter = new VimeoServiceAdapter($url,$regex);
-        return $vimeoAdapter;
+        $adapter = new VimeoServiceAdapter($url, $pattern);
+
+        return $adapter;
     }
 }

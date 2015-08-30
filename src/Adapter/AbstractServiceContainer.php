@@ -25,7 +25,7 @@ abstract class AbstractServiceAdapter implements VideoAdapterInterface
      * AbstractVideoAdapter constructor.
      * @param string $url
      */
-    public function __construct($url, $regex)
+    public function __construct($url, $pattern)
     {
         $this->rawUrl = $url;
     }

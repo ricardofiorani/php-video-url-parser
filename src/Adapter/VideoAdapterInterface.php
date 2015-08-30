@@ -13,8 +13,9 @@ interface VideoAdapterInterface
 {
     /**
      * @param string $url
+     * @param string $pattern
      */
-    public function __construct($url, $regex);
+    public function __construct($url, $pattern);
 
     /**
      * Returns the service name (ie: "Youtube" or "Vimeo")

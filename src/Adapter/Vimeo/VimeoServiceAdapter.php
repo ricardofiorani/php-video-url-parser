@@ -20,10 +20,10 @@ class VimeoServiceAdapter extends AbstractServiceAdapter
     const THUMBNAIL_LARGE = 'thumbnail_large';
 
 
-    public function __construct($url, $regex)
+    public function __construct($url, $pattern)
     {
         $match = array();
-        preg_match($regex, $url, $match);
+        preg_match($pattern, $url, $match);
         /*Gets the Video ID*/
         $videoId = $match[2];
         if (empty($videoId)) {
@@ -46,7 +46,7 @@ class VimeoServiceAdapter extends AbstractServiceAdapter
         $this->setTitle($data['title']);
         $this->setDescription($data['description']);
 
-        return parent::__construct($url, $regex);
+        return parent::__construct($url, $pattern);
     }
 
     /**
