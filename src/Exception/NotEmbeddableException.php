@@ -11,7 +11,7 @@ namespace RicardoFiorani\Exception;
 
 use Exception;
 
-class NotEmbedableException extends Exception
+class NotEmbeddableException extends Exception
 {
 
 }

@@ -10,7 +10,7 @@ use RicardoFiorani\Renderer\EmbedRendererInterface;
 /**
  * @author Ricardo Fiorani
  */
-class VideoDetector
+class VideoServiceDetector
 {
     /**
      * @var array
