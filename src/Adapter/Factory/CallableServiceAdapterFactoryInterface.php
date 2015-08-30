@@ -10,13 +10,15 @@ namespace RicardoFiorani\Adapter\Factory;
 
 
 use RicardoFiorani\Adapter\VideoAdapterInterface;
+use RicardoFiorani\Renderer\EmbedRendererInterface;
 
-interface CallableFactoryInterface
+interface CallableServiceAdapterFactoryInterface
 {
     /**
      * @param string $url
      * @param string $pattern
+     * @param EmbedRendererInterface $renderer
      * @return VideoAdapterInterface
      */
-    public function __invoke($url, $pattern);
+    public function __invoke($url, $pattern, EmbedRendererInterface $renderer);
 }

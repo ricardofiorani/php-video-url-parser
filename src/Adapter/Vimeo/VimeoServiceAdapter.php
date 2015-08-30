@@ -11,6 +11,7 @@ namespace RicardoFiorani\Adapter\Vimeo;
 
 use RicardoFiorani\Adapter\AbstractServiceAdapter;
 use RicardoFiorani\Exception\InvalidThumbnailSizeException;
+use RicardoFiorani\Renderer\EmbedRendererInterface;
 
 class VimeoServiceAdapter extends AbstractServiceAdapter
 {
@@ -20,7 +21,12 @@ class VimeoServiceAdapter extends AbstractServiceAdapter
     const THUMBNAIL_LARGE = 'thumbnail_large';
 
 
-    public function __construct($url, $pattern)
+    /**
+     * @param string $url
+     * @param string $pattern
+     * @param EmbedRendererInterface $renderer
+     */
+    public function __construct($url, $pattern, EmbedRendererInterface $renderer)
     {
         $match = array();
         preg_match($pattern, $url, $match);
@@ -46,7 +52,7 @@ class VimeoServiceAdapter extends AbstractServiceAdapter
         $this->setTitle($data['title']);
         $this->setDescription($data['description']);
 
-        return parent::__construct($url, $pattern);
+        return parent::__construct($url, $pattern, $renderer);
     }
 
     /**
@@ -137,6 +143,7 @@ class VimeoServiceAdapter extends AbstractServiceAdapter
     /**
      * @param string $size
      * @return string
+     * @throws InvalidThumbnailSizeException
      */
     public function getThumbnail($size)
     {
@@ -170,4 +177,47 @@ class VimeoServiceAdapter extends AbstractServiceAdapter
     }
 
 
+    /**
+     * Returns the small thumbnail's url
+     * @return string
+     */
+    public function getSmallThumbnail()
+    {
+        return $this->getThumbnail(self::THUMBNAIL_SMALL);
+    }
+
+    /**
+     * Returns the medium thumbnail's url
+     * @return string
+     */
+    public function getMediumThumbnail()
+    {
+        return $this->getThumbnail(self::THUMBNAIL_MEDIUM);
+    }
+
+    /**
+     * Returns the large thumbnail's url
+     * @return string
+     */
+    public function getLargeThumbnail()
+    {
+        return $this->getThumbnail(self::THUMBNAIL_LARGE);
+    }
+
+    /**
+     * Returns the largest thumnbnaail's url
+     * @return string
+     */
+    public function getLargestThumbnail()
+    {
+        return $this->getThumbnail(self::THUMBNAIL_LARGE);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEmbedable()
+    {
+        return true;
+    }
 }

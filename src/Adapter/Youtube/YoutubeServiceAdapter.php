@@ -11,18 +11,24 @@ namespace RicardoFiorani\Adapter\Youtube;
 
 use RicardoFiorani\Adapter\AbstractServiceAdapter;
 use RicardoFiorani\Exception\InvalidThumbnailSizeException;
+use RicardoFiorani\Renderer\EmbedRendererInterface;
 
 class YoutubeServiceAdapter extends AbstractServiceAdapter
 {
 
     const THUMBNAIL_DEFAULT = 'default';
-    const THUMBNAIL_HIGH_QUALITY = 'hqdefault';
-    const THUMBNAIL_MEDIUM_QUALITY = 'mqdefault';
     const THUMBNAIL_STANDARD_DEFINITION = 'sddefault';
+    const THUMBNAIL_MEDIUM_QUALITY = 'mqdefault';
+    const THUMBNAIL_HIGH_QUALITY = 'hqdefault';
     const THUMBNAIL_MAX_QUALITY = 'maxresdefault';
 
 
-    public function __construct($url, $pattern)
+    /**
+     * @param string $url
+     * @param string $pattern
+     * @param EmbedRendererInterface $renderer
+     */
+    public function __construct($url, $pattern, EmbedRendererInterface $renderer)
     {
         preg_match($pattern, $url, $match);
         $videoId = $match[2];
@@ -31,7 +37,7 @@ class YoutubeServiceAdapter extends AbstractServiceAdapter
         }
         $this->setVideoId($videoId);
 
-        return parent::__construct($url, $pattern);
+        return parent::__construct($url, $pattern, $renderer);
     }
 
     /**
@@ -87,5 +93,50 @@ class YoutubeServiceAdapter extends AbstractServiceAdapter
     public function getEmbedUrl($autoplay = false)
     {
         return 'http://www.youtube.com/embed/' . $this->getVideoId() . ($autoplay ? '?amp&autoplay=1' : '');
+    }
+
+    /**
+     * Returns the small thumbnail's url
+     * @return string
+     */
+    public function getSmallThumbnail()
+    {
+        return $this->getThumbnail(self::THUMBNAIL_STANDARD_DEFINITION);
+    }
+
+    /**
+     * Returns the medium thumbnail's url
+     * @return string
+     */
+    public function getMediumThumbnail()
+    {
+        return $this->getThumbnail(self::THUMBNAIL_MEDIUM_QUALITY);
+    }
+
+    /**
+     * Returns the large thumbnail's url
+     * @return string
+     */
+    public function getLargeThumbnail()
+    {
+        return $this->getThumbnail(self::THUMBNAIL_HIGH_QUALITY);
+    }
+
+    /**
+     * Returns the largest thumnbnaail's url
+     * @return string
+     */
+    public function getLargestThumbnail()
+    {
+        return $this->getThumbnail(self::THUMBNAIL_MAX_QUALITY);
+    }
+
+
+    /**
+     * @return bool
+     */
+    public function isEmbedable()
+    {
+        return true;
     }
 }

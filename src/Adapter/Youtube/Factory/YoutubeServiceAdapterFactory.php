@@ -9,10 +9,11 @@
 namespace RicardoFiorani\Adapter\Youtube\Factory;
 
 
-use RicardoFiorani\Adapter\Factory\CallableFactoryInterface;
+use RicardoFiorani\Adapter\Factory\CallableServiceAdapterFactoryInterface;
 use RicardoFiorani\Adapter\Youtube\YoutubeServiceAdapter;
+use RicardoFiorani\Renderer\EmbedRendererInterface;
 
-class YoutubeServiceAdapterFactory implements CallableFactoryInterface
+class YoutubeServiceAdapterFactory implements CallableServiceAdapterFactoryInterface
 {
 
     /**
@@ -20,9 +21,9 @@ class YoutubeServiceAdapterFactory implements CallableFactoryInterface
      * @param string $pattern
      * @return YoutubeServiceAdapter
      */
-    public function __invoke($url, $pattern)
+    public function __invoke($url, $pattern, EmbedRendererInterface $renderer)
     {
-        $adapter = new YoutubeServiceAdapter($url, $pattern);
+        $adapter = new YoutubeServiceAdapter($url, $pattern, $renderer);
 
         return $adapter;
     }

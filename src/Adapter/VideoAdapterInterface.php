@@ -9,13 +9,16 @@
 namespace RicardoFiorani\Adapter;
 
 
+use RicardoFiorani\Renderer\EmbedRendererInterface;
+
 interface VideoAdapterInterface
 {
     /**
      * @param string $url
      * @param string $pattern
+     * @param EmbedRendererInterface $renderer
      */
-    public function __construct($url, $pattern);
+    public function __construct($url, $pattern, EmbedRendererInterface $renderer);
 
     /**
      * Returns the service name (ie: "Youtube" or "Vimeo")
@@ -48,8 +51,45 @@ interface VideoAdapterInterface
     public function getThumbnail($size);
 
     /**
+     * Returns the small thumbnail's url
+     * @return string
+     */
+    public function getSmallThumbnail();
+
+    /**
+     * Returns the medium thumbnail's url
+     * @return string
+     */
+    public function getMediumThumbnail();
+
+    /**
+     * Returns the large thumbnail's url
+     * @return string
+     */
+    public function getLargeThumbnail();
+
+    /**
+     * Returns the largest thumnbnaail's url
+     * @return string
+     */
+    public function getLargestThumbnail();
+
+    /**
      * @param bool $autoplay
      * @return string
      */
     public function getEmbedUrl($autoplay = false);
+
+    /**
+     * @param integer $width
+     * @param integer $height
+     * @return string
+     */
+    public function getEmbedCode($width, $height);
+
+    /**
+     * @return bool
+     */
+    public function isEmbedable();
+
 }

@@ -9,19 +9,21 @@
 namespace RicardoFiorani\Adapter\Vimeo\Factory;
 
 
-use RicardoFiorani\Adapter\Factory\CallableFactoryInterface;
+use RicardoFiorani\Adapter\Factory\CallableServiceAdapterFactoryInterface;
 use RicardoFiorani\Adapter\Vimeo\VimeoServiceAdapter;
+use RicardoFiorani\Renderer\EmbedRendererInterface;
 
-class VimeoServiceAdapterFactory implements CallableFactoryInterface
+class VimeoServiceAdapterFactory implements CallableServiceAdapterFactoryInterface
 {
     /**
      * @param string $url
      * @param string $pattern
+     * @param EmbedRendererInterface $rendererInterface
      * @return VimeoServiceAdapter
      */
-    public function __invoke($url, $pattern)
+    public function __invoke($url, $pattern, EmbedRendererInterface $renderer)
     {
-        $adapter = new VimeoServiceAdapter($url, $pattern);
+        $adapter = new VimeoServiceAdapter($url, $pattern, $renderer);
 
         return $adapter;
     }
