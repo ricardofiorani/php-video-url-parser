@@ -108,7 +108,7 @@ require __DIR__ . '/vendor/autoload.php';
 
 $vsd = new VideoServiceDetector();
 
-//This is where the magic os done
+//This is where the magic is done
 $vsd->setRenderer('MyOwnRenderer', 'MyVendor\\MyRenderer\\Factory\\MyOwnRendererFactory');
 
 $video = $vsd->parse('https://www.youtube.com/watch?v=PkOcm_XaWrw');
