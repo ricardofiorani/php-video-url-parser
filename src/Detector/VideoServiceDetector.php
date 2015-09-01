@@ -25,7 +25,6 @@ class VideoServiceDetector
         $this->serviceContainer = ServicesContainerFactory::createNewServiceDetector();
     }
 
-
     /**
      * @param string $url
      * @return VideoAdapterInterface
