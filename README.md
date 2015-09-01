@@ -1,5 +1,5 @@
 # PHP Video URL Parser
-[![Build Status](https://secure.travis-ci.org/ricardofiorani/php-video-url-parser.png?branch=master)](http://travis-ci.org/ricardofiorani/php-video-url-parser)
+[![Build Status](https://api.travis-ci.org/ricardofiorani/php-video-url-parser.svg?branch=master)](http://travis-ci.org/ricardofiorani/php-video-url-parser)
 [![Minimum PHP Version](http://img.shields.io/badge/php-%3E%3D%205.3-8892BF.svg)](https://php.net/)
 [![License](https://poser.pugx.org/ricardofiorani/php-video-url-parser/license.png)](https://packagist.org/packages/ricardofiorani/php-video-url-parser)
 [![Total Downloads](https://poser.pugx.org/ricardofiorani/php-video-url-parser/d/total.png)](https://packagist.org/packages/ricardofiorani/php-video-url-parser)
