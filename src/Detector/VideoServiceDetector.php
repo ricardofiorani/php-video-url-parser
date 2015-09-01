@@ -67,7 +67,7 @@ class VideoServiceDetector
     /**
      * @param ServicesContainer $serviceContainer
      */
-    public function setServiceContainer($serviceContainer)
+    public function setServiceContainer(ServicesContainer $serviceContainer)
     {
         $this->serviceContainer = $serviceContainer;
     }
