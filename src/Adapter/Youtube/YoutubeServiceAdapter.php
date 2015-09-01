@@ -31,7 +31,9 @@ class YoutubeServiceAdapter extends AbstractServiceAdapter
     public function __construct($url, $pattern, EmbedRendererInterface $renderer)
     {
         preg_match($pattern, $url, $match);
-        $videoId = $match[2];
+        if (isset($match[2])) {
+            $videoId = $match[2];
+        }
         if (empty($videoId)) {
             $videoId = $match[1];
         }

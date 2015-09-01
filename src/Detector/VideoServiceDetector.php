@@ -18,6 +18,11 @@ class VideoServiceDetector
     private $serviceContainer;
 
     /**
+     * @var array
+     */
+    private $parsedUrls = array();
+
+    /**
      * VideoServiceDetector constructor.
      */
     public function __construct()
@@ -32,6 +37,9 @@ class VideoServiceDetector
      */
     public function parse($url)
     {
+        if (isset($this->parsedUrls[$url])) {
+            return $this->parsedUrls[$url];
+        }
         /** @var array $patterns */
         /** @var string $serviceName */
         foreach ($this->getServiceContainer()->getPatterns() as $serviceName => $patterns) {
@@ -40,7 +48,8 @@ class VideoServiceDetector
                 if (false != preg_match($pattern, $url)) {
                     $factory = $this->getServiceContainer()->getFactory($serviceName);
 
-                    return $factory($url, $pattern, $this->getServiceContainer()->getRenderer());
+                    return $this->parsedUrls[$url] = $factory($url, $pattern,
+                        $this->getServiceContainer()->getRenderer());
                 }
             }
         }

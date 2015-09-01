@@ -174,7 +174,7 @@ $patterns = array(
 );
 
 //Register the new service
-$vsd->registerService($serviceName, $patterns, "\\MyVendor\\ServiceAdapter\\Factory\\DailyMotionServiceAdapterFactory");
+$vsd->getServiceContainer()->registerService($serviceName, $patterns, "\\MyVendor\\ServiceAdapter\\Factory\\DailyMotionServiceAdapterFactory");
 
 //This will get you an DailyMotionServiceAdapter
 $video = $vsd->parse('http://www.dailymotion.com/video/x33ncwc_kittens-fight-in-tiny-boxing-ring_animals');

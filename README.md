@@ -109,7 +109,7 @@ require __DIR__ . '/vendor/autoload.php';
 $vsd = new VideoServiceDetector();
 
 //This is where the magic is done
-$vsd->setRenderer('MyOwnRenderer', 'MyVendor\\MyRenderer\\Factory\\MyOwnRendererFactory');
+$vsd->getServiceContainer()->setRenderer('MyOwnRenderer', 'MyVendor\\MyRenderer\\Factory\\MyOwnRendererFactory');
 
 $video = $vsd->parse('https://www.youtube.com/watch?v=PkOcm_XaWrw');
 
@@ -121,9 +121,9 @@ echo $video->getEmbedCode(500,500);
 ### Currently Suported Services
 * Youtube
 * Vimeo
+* Dailymotion
 
 # TODO List goals for release 1.0:
 
 * Fix the Exceptions Messages
 * Create PHPUnit Tests
-* Add more Services

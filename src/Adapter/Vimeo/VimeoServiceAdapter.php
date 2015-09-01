@@ -160,7 +160,7 @@ class VimeoServiceAdapter extends AbstractServiceAdapter
      */
     public function getEmbedUrl($autoplay = false)
     {
-        return "http://player.vimeo.com/video/" . $this->getVideoId() . "?byline=0&amp;portrait=0&amp" . ($autoplay ? '&amp&autoplay=1' : '');
+        return "http://player.vimeo.com/video/" . $this->getVideoId() . ($autoplay ? '?autoplay=1' : '');
     }
 
     /**
