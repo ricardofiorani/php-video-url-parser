@@ -39,7 +39,7 @@ class VimeoServiceAdapter extends AbstractServiceAdapter
         $this->setVideoId($videoId);
 
         /*Sends the video ID to the API to get the thumbnails and other infos*/
-        $hash = unserialize(@file_get_contents("http://vimeo.com/api/v2/video/$videoId.php"));
+        $hash = unserialize(@file_get_contents("http://vimeo.com/api/v2/video/" . $this->getVideoId() . ".php"));
         $data = $hash[0];
 
 
@@ -160,7 +160,7 @@ class VimeoServiceAdapter extends AbstractServiceAdapter
      */
     public function getEmbedUrl($autoplay = false)
     {
-        return "http://player.vimeo.com/video/$videoId?byline=0&amp;portrait=0&amp" . ($autoplay ? '&amp&autoplay=1' : '');
+        return "http://player.vimeo.com/video/" . $this->getVideoId() . "?byline=0&amp;portrait=0&amp" . ($autoplay ? '&amp&autoplay=1' : '');
     }
 
     /**

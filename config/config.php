@@ -21,6 +21,12 @@ return array(
             ),
             'factory' => '\\RicardoFiorani\\Adapter\\Youtube\\Factory\\YoutubeServiceAdapterFactory',
         ),
+        'Dailymotion' => array(
+            'patterns' => array(
+                '#https?://www.dailymotion.com/video/([A-Za-z0-9]+)#s',
+            ),
+            'factory' => '\\RicardoFiorani\\Adapter\\Dailymotion\\Factory\\DailymotionServiceAdapterFactory',
+        ),
     ),
     'renderer' => array(
         'name' => 'DefaultRenderer',
