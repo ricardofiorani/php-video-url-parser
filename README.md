@@ -1,4 +1,10 @@
 # PHP Video URL Parser
+[![Build Status](https://secure.travis-ci.org/ricardofiorani/php-video-url-parser.png?branch=master)](http://travis-ci.org/ricardofiorani/php-video-url-parser)
+[![Minimum PHP Version](http://img.shields.io/badge/php-%3E%3D%205.3-8892BF.svg)](https://php.net/)
+[![License](https://poser.pugx.org/ricardofiorani/php-video-url-parser/license.png)](https://packagist.org/packages/ricardofiorani/php-video-url-parser)
+[![Total Downloads](https://poser.pugx.org/ricardofiorani/php-video-url-parser/d/total.png)](https://packagist.org/packages/ricardofiorani/php-video-url-parser)
+[![Coding Standards](https://img.shields.io/badge/cs-PSR--4-yellow.svg)](https://github.com/php-fig-rectified/fig-rectified-standards)
+
 PHP Video URL Parser receives an video service URL (Like Youtube or VIMEO) and returns an object containing some video info
 such as Thumnail's, Video Title, Video Description.
 
