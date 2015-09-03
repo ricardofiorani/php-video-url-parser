@@ -53,7 +53,7 @@ class ServiceDetectorTest extends PHPUnit_Framework_TestCase
             ),
             'Commom Dailymotion URL' => array(
                 'http://www.dailymotion.com/video/x332a71_que-categoria-jogador-lucas-lima-faz-golaco-em-treino-do-santos_sport',
-                '\\RicardoFiorani\\Adapter\\Dailymotion\\DailyMotionServiceAdapter',
+                '\\RicardoFiorani\\Adapter\\Dailymotion\\DailymotionServiceAdapter',
             ),
         );
     }

@@ -1,6 +1,6 @@
-# Functional Example of Registering a DailyMotion Service
+# Functional Example of Registering a Dailymotion Service
 
-## DailyMotionServiceAdapter Class (The Service Adapter Itself)
+## DailymotionServiceAdapter Class (The Service Adapter Itself)
 ```php
 <?php
 namespace MyVendor\ServiceAdapter;
@@ -9,7 +9,7 @@ use RicardoFiorani\Adapter\AbstractServiceAdapter;
 use RicardoFiorani\Renderer\EmbedRendererInterface;
 
 //Your service Adapter must implement VideoAdapterInterface or Extend AbstractServiceAdapter
-class DailyMotionServiceAdapter extends AbstractServiceAdapter
+class DailymotionServiceAdapter extends AbstractServiceAdapter
 {
     const THUMBNAIL_DEFAULT = 'thumbnail';
 
@@ -34,7 +34,7 @@ class DailyMotionServiceAdapter extends AbstractServiceAdapter
      */
     public function getServiceName()
     {
-        return 'DailyMotion';
+        return 'Dailymotion';
     }
 
     /**
@@ -128,17 +128,17 @@ class DailyMotionServiceAdapter extends AbstractServiceAdapter
     }
 }
 ```
-## The DailyMotionServiceAdapterFactory
+## The DailymotionServiceAdapterFactory
 ```php
 <?php
 namespace MyVendor\ServiceAdapter\Factory;
 
 
-use MyVendor\ServiceAdapter\DailyMotionServiceAdapter;
+use MyVendor\ServiceAdapter\DailymotionServiceAdapter;
 use RicardoFiorani\Adapter\VideoAdapterInterface;
 use RicardoFiorani\Renderer\EmbedRendererInterface;
 
-class DailyMotionServiceAdapterFactory implements \RicardoFiorani\Adapter\Factory\CallableServiceAdapterFactoryInterface
+class DailymotionServiceAdapterFactory implements \RicardoFiorani\Adapter\Factory\CallableServiceAdapterFactoryInterface
 {
     /**
      * @param string $url
@@ -148,7 +148,7 @@ class DailyMotionServiceAdapterFactory implements \RicardoFiorani\Adapter\Factor
      */
     public function __invoke($url, $pattern, EmbedRendererInterface $renderer)
     {
-        $dailyMotionServiceAdapter = new DailyMotionServiceAdapter($url, $pattern, $renderer);
+        $dailyMotionServiceAdapter = new DailymotionServiceAdapter($url, $pattern, $renderer);
 
         return $dailyMotionServiceAdapter;
     }
@@ -165,7 +165,7 @@ require __DIR__ . '/vendor/autoload.php';
 
 $vsd = new VideoServiceDetector();
 //The Service Name
-$serviceName = 'DailyMotion';
+$serviceName = 'Dailymotion';
 
 //The Pattern used to identify this service
 //You can use multiple, but make sure your ServiceAdapter can handle it properly
@@ -174,9 +174,9 @@ $patterns = array(
 );
 
 //Register the new service
-$vsd->getServiceContainer()->registerService($serviceName, $patterns, "\\MyVendor\\ServiceAdapter\\Factory\\DailyMotionServiceAdapterFactory");
+$vsd->getServiceContainer()->registerService($serviceName, $patterns, "\\MyVendor\\ServiceAdapter\\Factory\\DailymotionServiceAdapterFactory");
 
-//This will get you an DailyMotionServiceAdapter
+//This will get you an DailymotionServiceAdapter
 $video = $vsd->parse('http://www.dailymotion.com/video/x33ncwc_kittens-fight-in-tiny-boxing-ring_animals');
 
 ```

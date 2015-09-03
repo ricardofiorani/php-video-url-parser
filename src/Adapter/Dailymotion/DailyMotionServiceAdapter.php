@@ -11,7 +11,7 @@ namespace RicardoFiorani\Adapter\Dailymotion;
 use RicardoFiorani\Adapter\AbstractServiceAdapter;
 use RicardoFiorani\Renderer\EmbedRendererInterface;
 
-class DailyMotionServiceAdapter extends AbstractServiceAdapter
+class DailymotionServiceAdapter extends AbstractServiceAdapter
 {
     const THUMBNAIL_DEFAULT = 'thumbnail';
 
@@ -36,7 +36,7 @@ class DailyMotionServiceAdapter extends AbstractServiceAdapter
      */
     public function getServiceName()
     {
-        return 'DailyMotion';
+        return 'Dailymotion';
     }
 
     /**

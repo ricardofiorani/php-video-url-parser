@@ -9,12 +9,12 @@
 namespace RicardoFiorani\Adapter\Dailymotion\Factory;
 
 
-use RicardoFiorani\Adapter\Dailymotion\DailyMotionServiceAdapter;
+use RicardoFiorani\Adapter\Dailymotion\DailymotionServiceAdapter;
 use RicardoFiorani\Adapter\Factory\CallableServiceAdapterFactoryInterface;
 use RicardoFiorani\Adapter\VideoAdapterInterface;
 use RicardoFiorani\Renderer\EmbedRendererInterface;
 
-class DailyMotionServiceAdapterFactory implements CallableServiceAdapterFactoryInterface
+class DailymotionServiceAdapterFactory implements CallableServiceAdapterFactoryInterface
 {
     /**
      * @param string $url
@@ -24,7 +24,7 @@ class DailyMotionServiceAdapterFactory implements CallableServiceAdapterFactoryI
      */
     public function __invoke($url, $pattern, EmbedRendererInterface $renderer)
     {
-        $dailyMotionServiceAdapter = new DailyMotionServiceAdapter($url, $pattern, $renderer);
+        $dailyMotionServiceAdapter = new DailymotionServiceAdapter($url, $pattern, $renderer);
 
         return $dailyMotionServiceAdapter;
     }
