@@ -6,7 +6,7 @@
  * Time: 21:54
  */
 
-namespace RicardoFiorani\Test;
+namespace RicardoFiorani\Test\Detector;
 
 use PHPUnit_Framework_TestCase;
 use RicardoFiorani\Container\Factory\ServicesContainerFactory;
@@ -55,6 +55,10 @@ class ServiceDetectorTest extends PHPUnit_Framework_TestCase
                 'http://www.dailymotion.com/video/x332a71_que-categoria-jogador-lucas-lima-faz-golaco-em-treino-do-santos_sport',
                 '\\RicardoFiorani\\Adapter\\Dailymotion\\DailymotionServiceAdapter',
             ),
+            'Commom Facebook Video URL' => array(
+                'https://www.facebook.com/RantPets/videos/583336855137988/',
+                '\\RicardoFiorani\\Adapter\\Facebook\\FacebookServiceAdapter',
+            )
         );
     }
 

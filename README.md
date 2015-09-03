@@ -128,6 +128,7 @@ echo $video->getEmbedCode(500,500);
 * Youtube
 * Vimeo
 * Dailymotion
+* Facebook Videos
 
 # TODO List goals for release 1.0:
 

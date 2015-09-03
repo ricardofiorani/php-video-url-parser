@@ -53,7 +53,8 @@ class VideoServiceDetector
                 }
             }
         }
-        throw new ServiceNotAvailableException();
+        throw new ServiceNotAvailableException(sprintf('The url "%s" could not be parsed by any of the services available.',
+            $url));
     }
 
     /**
