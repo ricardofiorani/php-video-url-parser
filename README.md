@@ -33,7 +33,7 @@ require __DIR__ . '/vendor/autoload.php';
 
 $vsd = new VideoServiceDetector();
 
-//Detects wich service the url belongs to and returns the service's implementation
+//Detects which service the url belongs to and returns the service's implementation
 //of RicardoFiorani\Adapter\VideoAdapterInterface
 $video = $vsd->parse('https://www.youtube.com/watch?v=PkOcm_XaWrw');
 
@@ -69,7 +69,7 @@ A Fully functional example can be found [Here](https://github.com/ricardofiorani
 PS: If you've made your awesome implementation of some well known service, feel free to send a Pull Request. All contributions are welcome :)
 
 ## Using your own framework's template engine
-In this project I've used a simple renderer (wich just does an echo of an iframe) but you can use your own implementation. It must follow the RicardoFiorani\Renderer\EmbedRendererInterface and just like that. 
+In this project I've used a simple renderer (which just does an echo of an iframe) but you can use your own implementation. It must follow the RicardoFiorani\Renderer\EmbedRendererInterface and just like that. 
 
 Here's an example:
 ### My Example Renderer Class
