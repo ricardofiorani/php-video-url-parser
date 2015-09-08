@@ -1,0 +1,52 @@
+filter:
+    excluded_paths:
+        - 'test/*'
+checks:
+    php:
+        use_self_instead_of_fqcn: true
+        uppercase_constants: true
+        simplify_boolean_return: true
+        return_doc_comments: true
+        return_doc_comment_if_not_inferrable: true
+        remove_extra_empty_lines: true
+        properties_in_camelcaps: true
+        phpunit_assertions: true
+        parameters_in_camelcaps: true
+        parameter_doc_comments: true
+        param_doc_comment_if_not_inferrable: true
+        optional_parameters_at_the_end: true
+        no_short_variable_names:
+            minimum: '3'
+        no_short_method_names:
+            minimum: '3'
+        no_new_line_at_end_of_file: true
+        no_long_variable_names:
+            maximum: '35'
+        no_goto: true
+        newline_at_end_of_file: true
+        align_assignments: true
+        avoid_fixme_comments: true
+        avoid_multiple_statements_on_same_line: true
+        avoid_perl_style_comments: true
+        avoid_todo_comments: true
+        avoid_unnecessary_concatenation: true
+        classes_in_camel_caps: true
+        encourage_postdec_operator: true
+        encourage_single_quotes: true
+        fix_line_ending: true
+        fix_use_statements:
+            remove_unused: true
+            preserve_multiple: false
+            preserve_blanklines: false
+            order_alphabetically: false
+        function_in_camel_caps: true
+        line_length:
+            max_length: '120'
+        more_specific_types_in_doc_comments: true
+
+tools:
+    external_code_coverage: true
+
+
+coding_style:
+    php: {  }

@@ -18,7 +18,11 @@ before_install:
 install:
   - travis_retry composer update --no-interaction --prefer-source
 
-script: phpunit
+script: phpunit --coverage-clover=coverage.clover
+
+after_script:
+  - wget https://scrutinizer-ci.com/ocular.phar
+  - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
 
 # Cache dependencies
 cache:
