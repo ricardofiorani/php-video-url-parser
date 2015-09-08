@@ -14,14 +14,14 @@ such as Thumnail's, Video Title, Video Description.
 
 Install the latest version with
 
+```bash
+$ composer require ricardofiorani/php-video-url-parser
+```
+
 ## Requirements
 
 * PHP 5.3
 * cURL
-
-```bash
-$ composer require ricardofiorani/php-video-url-parser
-```
 
 ## Basic Usage
 
