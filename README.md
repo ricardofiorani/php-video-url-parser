@@ -8,7 +8,7 @@
 [![Code Coverage](https://scrutinizer-ci.com/g/ricardofiorani/php-video-url-parser/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/ricardofiorani/php-video-url-parser/?branch=master)
 
 PHP Video URL Parser receives an video service URL (Like Youtube or VIMEO) and returns an object containing some video info
-such as Thumnail's, Video Title, Video Description.
+such as Thumbnail's, Video Title, Video Description.
 
 ## Installation
 
