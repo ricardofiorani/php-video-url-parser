@@ -159,11 +159,11 @@ class DailymotionServiceAdapterFactory implements \RicardoFiorani\Adapter\Factor
 
 ```php
 <?php
-use RicardoFiorani\Detector\VideoServiceDetector;
+use RicardoFiorani\Matcher\VideoServiceMatcher;
 
 require __DIR__ . '/vendor/autoload.php';
 
-$vsd = new VideoServiceDetector();
+$vsd = new VideoServiceMatcher();
 //The Service Name
 $serviceName = 'Dailymotion';
 

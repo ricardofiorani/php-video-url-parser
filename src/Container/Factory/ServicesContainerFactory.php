@@ -22,7 +22,7 @@ class ServicesContainerFactory
         return $servicesContainer;
     }
 
-    public static function createNewServiceDetector()
+    public static function createNewServiceMatcher()
     {
         $factory = new self();
 

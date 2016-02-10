@@ -2,7 +2,8 @@
     "name": "ricardofiorani/php-video-url-parser",
     "description": "PHP Video URL Parser is a simple video url parser.",
     "require-dev": {
-        "phpunit/phpunit": "^4.8"
+        "phpunit/phpunit": "^4.8",
+        "guzzlehttp/guzzle": ">=6"
     },
     "license": "MIT",
     "authors": [

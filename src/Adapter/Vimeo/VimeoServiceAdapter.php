@@ -11,49 +11,14 @@ namespace RicardoFiorani\Adapter\Vimeo;
 
 use RicardoFiorani\Adapter\AbstractServiceAdapter;
 use RicardoFiorani\Exception\InvalidThumbnailSizeException;
+use RicardoFiorani\Exception\ServiceApiNotAvailable;
 use RicardoFiorani\Renderer\EmbedRendererInterface;
 
 class VimeoServiceAdapter extends AbstractServiceAdapter
 {
-
     const THUMBNAIL_SMALL = 'thumbnail_small';
     const THUMBNAIL_MEDIUM = 'thumbnail_medium';
     const THUMBNAIL_LARGE = 'thumbnail_large';
-
-
-    /**
-     * @param string $url
-     * @param string $pattern
-     * @param EmbedRendererInterface $renderer
-     */
-    public function __construct($url, $pattern, EmbedRendererInterface $renderer)
-    {
-        $match = array();
-        preg_match($pattern, $url, $match);
-        /*Gets the Video ID*/
-        $videoId = $match[2];
-        if (empty($videoId)) {
-            $videoId = $match[1];
-        }
-
-        $this->setVideoId($videoId);
-
-        /*Sends the video ID to the API to get the thumbnails and other infos*/
-        $hash = unserialize(@file_get_contents("http://vimeo.com/api/v2/video/" . $this->getVideoId() . ".php"));
-        $data = $hash[0];
-
-
-        $this->setThumbnails(array(
-            self::THUMBNAIL_SMALL => $data[self::THUMBNAIL_SMALL],
-            self::THUMBNAIL_MEDIUM => $data[self::THUMBNAIL_MEDIUM],
-            self::THUMBNAIL_LARGE => $data[self::THUMBNAIL_LARGE],
-        ));
-
-        $this->setTitle($data['title']);
-        $this->setDescription($data['description']);
-
-        return parent::__construct($url, $pattern, $renderer);
-    }
 
     /**
      * @var string
@@ -70,6 +35,28 @@ class VimeoServiceAdapter extends AbstractServiceAdapter
      */
     public $thumbnails;
 
+    /**
+     * @param string $url
+     * @param string $pattern
+     * @param EmbedRendererInterface $renderer
+     */
+    public function __construct($url, $pattern, EmbedRendererInterface $renderer)
+    {
+        $videoId = $this->getVideoIdByPattern($url, $pattern);
+        $this->setVideoId($videoId);
+        $videoData = $this->getVideoDataFromServiceApi();
+
+        $this->setThumbnails(array(
+            self::THUMBNAIL_SMALL => $videoData[self::THUMBNAIL_SMALL],
+            self::THUMBNAIL_MEDIUM => $videoData[self::THUMBNAIL_MEDIUM],
+            self::THUMBNAIL_LARGE => $videoData[self::THUMBNAIL_LARGE],
+        ));
+
+        $this->setTitle($videoData['title']);
+        $this->setDescription($videoData['description']);
+
+        return parent::__construct($url, $pattern, $renderer);
+    }
 
     /**
      * Returns the service name (ie: "Youtube" or "Vimeo")
@@ -80,7 +67,6 @@ class VimeoServiceAdapter extends AbstractServiceAdapter
         return 'Vimeo';
     }
 
-
     /**
      * Returns if the service has a thumbnail image
      * @return bool
@@ -89,7 +75,6 @@ class VimeoServiceAdapter extends AbstractServiceAdapter
     {
         return false == empty($this->thumbnails);
     }
-
 
     /**
      * @return string
@@ -139,7 +124,6 @@ class VimeoServiceAdapter extends AbstractServiceAdapter
         $this->thumbnails = $thumbnails;
     }
 
-
     /**
      * @param string $size
      * @return string
@@ -175,7 +159,6 @@ class VimeoServiceAdapter extends AbstractServiceAdapter
             self::THUMBNAIL_LARGE,
         );
     }
-
 
     /**
      * Returns the small thumbnail's url
@@ -219,5 +202,38 @@ class VimeoServiceAdapter extends AbstractServiceAdapter
     public function isEmbeddable()
     {
         return true;
+    }
+
+    /**
+     * @param string $url
+     * @param string $pattern
+     * @return int
+     */
+    private function getVideoIdByPattern($url, $pattern)
+    {
+        $match = array();
+        preg_match($pattern, $url, $match);
+        $videoId = $match[2];
+        if (empty($videoId)) {
+            $videoId = $match[1];
+        }
+
+        return $videoId;
+    }
+
+    /**
+     * Uses the Vimeo video API to get video info
+     * @todo make this better by using guzzle
+     * @return array
+     * @throws ServiceApiNotAvailable
+     */
+    private function getVideoDataFromServiceApi()
+    {
+        $contents = file_get_contents("http://vimeo.com/api/v2/video/" . $this->getVideoId() . ".php");
+        if (false === $contents) {
+            throw new ServiceApiNotAvailable('Vimeo Service Adapter could not reach Vimeo API Service. Check if your server has file_get_contents() function available.');
+        }
+        $hash = unserialize($contents);
+        return reset($hash);
     }
 }
