@@ -10,7 +10,7 @@ namespace RicardoFiorani\Test\Detector;
 
 use PHPUnit_Framework_TestCase;
 use RicardoFiorani\Container\Factory\ServicesContainerFactory;
-use RicardoFiorani\Detector\VideoServiceDetector;
+use RicardoFiorani\Matcher\VideoServiceMatcher;
 use RicardoFiorani\Exception\ServiceNotAvailableException;
 
 class ServiceDetectorTest extends PHPUnit_Framework_TestCase
@@ -23,7 +23,7 @@ class ServiceDetectorTest extends PHPUnit_Framework_TestCase
      */
     public function testCanParseUrl($url, $expectedServiceName)
     {
-        $detector = new VideoServiceDetector();
+        $detector = new VideoServiceMatcher();
         $video = $detector->parse($url);
         $this->assertInstanceOf($expectedServiceName, $video);
     }
@@ -68,7 +68,7 @@ class ServiceDetectorTest extends PHPUnit_Framework_TestCase
      */
     public function testThrowsExceptionOnInvalidUrl($url)
     {
-        $detector = new VideoServiceDetector();
+        $detector = new VideoServiceMatcher();
         $this->setExpectedException('\\RicardoFiorani\\Exception\\ServiceNotAvailableException');
         $video = $detector->parse($url);
     }
@@ -76,7 +76,7 @@ class ServiceDetectorTest extends PHPUnit_Framework_TestCase
     /**
      * @return array
      */
-    public function invalidVideoUrlProvider($url)
+    public function invalidVideoUrlProvider()
     {
         return array(
             array(
@@ -93,28 +93,35 @@ class ServiceDetectorTest extends PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider videoUrlProvider
+     * @param $url
+     * @throws ServiceNotAvailableException
      */
     public function testServiceDetectorDontReparseSameUrl($url)
     {
-        $detector = new VideoServiceDetector();
+        $detector = new VideoServiceMatcher();
         $video = $detector->parse($url);
 
         $this->assertSame($video, $detector->parse($url));
     }
 
+    /**
+     * Tests container getter
+     */
     public function testServiceContainerGetter()
     {
-        $detector = new VideoServiceDetector();
+        $detector = new VideoServiceMatcher();
         $this->assertInstanceOf('RicardoFiorani\\Container\\ServicesContainer', $detector->getServiceContainer());
     }
 
+    /**
+     * Tests container setter
+     */
     public function testServiceContainerSetter()
     {
-        $detector = new VideoServiceDetector();
-        $serviceContainer = ServicesContainerFactory::createNewServiceDetector();
+        $detector = new VideoServiceMatcher();
+        $serviceContainer = ServicesContainerFactory::createNewServiceMatcher();
         $detector->setServiceContainer($serviceContainer);
         $this->assertSame($serviceContainer, $detector->getServiceContainer());
     }
-
 
 }

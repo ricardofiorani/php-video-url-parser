@@ -15,13 +15,11 @@ use RicardoFiorani\Renderer\EmbedRendererInterface;
 
 class YoutubeServiceAdapter extends AbstractServiceAdapter
 {
-
     const THUMBNAIL_DEFAULT = 'default';
     const THUMBNAIL_STANDARD_DEFINITION = 'sddefault';
     const THUMBNAIL_MEDIUM_QUALITY = 'mqdefault';
     const THUMBNAIL_HIGH_QUALITY = 'hqdefault';
     const THUMBNAIL_MAX_QUALITY = 'maxresdefault';
-
 
     /**
      * @param string $url

@@ -30,7 +30,6 @@ class FacebookServiceAdapter extends AbstractServiceAdapter
         $match = array();
         preg_match($pattern, $url, $match);
         $this->setVideoId($match[1]);
-
         return parent::__construct($url, $pattern, $renderer);
     }
 

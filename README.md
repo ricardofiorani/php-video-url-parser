@@ -20,17 +20,17 @@ $ composer require ricardofiorani/php-video-url-parser
 ## Requirements
 
 * PHP 5.3
-* cURL
+* cURL (Or at least file_get_contents() enabled if you want to use it with Vimeo, otherwise it's not required)
 
 ## Basic Usage
 
 ```php
 <?php
-use RicardoFiorani\Detector\VideoServiceDetector;
+use RicardoFiorani\Matcher\VideoServiceMatcher;
 
 require __DIR__ . '/vendor/autoload.php';
 
-$vsd = new VideoServiceDetector();
+$vsd = new VideoServiceMatcher();
 
 //Detects which service the url belongs to and returns the service's implementation
 //of RicardoFiorani\Adapter\VideoAdapterInterface
@@ -114,11 +114,11 @@ class MyOwnRendererFactory implements RendererFactoryInterface
 
 ```php
 <?php
-use RicardoFiorani\Detector\VideoServiceDetector;
+use RicardoFiorani\Matcher\VideoServiceMatcher;
 
 require __DIR__ . '/vendor/autoload.php';
 
-$vsd = new VideoServiceDetector();
+$vsd = new VideoServiceMatcher();
 
 //This is where the magic is done
 $vsd->getServiceContainer()->setRenderer('MyOwnRenderer', 'MyVendor\\MyRenderer\\Factory\\MyOwnRendererFactory');

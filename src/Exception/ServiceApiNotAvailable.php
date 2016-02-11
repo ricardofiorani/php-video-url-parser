@@ -2,15 +2,15 @@
 /**
  * Created by PhpStorm.
  * User: Ricardo Fiorani
- * Date: 29/08/2015
- * Time: 20:17
+ * Date: 10/02/2016
+ * Time: 18:13
  */
 
 namespace RicardoFiorani\Exception;
 
 use Exception;
 
-class InvalidThumbnailSizeException extends Exception
+class ServiceApiNotAvailable extends Exception
 {
 
 }

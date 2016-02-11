@@ -8,9 +8,6 @@
 
 namespace RicardoFiorani\Adapter;
 
-
-use RicardoFiorani\Renderer\EmbedRendererInterface;
-
 interface VideoAdapterInterface
 {
 
@@ -63,7 +60,7 @@ interface VideoAdapterInterface
     public function getLargeThumbnail();
 
     /**
-     * Returns the largest thumnbnaail's url
+     * Returns the largest thumnbnail's url
      * @return string
      */
     public function getLargestThumbnail();

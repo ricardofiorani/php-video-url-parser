@@ -1,6 +1,6 @@
 <?php
 
-namespace RicardoFiorani\Detector;
+namespace RicardoFiorani\Matcher;
 
 use RicardoFiorani\Adapter\VideoAdapterInterface;
 use RicardoFiorani\Container\Factory\ServicesContainerFactory;
@@ -10,7 +10,7 @@ use RicardoFiorani\Exception\ServiceNotAvailableException;
 /**
  * @author Ricardo Fiorani
  */
-class VideoServiceDetector
+class VideoServiceMatcher
 {
     /**
      * @var ServicesContainer
@@ -23,11 +23,11 @@ class VideoServiceDetector
     private $parsedUrls = array();
 
     /**
-     * VideoServiceDetector constructor.
+     * VideoServiceMatcher constructor.
      */
     public function __construct()
     {
-        $this->serviceContainer = ServicesContainerFactory::createNewServiceDetector();
+        $this->serviceContainer = ServicesContainerFactory::createNewServiceMatcher();
     }
 
     /**

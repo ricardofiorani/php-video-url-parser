@@ -10,7 +10,8 @@ return array(
     'services' => array(
         'Vimeo' => array(
             'patterns' => array(
-                '#(https?://vimeo.com)/([0-9]+)#i'
+                '#(https?://vimeo.com)/([0-9]+)#i',
+                '#(https?://vimeo.com)/channels/staffpicks/([0-9]+)#i',
             ),
             'factory' => '\\RicardoFiorani\\Adapter\\Vimeo\\Factory\\VimeoServiceAdapterFactory',
         ),

@@ -8,11 +8,11 @@
 
 namespace RicardoFiorani\Test\Adapter;
 
-
 use PHPUnit_Framework_TestCase;
 use RicardoFiorani\Adapter\Dailymotion\DailymotionServiceAdapter;
-use RicardoFiorani\Detector\VideoServiceDetector;
+use RicardoFiorani\Matcher\VideoServiceMatcher;
 use RicardoFiorani\Exception\ServiceNotAvailableException;
+
 
 class DailymotionServiceAdapterTest extends PHPUnit_Framework_TestCase
 {
@@ -25,7 +25,6 @@ class DailymotionServiceAdapterTest extends PHPUnit_Framework_TestCase
     {
         $dailymotionVideo = $this->getMockingObject($url);
         $this->assertInternalType('string', $dailymotionVideo->getServiceName());
-
     }
 
     /**
@@ -57,13 +56,10 @@ class DailymotionServiceAdapterTest extends PHPUnit_Framework_TestCase
         $dailymotionVideo = $this->getMockingObject($url);
         $this->assertInternalType('string',
             $dailymotionVideo->getThumbnail(DailymotionServiceAdapter::THUMBNAIL_DEFAULT));
-
         $this->assertInternalType('string', $dailymotionVideo->getSmallThumbnail());
         $this->assertInternalType('string', $dailymotionVideo->getMediumThumbnail());
         $this->assertInternalType('string', $dailymotionVideo->getLargeThumbnail());
         $this->assertInternalType('string', $dailymotionVideo->getLargestThumbnail());
-
-
     }
 
     /**
@@ -75,6 +71,26 @@ class DailymotionServiceAdapterTest extends PHPUnit_Framework_TestCase
         $dailymotionVideo = $this->getMockingObject($url);
         $this->setExpectedException('\\RicardoFiorani\\Exception\\InvalidThumbnailSizeException');
         $dailymotionVideo->getThumbnail('This Size does not exists :)');
+    }
+
+    /**
+     * @dataProvider exampleUrlDataProvider
+     * @param string $url
+     */
+    public function testIfGetEmbedUrl($url)
+    {
+        $dailymotionVideo = $this->getMockingObject($url);
+        $this->assertInternalType('string', $dailymotionVideo->getEmbedUrl());
+    }
+
+    /**
+     * @dataProvider exampleUrlDataProvider
+     * @param string $url
+     */
+    public function testIfIsEmbeddable($url)
+    {
+        $dailymotionVideo = $this->getMockingObject($url);
+        $this->assertTrue($dailymotionVideo->isEmbeddable());
     }
 
     /**
@@ -96,7 +112,7 @@ class DailymotionServiceAdapterTest extends PHPUnit_Framework_TestCase
      */
     public function getMockingObject($url)
     {
-        $videoParser = new VideoServiceDetector();
+        $videoParser = new VideoServiceMatcher();
         $dailymotionVideo = $videoParser->parse($url);
 
         return $dailymotionVideo;

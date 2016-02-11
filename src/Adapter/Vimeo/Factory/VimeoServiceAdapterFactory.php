@@ -18,13 +18,13 @@ class VimeoServiceAdapterFactory implements CallableServiceAdapterFactoryInterfa
     /**
      * @param string $url
      * @param string $pattern
-     * @param EmbedRendererInterface $rendererInterface
+     * @param EmbedRendererInterface $renderer
      * @return VimeoServiceAdapter
+     * @internal param EmbedRendererInterface $rendererInterface
      */
     public function __invoke($url, $pattern, EmbedRendererInterface $renderer)
     {
         $adapter = new VimeoServiceAdapter($url, $pattern, $renderer);
-
         return $adapter;
     }
 }

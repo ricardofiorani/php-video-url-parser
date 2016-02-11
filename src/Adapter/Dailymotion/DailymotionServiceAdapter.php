@@ -9,6 +9,7 @@
 namespace RicardoFiorani\Adapter\Dailymotion;
 
 use RicardoFiorani\Adapter\AbstractServiceAdapter;
+use RicardoFiorani\Exception\InvalidThumbnailSizeException;
 use RicardoFiorani\Renderer\EmbedRendererInterface;
 
 class DailymotionServiceAdapter extends AbstractServiceAdapter
@@ -62,11 +63,12 @@ class DailymotionServiceAdapter extends AbstractServiceAdapter
     /**
      * @param string $size
      * @return string
+     * @throws InvalidThumbnailSizeException
      */
     public function getThumbnail($size)
     {
         if (false == in_array($size, $this->getThumbNailSizes())) {
-            throw new \RicardoFiorani\Exception\InvalidThumbnailSizeException;
+            throw new InvalidThumbnailSizeException;
         }
 
         return 'http://www.dailymotion.com/' . $size . '/video/' . $this->videoId;
