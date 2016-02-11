@@ -214,9 +214,6 @@ class VimeoServiceAdapter extends AbstractServiceAdapter
         $match = array();
         preg_match($pattern, $url, $match);
         $videoId = $match[2];
-        if (empty($videoId)) {
-            $videoId = $match[1];
-        }
 
         return $videoId;
     }
@@ -234,6 +231,7 @@ class VimeoServiceAdapter extends AbstractServiceAdapter
             throw new ServiceApiNotAvailable('Vimeo Service Adapter could not reach Vimeo API Service. Check if your server has file_get_contents() function available.');
         }
         $hash = unserialize($contents);
+
         return reset($hash);
     }
 }
