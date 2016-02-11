@@ -117,8 +117,8 @@ class VimeoServiceAdapterTest extends PHPUnit_Framework_TestCase
      */
     public function testIfIsEmbeddable($url)
     {
-        $facebookVideo = $this->getMockingObject($url);
-        $this->assertTrue($facebookVideo->isEmbeddable());
+        $vimeoVideo = $this->getMockingObject($url);
+        $this->assertTrue($vimeoVideo->isEmbeddable());
     }
 
     /**
@@ -128,7 +128,8 @@ class VimeoServiceAdapterTest extends PHPUnit_Framework_TestCase
     {
         return array(
             array(
-                'https://vimeo.com/8733915'
+                'https://vimeo.com/8733915',
+                'https://vimeo.com/channels/staffpicks/154766467',
             ),
         );
     }
