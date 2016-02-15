@@ -32,7 +32,9 @@ class VideoServiceMatcher
 
     /**
      * @param string $url
+     *
      * @return VideoAdapterInterface
+     *
      * @throws ServiceNotAvailableException
      */
     public function parse($url)
@@ -72,6 +74,4 @@ class VideoServiceMatcher
     {
         $this->serviceContainer = $serviceContainer;
     }
-
-
 }

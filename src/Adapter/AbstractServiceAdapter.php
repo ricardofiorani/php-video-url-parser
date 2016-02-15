@@ -3,11 +3,9 @@
  * Created by PhpStorm.
  * User: Ricardo Fiorani
  * Date: 29/08/2015
- * Time: 19:37
+ * Time: 19:37.
  */
-
 namespace RicardoFiorani\Adapter;
-
 
 use RicardoFiorani\Exception\NotEmbeddableException;
 use RicardoFiorani\Renderer\EmbedRendererInterface;
@@ -36,8 +34,9 @@ abstract class AbstractServiceAdapter implements VideoAdapterInterface
 
     /**
      * AbstractVideoAdapter constructor.
-     * @param string $url
-     * @param string $pattern
+     *
+     * @param string                 $url
+     * @param string                 $pattern
      * @param EmbedRendererInterface $renderer
      */
     public function __construct($url, $pattern, EmbedRendererInterface $renderer)
@@ -48,7 +47,8 @@ abstract class AbstractServiceAdapter implements VideoAdapterInterface
     }
 
     /**
-     * Returns the input URL
+     * Returns the input URL.
+     *
      * @return string
      */
     public function getRawUrl()
@@ -113,10 +113,12 @@ abstract class AbstractServiceAdapter implements VideoAdapterInterface
     }
 
     /**
-     * @param int $width
-     * @param int $height
+     * @param int  $width
+     * @param int  $height
      * @param bool $autoplay
+     *
      * @return string
+     *
      * @throws NotEmbeddableException
      */
     public function getEmbedCode($width, $height, $autoplay = false)
@@ -127,6 +129,4 @@ abstract class AbstractServiceAdapter implements VideoAdapterInterface
 
         return $this->getRenderer()->render($this->getEmbedUrl($autoplay), $width, $height);
     }
-
-
 }

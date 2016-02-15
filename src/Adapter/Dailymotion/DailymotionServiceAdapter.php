@@ -3,9 +3,8 @@
  * Created by PhpStorm.
  * User: Ricardo Fiorani
  * Date: 30/08/2015
- * Time: 14:38
+ * Time: 14:38.
  */
-
 namespace RicardoFiorani\Adapter\Dailymotion;
 
 use RicardoFiorani\Adapter\AbstractServiceAdapter;
@@ -18,8 +17,9 @@ class DailymotionServiceAdapter extends AbstractServiceAdapter
 
     /**
      * AbstractVideoAdapter constructor.
-     * @param string $url
-     * @param string $pattern
+     *
+     * @param string                 $url
+     * @param string                 $pattern
      * @param EmbedRendererInterface $renderer
      */
     public function __construct($url, $pattern, EmbedRendererInterface $renderer)
@@ -30,9 +30,9 @@ class DailymotionServiceAdapter extends AbstractServiceAdapter
         return parent::__construct($url, $pattern, $renderer);
     }
 
-
     /**
-     * Returns the service name (ie: "Youtube" or "Vimeo")
+     * Returns the service name (ie: "Youtube" or "Vimeo").
+     *
      * @return string
      */
     public function getServiceName()
@@ -41,7 +41,8 @@ class DailymotionServiceAdapter extends AbstractServiceAdapter
     }
 
     /**
-     * Returns if the service has a thumbnail image
+     * Returns if the service has a thumbnail image.
+     *
      * @return bool
      */
     public function hasThumbnail()
@@ -50,7 +51,8 @@ class DailymotionServiceAdapter extends AbstractServiceAdapter
     }
 
     /**
-     * Returns all thumbnails available sizes
+     * Returns all thumbnails available sizes.
+     *
      * @return array
      */
     public function getThumbNailSizes()
@@ -62,20 +64,23 @@ class DailymotionServiceAdapter extends AbstractServiceAdapter
 
     /**
      * @param string $size
+     *
      * @return string
+     *
      * @throws InvalidThumbnailSizeException
      */
     public function getThumbnail($size)
     {
         if (false == in_array($size, $this->getThumbNailSizes())) {
-            throw new InvalidThumbnailSizeException;
+            throw new InvalidThumbnailSizeException();
         }
 
-        return 'http://www.dailymotion.com/' . $size . '/video/' . $this->videoId;
+        return 'http://www.dailymotion.com/'.$size.'/video/'.$this->videoId;
     }
 
     /**
-     * Returns the small thumbnail's url
+     * Returns the small thumbnail's url.
+     *
      * @return string
      */
     public function getSmallThumbnail()
@@ -85,7 +90,8 @@ class DailymotionServiceAdapter extends AbstractServiceAdapter
     }
 
     /**
-     * Returns the medium thumbnail's url
+     * Returns the medium thumbnail's url.
+     *
      * @return string
      */
     public function getMediumThumbnail()
@@ -95,7 +101,8 @@ class DailymotionServiceAdapter extends AbstractServiceAdapter
     }
 
     /**
-     * Returns the large thumbnail's url
+     * Returns the large thumbnail's url.
+     *
      * @return string
      */
     public function getLargeThumbnail()
@@ -105,7 +112,8 @@ class DailymotionServiceAdapter extends AbstractServiceAdapter
     }
 
     /**
-     * Returns the largest thumnbnaail's url
+     * Returns the largest thumnbnaail's url.
+     *
      * @return string
      */
     public function getLargestThumbnail()
@@ -116,11 +124,12 @@ class DailymotionServiceAdapter extends AbstractServiceAdapter
 
     /**
      * @param bool $autoplay
+     *
      * @return string
      */
     public function getEmbedUrl($autoplay = false)
     {
-        return '//www.dailymotion.com/embed/video/' . $this->videoId . ($autoplay ? '?amp&autoplay=1' : '');
+        return '//www.dailymotion.com/embed/video/'.$this->videoId.($autoplay ? '?amp&autoplay=1' : '');
     }
 
     /**

@@ -3,11 +3,9 @@
  * Created by PhpStorm.
  * User: Ricardo Fiorani
  * Date: 29/08/2015
- * Time: 14:56
+ * Time: 14:56.
  */
-
 namespace RicardoFiorani\Adapter\Vimeo;
-
 
 use RicardoFiorani\Adapter\AbstractServiceAdapter;
 use RicardoFiorani\Exception\InvalidThumbnailSizeException;
@@ -36,8 +34,8 @@ class VimeoServiceAdapter extends AbstractServiceAdapter
     public $thumbnails;
 
     /**
-     * @param string $url
-     * @param string $pattern
+     * @param string                 $url
+     * @param string                 $pattern
      * @param EmbedRendererInterface $renderer
      */
     public function __construct($url, $pattern, EmbedRendererInterface $renderer)
@@ -59,7 +57,8 @@ class VimeoServiceAdapter extends AbstractServiceAdapter
     }
 
     /**
-     * Returns the service name (ie: "Youtube" or "Vimeo")
+     * Returns the service name (ie: "Youtube" or "Vimeo").
+     *
      * @return string
      */
     public function getServiceName()
@@ -68,7 +67,8 @@ class VimeoServiceAdapter extends AbstractServiceAdapter
     }
 
     /**
-     * Returns if the service has a thumbnail image
+     * Returns if the service has a thumbnail image.
+     *
      * @return bool
      */
     public function hasThumbnail()
@@ -126,7 +126,9 @@ class VimeoServiceAdapter extends AbstractServiceAdapter
 
     /**
      * @param string $size
+     *
      * @return string
+     *
      * @throws InvalidThumbnailSizeException
      */
     public function getThumbnail($size)
@@ -140,15 +142,17 @@ class VimeoServiceAdapter extends AbstractServiceAdapter
 
     /**
      * @param bool $autoplay
+     *
      * @return string
      */
     public function getEmbedUrl($autoplay = false)
     {
-        return "http://player.vimeo.com/video/" . $this->getVideoId() . ($autoplay ? '?autoplay=1' : '');
+        return 'http://player.vimeo.com/video/'.$this->getVideoId().($autoplay ? '?autoplay=1' : '');
     }
 
     /**
-     * Returns all thumbnails available sizes
+     * Returns all thumbnails available sizes.
+     *
      * @return array
      */
     public function getThumbNailSizes()
@@ -161,7 +165,8 @@ class VimeoServiceAdapter extends AbstractServiceAdapter
     }
 
     /**
-     * Returns the small thumbnail's url
+     * Returns the small thumbnail's url.
+     *
      * @return string
      */
     public function getSmallThumbnail()
@@ -170,7 +175,8 @@ class VimeoServiceAdapter extends AbstractServiceAdapter
     }
 
     /**
-     * Returns the medium thumbnail's url
+     * Returns the medium thumbnail's url.
+     *
      * @return string
      */
     public function getMediumThumbnail()
@@ -179,7 +185,8 @@ class VimeoServiceAdapter extends AbstractServiceAdapter
     }
 
     /**
-     * Returns the large thumbnail's url
+     * Returns the large thumbnail's url.
+     *
      * @return string
      */
     public function getLargeThumbnail()
@@ -188,7 +195,8 @@ class VimeoServiceAdapter extends AbstractServiceAdapter
     }
 
     /**
-     * Returns the largest thumnbnaail's url
+     * Returns the largest thumnbnaail's url.
+     *
      * @return string
      */
     public function getLargestThumbnail()
@@ -207,6 +215,7 @@ class VimeoServiceAdapter extends AbstractServiceAdapter
     /**
      * @param string $url
      * @param string $pattern
+     *
      * @return int
      */
     private function getVideoIdByPattern($url, $pattern)
@@ -219,14 +228,17 @@ class VimeoServiceAdapter extends AbstractServiceAdapter
     }
 
     /**
-     * Uses the Vimeo video API to get video info
+     * Uses the Vimeo video API to get video info.
+     *
      * @todo make this better by using guzzle
+     *
      * @return array
+     *
      * @throws ServiceApiNotAvailable
      */
     private function getVideoDataFromServiceApi()
     {
-        $contents = file_get_contents("http://vimeo.com/api/v2/video/" . $this->getVideoId() . ".php");
+        $contents = file_get_contents('http://vimeo.com/api/v2/video/'.$this->getVideoId().'.php');
         if (false === $contents) {
             throw new ServiceApiNotAvailable('Vimeo Service Adapter could not reach Vimeo API Service. Check if your server has file_get_contents() function available.');
         }

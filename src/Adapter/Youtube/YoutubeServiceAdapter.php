@@ -3,11 +3,9 @@
  * Created by PhpStorm.
  * User: Ricardo Fiorani
  * Date: 29/08/2015
- * Time: 14:53
+ * Time: 14:53.
  */
-
 namespace RicardoFiorani\Adapter\Youtube;
-
 
 use RicardoFiorani\Adapter\AbstractServiceAdapter;
 use RicardoFiorani\Exception\InvalidThumbnailSizeException;
@@ -22,8 +20,8 @@ class YoutubeServiceAdapter extends AbstractServiceAdapter
     const THUMBNAIL_MAX_QUALITY = 'maxresdefault';
 
     /**
-     * @param string $url
-     * @param string $pattern
+     * @param string                 $url
+     * @param string                 $pattern
      * @param EmbedRendererInterface $renderer
      */
     public function __construct($url, $pattern, EmbedRendererInterface $renderer)
@@ -41,7 +39,8 @@ class YoutubeServiceAdapter extends AbstractServiceAdapter
     }
 
     /**
-     * Returns the service name (ie: "Youtube" or "Vimeo")
+     * Returns the service name (ie: "Youtube" or "Vimeo").
+     *
      * @return string
      */
     public function getServiceName()
@@ -50,7 +49,8 @@ class YoutubeServiceAdapter extends AbstractServiceAdapter
     }
 
     /**
-     * Returns if the service has a thumbnail image
+     * Returns if the service has a thumbnail image.
+     *
      * @return bool
      */
     public function hasThumbnail()
@@ -60,7 +60,9 @@ class YoutubeServiceAdapter extends AbstractServiceAdapter
 
     /**
      * @param string $size
+     *
      * @return string
+     *
      * @throws InvalidThumbnailSizeException
      */
     public function getThumbnail($size)
@@ -69,7 +71,7 @@ class YoutubeServiceAdapter extends AbstractServiceAdapter
             throw new InvalidThumbnailSizeException();
         }
 
-        return 'http://img.youtube.com/vi/' . $this->getVideoId() . '/' . $size . '.jpg';
+        return 'http://img.youtube.com/vi/'.$this->getVideoId().'/'.$size.'.jpg';
     }
 
     /**
@@ -88,15 +90,17 @@ class YoutubeServiceAdapter extends AbstractServiceAdapter
 
     /**
      * @param bool $autoplay
+     *
      * @return string
      */
     public function getEmbedUrl($autoplay = false)
     {
-        return 'http://www.youtube.com/embed/' . $this->getVideoId() . ($autoplay ? '?amp&autoplay=1' : '');
+        return 'http://www.youtube.com/embed/'.$this->getVideoId().($autoplay ? '?amp&autoplay=1' : '');
     }
 
     /**
-     * Returns the small thumbnail's url
+     * Returns the small thumbnail's url.
+     *
      * @return string
      */
     public function getSmallThumbnail()
@@ -105,7 +109,8 @@ class YoutubeServiceAdapter extends AbstractServiceAdapter
     }
 
     /**
-     * Returns the medium thumbnail's url
+     * Returns the medium thumbnail's url.
+     *
      * @return string
      */
     public function getMediumThumbnail()
@@ -114,7 +119,8 @@ class YoutubeServiceAdapter extends AbstractServiceAdapter
     }
 
     /**
-     * Returns the large thumbnail's url
+     * Returns the large thumbnail's url.
+     *
      * @return string
      */
     public function getLargeThumbnail()
@@ -123,14 +129,14 @@ class YoutubeServiceAdapter extends AbstractServiceAdapter
     }
 
     /**
-     * Returns the largest thumnbnaail's url
+     * Returns the largest thumnbnaail's url.
+     *
      * @return string
      */
     public function getLargestThumbnail()
     {
         return $this->getThumbnail(self::THUMBNAIL_MAX_QUALITY);
     }
-
 
     /**
      * @return bool

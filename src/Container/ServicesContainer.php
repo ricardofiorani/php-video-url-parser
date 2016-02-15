@@ -3,11 +3,9 @@
  * Created by PhpStorm.
  * User: Ricardo Fiorani
  * Date: 31/08/2015
- * Time: 21:06
+ * Time: 21:06.
  */
-
 namespace RicardoFiorani\Container;
-
 
 use RicardoFiorani\Adapter\Factory\CallableServiceAdapterFactoryInterface;
 use RicardoFiorani\Exception\DuplicatedServiceNameException;
@@ -47,6 +45,7 @@ class ServicesContainer
 
     /**
      * ServicesContainer constructor.
+     *
      * @param array $config
      */
     public function __construct(array $config = array())
@@ -57,8 +56,10 @@ class ServicesContainer
     }
 
     /**
-     * Loads de default config file
+     * Loads de default config file.
+     *
      * @param array $config
+     *
      * @throws DuplicatedServiceNameException
      */
     private function registerFromConfig(array $config)
@@ -70,10 +71,12 @@ class ServicesContainer
     }
 
     /**
-     * Register a Service
-     * @param string $serviceName
-     * @param array $regex
+     * Register a Service.
+     *
+     * @param string          $serviceName
+     * @param array           $regex
      * @param string|callable $factory
+     *
      * @throws DuplicatedServiceNameException
      */
     public function registerService($serviceName, array $regex, $factory)
@@ -86,7 +89,6 @@ class ServicesContainer
         $this->patterns[$serviceName] = $regex;
         $this->factories[$serviceName] = $factory;
     }
-
 
     /**
      * @param string $rendererName
@@ -107,7 +109,6 @@ class ServicesContainer
         return $this->renderer;
     }
 
-
     /**
      * @return array
      */
@@ -116,9 +117,9 @@ class ServicesContainer
         return $this->services;
     }
 
-
     /**
      * @param string $serviceName
+     *
      * @return bool
      */
     public function hasService($serviceName)
@@ -144,6 +145,7 @@ class ServicesContainer
 
     /**
      * @param string $service
+     *
      * @return CallableServiceAdapterFactoryInterface
      */
     public function getFactory($service)
@@ -155,6 +157,4 @@ class ServicesContainer
 
         return $this->instantiatedFactories[$service] = $factory;
     }
-
-
 }
