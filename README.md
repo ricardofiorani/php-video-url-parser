@@ -140,3 +140,7 @@ echo $video->getEmbedCode(500,500);
 
 * Fix the Exceptions Messages
 * Create PHPUnit Tests
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/ricardofiorani/php-video-url-parser/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
