@@ -5,7 +5,7 @@
  * Date: 29/08/2015
  * Time: 14:57.
  */
-namespace RicardoFiorani\Adapter\Factory;
+namespace RicardoFiorani\Adapter;
 
 use RicardoFiorani\Adapter\VideoAdapterInterface;
 use RicardoFiorani\Renderer\EmbedRendererInterface;

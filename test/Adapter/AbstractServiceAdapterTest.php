@@ -87,6 +87,19 @@ class AbstractServiceAdapterTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @dataProvider exampleUrlDataProvider
+     * @param $url
+     */
+    public function testGetScheme($url)
+    {
+        $facebookVideo = $this->getMockingObject($url);
+        $schemeInsecure = $facebookVideo->getScheme(false);
+        $this->assertEquals('http', $schemeInsecure);
+        $schemeSecure = $facebookVideo->getScheme(true);
+        $this->assertEquals('https', $schemeSecure);
+    }
+
+    /**
      * @return array
      */
     public function exampleUrlDataProvider()

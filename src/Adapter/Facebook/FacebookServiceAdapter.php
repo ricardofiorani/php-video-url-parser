@@ -19,8 +19,8 @@ class FacebookServiceAdapter extends AbstractServiceAdapter
     /**
      * AbstractVideoAdapter constructor.
      *
-     * @param string                 $url
-     * @param string                 $pattern
+     * @param string $url
+     * @param string $pattern
      * @param EmbedRendererInterface $renderer
      */
     public function __construct($url, $pattern, EmbedRendererInterface $renderer)
@@ -33,7 +33,7 @@ class FacebookServiceAdapter extends AbstractServiceAdapter
     }
 
     /**
-     * Returns the service name (ie: "Youtube" or "Vimeo").
+     * Returns the service name .
      *
      * @return string
      */
@@ -65,27 +65,27 @@ class FacebookServiceAdapter extends AbstractServiceAdapter
     /**
      * @param string $size
      *
+     * @param bool $secure
      * @return string
-     *
      * @throws InvalidThumbnailSizeException
      */
-    public function getThumbnail($size)
+    public function getThumbnail($size, $secure = false)
     {
         if (false == in_array($size, $this->getThumbNailSizes())) {
             throw new InvalidThumbnailSizeException();
         }
 
-        return 'https://graph.facebook.com/'.$this->getVideoId().'/picture';
+        return $this->getScheme($secure) . '://graph.facebook.com/' . $this->getVideoId() . '/picture';
     }
 
     /**
      * Returns the small thumbnail's url.
      *
+     * @param bool $secure
      * @return string
-     *
      * @throws ThumbnailSizeNotAvailable
      */
-    public function getSmallThumbnail()
+    public function getSmallThumbnail($secure = false)
     {
         throw new ThumbnailSizeNotAvailable();
     }
@@ -93,43 +93,48 @@ class FacebookServiceAdapter extends AbstractServiceAdapter
     /**
      * Returns the medium thumbnail's url.
      *
+     * @param bool $secure
      * @return string
+     * @throws InvalidThumbnailSizeException
      */
-    public function getMediumThumbnail()
+    public function getMediumThumbnail($secure = false)
     {
-        return $this->getThumbnail(self::THUMBNAIL_SIZE_DEFAULT);
+        return $this->getThumbnail(self::THUMBNAIL_SIZE_DEFAULT, $secure);
     }
 
     /**
      * Returns the large thumbnail's url.
      *
+     * @param bool $secure
      * @return string
-     *
      * @throws ThumbnailSizeNotAvailable
      */
-    public function getLargeThumbnail()
+    public function getLargeThumbnail($secure = false)
     {
         throw new ThumbnailSizeNotAvailable();
     }
 
     /**
-     * Returns the largest thumnbnaail's url.
+     * Returns the largest thumbnail's url.
      *
+     * @param bool $secure
      * @return string
+     * @throws InvalidThumbnailSizeException
      */
-    public function getLargestThumbnail()
+    public function getLargestThumbnail($secure = false)
     {
-        return $this->getThumbnail(self::THUMBNAIL_SIZE_DEFAULT);
+        return $this->getThumbnail(self::THUMBNAIL_SIZE_DEFAULT, $secure);
     }
 
     /**
      * @param bool $autoplay
      *
+     * @param bool $secure
      * @return string
      */
-    public function getEmbedUrl($autoplay = false)
+    public function getEmbedUrl($autoplay = false, $secure = false)
     {
-        return 'https://www.facebook.com/video/embed?video_id='.$this->getVideoId();
+        return $this->getScheme($secure) . '://www.facebook.com/video/embed?video_id=' . $this->getVideoId();
     }
 
     /**

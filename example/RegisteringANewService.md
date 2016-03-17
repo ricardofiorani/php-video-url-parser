@@ -138,7 +138,7 @@ use MyVendor\ServiceAdapter\DailymotionServiceAdapter;
 use RicardoFiorani\Adapter\VideoAdapterInterface;
 use RicardoFiorani\Renderer\EmbedRendererInterface;
 
-class DailymotionServiceAdapterFactory implements \RicardoFiorani\Adapter\Factory\CallableServiceAdapterFactoryInterface
+class DailymotionServiceAdapterFactory implements \RicardoFiorani\Adapter\CallableServiceAdapterFactoryInterface
 {
     /**
      * @param string $url

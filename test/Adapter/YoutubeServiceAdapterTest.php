@@ -85,6 +85,20 @@ class YoutubeServiceAdapterTest extends PHPUnit_Framework_TestCase
      * @dataProvider exampleUrlDataProvider
      * @param string $url
      */
+    public function testIfGetEmbedUrlUsesRightScheme($url)
+    {
+        $videoObject = $this->getMockingObject($url);
+        $embedUrl = $videoObject->getEmbedUrl(false, true);
+        $this->assertContains('https', $embedUrl);
+
+        $embedUrl = $videoObject->getEmbedUrl(false, false);
+        $this->assertNotContains('https', $embedUrl);
+    }
+
+    /**
+     * @dataProvider exampleUrlDataProvider
+     * @param string $url
+     */
     public function testIfIsEmbeddable($url)
     {
         $facebookVideo = $this->getMockingObject($url);

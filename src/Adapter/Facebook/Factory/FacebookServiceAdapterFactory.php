@@ -8,7 +8,7 @@
 namespace RicardoFiorani\Adapter\Facebook\Factory;
 
 use RicardoFiorani\Adapter\Facebook\FacebookServiceAdapter;
-use RicardoFiorani\Adapter\Factory\CallableServiceAdapterFactoryInterface;
+use RicardoFiorani\Adapter\CallableServiceAdapterFactoryInterface;
 use RicardoFiorani\Adapter\VideoAdapterInterface;
 use RicardoFiorani\Renderer\EmbedRendererInterface;
 

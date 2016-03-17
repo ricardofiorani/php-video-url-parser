@@ -7,7 +7,7 @@
  */
 namespace RicardoFiorani\Adapter\Vimeo\Factory;
 
-use RicardoFiorani\Adapter\Factory\CallableServiceAdapterFactoryInterface;
+use RicardoFiorani\Adapter\CallableServiceAdapterFactoryInterface;
 use RicardoFiorani\Adapter\Vimeo\VimeoServiceAdapter;
 use RicardoFiorani\Renderer\EmbedRendererInterface;
 

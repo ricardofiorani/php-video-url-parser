@@ -8,7 +8,7 @@
 namespace RicardoFiorani\Adapter\Dailymotion\Factory;
 
 use RicardoFiorani\Adapter\Dailymotion\DailymotionServiceAdapter;
-use RicardoFiorani\Adapter\Factory\CallableServiceAdapterFactoryInterface;
+use RicardoFiorani\Adapter\CallableServiceAdapterFactoryInterface;
 use RicardoFiorani\Adapter\VideoAdapterInterface;
 use RicardoFiorani\Renderer\EmbedRendererInterface;
 

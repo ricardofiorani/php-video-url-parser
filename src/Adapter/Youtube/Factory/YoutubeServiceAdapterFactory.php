@@ -7,7 +7,7 @@
  */
 namespace RicardoFiorani\Adapter\Youtube\Factory;
 
-use RicardoFiorani\Adapter\Factory\CallableServiceAdapterFactoryInterface;
+use RicardoFiorani\Adapter\CallableServiceAdapterFactoryInterface;
 use RicardoFiorani\Adapter\Youtube\YoutubeServiceAdapter;
 use RicardoFiorani\Renderer\EmbedRendererInterface;
 

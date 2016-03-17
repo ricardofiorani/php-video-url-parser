@@ -16,5 +16,5 @@ interface EmbedRendererInterface
      *
      * @return string
      */
-    public function render($embedUrl, $width, $height);
+    public function renderVideoEmbedCode($embedUrl, $width, $height);
 }
