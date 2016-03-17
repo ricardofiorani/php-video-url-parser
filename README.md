@@ -110,7 +110,7 @@ class MyOwnRendererFactory implements RendererFactoryInterface
      */
     public function __invoke()
     {
-        $renderer = new MyOwnRenderer();
+        return new MyOwnRenderer();
     }
 }
 ```
