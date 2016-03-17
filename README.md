@@ -8,7 +8,7 @@
 [![Code Coverage](https://scrutinizer-ci.com/g/ricardofiorani/php-video-url-parser/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/ricardofiorani/php-video-url-parser/?branch=master)
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/ricardofiorani/php-video-url-parser/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
-PHP Video URL Parser is a parser that detects a given video url and returns an object containing information like the video's embed code, title, description, thumbnail and other information that the service may give.
+PHP Video URL Parser is a parser that detects a given video url and returns an object containing information like the video's embed code, title, description, thumbnail and other information that the service's API may give.
 
 ## Installation
 
