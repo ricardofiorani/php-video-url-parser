@@ -23,7 +23,7 @@ class DefaultRenderer implements EmbedRendererInterface
      *
      * @return string
      */
-    public function render($embedUrl, $width, $height)
+    public function renderVideoEmbedCode($embedUrl, $width, $height)
     {
         return '<iframe width="'.$width.'" height="'.$height.'" src="'.addslashes($embedUrl).'" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
     }

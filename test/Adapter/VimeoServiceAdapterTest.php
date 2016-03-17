@@ -84,16 +84,6 @@ class VimeoServiceAdapterTest extends PHPUnit_Framework_TestCase
      * @dataProvider exampleUrlDataProvider
      * @param string $url
      */
-    public function testIfGetThumbnailsIsArray($url)
-    {
-        $vimeoVideo = $this->getMockingObject($url);
-        $this->assertInternalType('array', $vimeoVideo->getThumbnails());
-    }
-
-    /**
-     * @dataProvider exampleUrlDataProvider
-     * @param string $url
-     */
     public function testThrowsExceptionOnRequestThumbnailWithAnInvalidSize($url)
     {
         $vimeoVideo = $this->getMockingObject($url);
@@ -109,6 +99,20 @@ class VimeoServiceAdapterTest extends PHPUnit_Framework_TestCase
     {
         $vimeoVideo = $this->getMockingObject($url);
         $this->assertInternalType('string', $vimeoVideo->getEmbedUrl());
+    }
+
+    /**
+     * @dataProvider exampleUrlDataProvider
+     * @param string $url
+     */
+    public function testIfGetEmbedUrlUsesRightScheme($url)
+    {
+        $videoObject = $this->getMockingObject($url);
+        $embedUrl = $videoObject->getEmbedUrl(false, true);
+        $this->assertContains('https', $embedUrl);
+
+        $embedUrl = $videoObject->getEmbedUrl(false, false);
+        $this->assertNotContains('https', $embedUrl);
     }
 
     /**

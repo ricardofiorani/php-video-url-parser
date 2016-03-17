@@ -34,8 +34,8 @@ class VimeoServiceAdapter extends AbstractServiceAdapter
     public $thumbnails;
 
     /**
-     * @param string                 $url
-     * @param string                 $pattern
+     * @param string $url
+     * @param string $pattern
      * @param EmbedRendererInterface $renderer
      */
     public function __construct($url, $pattern, EmbedRendererInterface $renderer)
@@ -109,19 +109,13 @@ class VimeoServiceAdapter extends AbstractServiceAdapter
     }
 
     /**
-     * @return array
-     */
-    public function getThumbnails()
-    {
-        return $this->thumbnails;
-    }
-
-    /**
      * @param array $thumbnails
      */
-    public function setThumbnails($thumbnails)
+    private function setThumbnails(array $thumbnails)
     {
-        $this->thumbnails = $thumbnails;
+        foreach ($thumbnails as $key => $thumbnail) {
+            $this->thumbnails[$key] = parse_url($thumbnail);
+        }
     }
 
     /**
@@ -131,13 +125,13 @@ class VimeoServiceAdapter extends AbstractServiceAdapter
      *
      * @throws InvalidThumbnailSizeException
      */
-    public function getThumbnail($size)
+    public function getThumbnail($size, $secure = false)
     {
         if (false == in_array($size, $this->getThumbNailSizes())) {
             throw new InvalidThumbnailSizeException();
         }
 
-        return $this->thumbnails[$size];
+        return $this->getScheme($secure) . '://' . $this->thumbnails[$size]['host'] . $this->thumbnails[$size]['path'];
     }
 
     /**
@@ -145,9 +139,9 @@ class VimeoServiceAdapter extends AbstractServiceAdapter
      *
      * @return string
      */
-    public function getEmbedUrl($autoplay = false)
+    public function getEmbedUrl($autoplay = false, $secure = false)
     {
-        return 'http://player.vimeo.com/video/'.$this->getVideoId().($autoplay ? '?autoplay=1' : '');
+        return $this->getScheme($secure) . '://player.vimeo.com/video/' . $this->getVideoId() . ($autoplay ? '?autoplay=1' : '');
     }
 
     /**
@@ -167,41 +161,51 @@ class VimeoServiceAdapter extends AbstractServiceAdapter
     /**
      * Returns the small thumbnail's url.
      *
+     * @param bool $secure
      * @return string
+     * @throws InvalidThumbnailSizeException
      */
-    public function getSmallThumbnail()
+    public function getSmallThumbnail($secure = false)
     {
-        return $this->getThumbnail(self::THUMBNAIL_SMALL);
+        return $this->getThumbnail(self::THUMBNAIL_SMALL,$secure);
     }
 
     /**
      * Returns the medium thumbnail's url.
      *
+     * @param bool $secure
      * @return string
+     * @throws InvalidThumbnailSizeException
      */
-    public function getMediumThumbnail()
+    public function getMediumThumbnail($secure = false)
     {
-        return $this->getThumbnail(self::THUMBNAIL_MEDIUM);
+        return $this->getThumbnail(self::THUMBNAIL_MEDIUM,$secure);
     }
 
     /**
      * Returns the large thumbnail's url.
      *
+     * @param bool $secure
+     * @param $secure
      * @return string
+     * @throws InvalidThumbnailSizeException
      */
-    public function getLargeThumbnail()
+    public function getLargeThumbnail($secure = false)
     {
-        return $this->getThumbnail(self::THUMBNAIL_LARGE);
+        return $this->getThumbnail(self::THUMBNAIL_LARGE,$secure);
     }
 
     /**
      * Returns the largest thumnbnaail's url.
      *
+     * @param bool $secure
+     * @param $secure
      * @return string
+     * @throws InvalidThumbnailSizeException
      */
-    public function getLargestThumbnail()
+    public function getLargestThumbnail($secure = false)
     {
-        return $this->getThumbnail(self::THUMBNAIL_LARGE);
+        return $this->getThumbnail(self::THUMBNAIL_LARGE,$secure);
     }
 
     /**
@@ -238,7 +242,7 @@ class VimeoServiceAdapter extends AbstractServiceAdapter
      */
     private function getVideoDataFromServiceApi()
     {
-        $contents = file_get_contents('http://vimeo.com/api/v2/video/'.$this->getVideoId().'.php');
+        $contents = file_get_contents('http://vimeo.com/api/v2/video/' . $this->getVideoId() . '.php');
         if (false === $contents) {
             throw new ServiceApiNotAvailable('Vimeo Service Adapter could not reach Vimeo API Service. Check if your server has file_get_contents() function available.');
         }

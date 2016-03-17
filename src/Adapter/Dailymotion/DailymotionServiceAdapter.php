@@ -18,8 +18,8 @@ class DailymotionServiceAdapter extends AbstractServiceAdapter
     /**
      * AbstractVideoAdapter constructor.
      *
-     * @param string                 $url
-     * @param string                 $pattern
+     * @param string $url
+     * @param string $pattern
      * @param EmbedRendererInterface $renderer
      */
     public function __construct($url, $pattern, EmbedRendererInterface $renderer)
@@ -64,72 +64,79 @@ class DailymotionServiceAdapter extends AbstractServiceAdapter
 
     /**
      * @param string $size
+     * @param bool $secure
      *
      * @return string
-     *
      * @throws InvalidThumbnailSizeException
      */
-    public function getThumbnail($size)
+    public function getThumbnail($size, $secure = false)
     {
         if (false == in_array($size, $this->getThumbNailSizes())) {
             throw new InvalidThumbnailSizeException();
         }
 
-        return 'http://www.dailymotion.com/'.$size.'/video/'.$this->videoId;
+        return $this->getScheme($secure) . '://www.dailymotion.com/' . $size . '/video/' . $this->videoId;
     }
 
     /**
      * Returns the small thumbnail's url.
      *
+     * @param bool $secure
      * @return string
+     * @throws InvalidThumbnailSizeException
      */
-    public function getSmallThumbnail()
+    public function getSmallThumbnail($secure = false)
     {
         //Since this service does not provide other thumbnails sizes we just return the default size
-        return $this->getThumbnail(self::THUMBNAIL_DEFAULT);
+        return $this->getThumbnail(self::THUMBNAIL_DEFAULT, $secure);
     }
 
     /**
      * Returns the medium thumbnail's url.
      *
+     * @param bool $secure
      * @return string
+     * @throws InvalidThumbnailSizeException
      */
-    public function getMediumThumbnail()
+    public function getMediumThumbnail($secure = false)
     {
         //Since this service does not provide other thumbnails sizes we just return the default size
-        return $this->getThumbnail(self::THUMBNAIL_DEFAULT);
+        return $this->getThumbnail(self::THUMBNAIL_DEFAULT, $secure);
     }
 
     /**
      * Returns the large thumbnail's url.
      *
+     * @param bool $secure
      * @return string
+     * @throws InvalidThumbnailSizeException
      */
-    public function getLargeThumbnail()
+    public function getLargeThumbnail($secure = false)
     {
         //Since this service does not provide other thumbnails sizes we just return the default size
-        return $this->getThumbnail(self::THUMBNAIL_DEFAULT);
+        return $this->getThumbnail(self::THUMBNAIL_DEFAULT, $secure);
     }
 
     /**
      * Returns the largest thumnbnaail's url.
-     *
+     * @param bool $secure
      * @return string
+     * @throws InvalidThumbnailSizeException
      */
-    public function getLargestThumbnail()
+    public function getLargestThumbnail($secure = false)
     {
         //Since this service does not provide other thumbnails sizes we just return the default size
-        return $this->getThumbnail(self::THUMBNAIL_DEFAULT);
+        return $this->getThumbnail(self::THUMBNAIL_DEFAULT, $secure);
     }
 
     /**
      * @param bool $autoplay
-     *
+     * @param bool $secure
      * @return string
      */
-    public function getEmbedUrl($autoplay = false)
+    public function getEmbedUrl($autoplay = false, $secure = false)
     {
-        return '//www.dailymotion.com/embed/video/'.$this->videoId.($autoplay ? '?amp&autoplay=1' : '');
+        return $this->getScheme($secure) . '://www.dailymotion.com/embed/video/' . $this->videoId . ($autoplay ? '?amp&autoplay=1' : '');
     }
 
     /**

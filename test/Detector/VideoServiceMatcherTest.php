@@ -13,7 +13,7 @@ use RicardoFiorani\Container\Factory\ServicesContainerFactory;
 use RicardoFiorani\Matcher\VideoServiceMatcher;
 use RicardoFiorani\Exception\ServiceNotAvailableException;
 
-class ServiceDetectorTest extends PHPUnit_Framework_TestCase
+class VideoServiceMatcherTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider videoUrlProvider

@@ -7,7 +7,7 @@
  */
 namespace RicardoFiorani\Container;
 
-use RicardoFiorani\Adapter\Factory\CallableServiceAdapterFactoryInterface;
+use RicardoFiorani\Adapter\CallableServiceAdapterFactoryInterface;
 use RicardoFiorani\Exception\DuplicatedServiceNameException;
 use RicardoFiorani\Renderer\EmbedRendererInterface;
 
@@ -144,17 +144,17 @@ class ServicesContainer
     }
 
     /**
-     * @param string $service
+     * @param string $serviceName
      *
      * @return CallableServiceAdapterFactoryInterface
      */
-    public function getFactory($service)
+    public function getFactory($serviceName)
     {
-        $factory = new $this->factories[$service]();
-        if (isset($this->instantiatedFactories[$service])) {
-            return $this->instantiatedFactories[$service];
+        $factory = new $this->factories[$serviceName]();
+        if (isset($this->instantiatedFactories[$serviceName])) {
+            return $this->instantiatedFactories[$serviceName];
         }
 
-        return $this->instantiatedFactories[$service] = $factory;
+        return $this->instantiatedFactories[$serviceName] = $factory;
     }
 }

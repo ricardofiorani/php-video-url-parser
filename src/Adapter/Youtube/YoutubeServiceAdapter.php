@@ -20,8 +20,8 @@ class YoutubeServiceAdapter extends AbstractServiceAdapter
     const THUMBNAIL_MAX_QUALITY = 'maxresdefault';
 
     /**
-     * @param string                 $url
-     * @param string                 $pattern
+     * @param string $url
+     * @param string $pattern
      * @param EmbedRendererInterface $renderer
      */
     public function __construct($url, $pattern, EmbedRendererInterface $renderer)
@@ -60,18 +60,17 @@ class YoutubeServiceAdapter extends AbstractServiceAdapter
 
     /**
      * @param string $size
-     *
+     * @param bool $secure
      * @return string
-     *
      * @throws InvalidThumbnailSizeException
      */
-    public function getThumbnail($size)
+    public function getThumbnail($size, $secure = false)
     {
         if (false == in_array($size, $this->getThumbNailSizes())) {
             throw new InvalidThumbnailSizeException();
         }
 
-        return 'http://img.youtube.com/vi/'.$this->getVideoId().'/'.$size.'.jpg';
+        return $this->getScheme($secure) . '://img.youtube.com/vi/' . $this->getVideoId() . '/' . $size . '.jpg';
     }
 
     /**
@@ -90,12 +89,12 @@ class YoutubeServiceAdapter extends AbstractServiceAdapter
 
     /**
      * @param bool $autoplay
-     *
+     * @param bool $secure
      * @return string
      */
-    public function getEmbedUrl($autoplay = false)
+    public function getEmbedUrl($autoplay = false, $secure = false)
     {
-        return 'http://www.youtube.com/embed/'.$this->getVideoId().($autoplay ? '?amp&autoplay=1' : '');
+        return $this->getScheme($secure) . '://www.youtube.com/embed/' . $this->getVideoId() . ($autoplay ? '?amp&autoplay=1' : '');
     }
 
     /**
@@ -103,9 +102,9 @@ class YoutubeServiceAdapter extends AbstractServiceAdapter
      *
      * @return string
      */
-    public function getSmallThumbnail()
+    public function getSmallThumbnail($secure = false)
     {
-        return $this->getThumbnail(self::THUMBNAIL_STANDARD_DEFINITION);
+        return $this->getThumbnail(self::THUMBNAIL_STANDARD_DEFINITION, $secure);
     }
 
     /**
@@ -113,9 +112,9 @@ class YoutubeServiceAdapter extends AbstractServiceAdapter
      *
      * @return string
      */
-    public function getMediumThumbnail()
+    public function getMediumThumbnail($secure = false)
     {
-        return $this->getThumbnail(self::THUMBNAIL_MEDIUM_QUALITY);
+        return $this->getThumbnail(self::THUMBNAIL_MEDIUM_QUALITY, $secure);
     }
 
     /**
@@ -123,9 +122,9 @@ class YoutubeServiceAdapter extends AbstractServiceAdapter
      *
      * @return string
      */
-    public function getLargeThumbnail()
+    public function getLargeThumbnail($secure = false)
     {
-        return $this->getThumbnail(self::THUMBNAIL_HIGH_QUALITY);
+        return $this->getThumbnail(self::THUMBNAIL_HIGH_QUALITY, $secure);
     }
 
     /**
@@ -133,9 +132,9 @@ class YoutubeServiceAdapter extends AbstractServiceAdapter
      *
      * @return string
      */
-    public function getLargestThumbnail()
+    public function getLargestThumbnail($secure = false)
     {
-        return $this->getThumbnail(self::THUMBNAIL_MAX_QUALITY);
+        return $this->getThumbnail(self::THUMBNAIL_MAX_QUALITY, $secure);
     }
 
     /**

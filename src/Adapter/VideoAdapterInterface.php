@@ -47,46 +47,52 @@ interface VideoAdapterInterface
     /**
      * Returns the small thumbnail's url.
      *
+     * @param bool $secure
      * @return string
      */
-    public function getSmallThumbnail();
+    public function getSmallThumbnail($secure = false);
 
     /**
      * Returns the medium thumbnail's url.
      *
+     * @param bool $secure
      * @return string
      */
-    public function getMediumThumbnail();
+    public function getMediumThumbnail($secure = false);
 
     /**
      * Returns the large thumbnail's url.
      *
+     * @param bool $secure
      * @return string
      */
-    public function getLargeThumbnail();
+    public function getLargeThumbnail($secure = false);
 
     /**
      * Returns the largest thumnbnail's url.
      *
+     * @param bool $secure
      * @return string
      */
-    public function getLargestThumbnail();
+    public function getLargestThumbnail($secure = false);
 
     /**
      * @param bool $autoplay
+     * @param bool $secure
      *
      * @return string
      */
-    public function getEmbedUrl($autoplay = false);
+    public function getEmbedUrl($autoplay = false, $secure = false);
 
     /**
-     * @param int  $width
-     * @param int  $height
+     * @param int $width
+     * @param int $height
      * @param bool $autoplay
+     * @param bool $secure
      *
      * @return string
      */
-    public function getEmbedCode($width, $height, $autoplay = false);
+    public function getEmbedCode($width, $height, $autoplay = false, $secure = false);
 
     /**
      * @return bool

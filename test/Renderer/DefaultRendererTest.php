@@ -23,7 +23,7 @@ class DefaultRendererTest extends PHPUnit_Framework_TestCase
     {
         $renderer = new DefaultRenderer();
 
-        $output = $renderer->render($this->embedUrl, $this->width, $this->height);
+        $output = $renderer->renderVideoEmbedCode($this->embedUrl, $this->width, $this->height);
         $this->assertInternalType('string', $output);
         $this->assertContains($this->embedUrl, $output);
         $this->assertContains($this->width, $output);
