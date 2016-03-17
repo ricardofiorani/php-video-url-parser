@@ -42,8 +42,11 @@ if ($video->isEmbeddable()) {
     //Will echo the embed html element with the size 200x200
     echo $video->getEmbedCode(200, 200);
 
-    //Returns the embed html element with the size 1920x1080 and autoplay enable
+    //Returns the embed html element with the size 1920x1080 and autoplay enabled
     echo $video->getEmbedCode(1920, 1080, true);
+    
+    //Returns the embed html element with the size 1920x1080, autoplay enabled and force the URL schema to be https.
+    echo $video->getEmbedCode(1920, 1080, true, true);
 }
 
 //If you don't want to check if service provides embeddable videos you can try/catch
