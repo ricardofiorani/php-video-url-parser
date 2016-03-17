@@ -31,11 +31,11 @@ use RicardoFiorani\Matcher\VideoServiceMatcher;
 
 require __DIR__ . '/vendor/autoload.php';
 
-$vsd = new VideoServiceMatcher();
+$vsm = new VideoServiceMatcher();
 
 //Detects which service the url belongs to and returns the service's implementation
 //of RicardoFiorani\Adapter\VideoAdapterInterface
-$video = $vsd->parse('https://www.youtube.com/watch?v=PkOcm_XaWrw');
+$video = $vsm->parse('https://www.youtube.com/watch?v=PkOcm_XaWrw');
 
 //Checks if service provides embeddable videos (most services does)
 if ($video->isEmbeddable()) {
@@ -122,12 +122,12 @@ use RicardoFiorani\Matcher\VideoServiceMatcher;
 
 require __DIR__ . '/vendor/autoload.php';
 
-$vsd = new VideoServiceMatcher();
+$vsm = new VideoServiceMatcher();
 
 //This is where the magic is done
-$vsd->getServiceContainer()->setRenderer('MyOwnRenderer', 'MyVendor\\MyRenderer\\Factory\\MyOwnRendererFactory');
+$vsm->getServiceContainer()->setRenderer('MyOwnRenderer', 'MyVendor\\MyRenderer\\Factory\\MyOwnRendererFactory');
 
-$video = $vsd->parse('https://www.youtube.com/watch?v=PkOcm_XaWrw');
+$video = $vsm->parse('https://www.youtube.com/watch?v=PkOcm_XaWrw');
 
 //This will output "Hell yeah baby, you've rendered: http://www.youtube.com/embed/PkOcm_XaWrw"
 echo $video->getEmbedCode(500,500);
