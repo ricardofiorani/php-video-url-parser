@@ -6,7 +6,6 @@
 [![Coding Standards](https://img.shields.io/badge/cs-PSR--4-yellow.svg)](https://github.com/php-fig-rectified/fig-rectified-standards)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/ricardofiorani/php-video-url-parser/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/ricardofiorani/php-video-url-parser/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/ricardofiorani/php-video-url-parser/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/ricardofiorani/php-video-url-parser/?branch=master)
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/ricardofiorani/php-video-url-parser/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
 PHP Video URL Parser is a parser that detects a given video url and returns an object containing information like the video's embed code, title, description, thumbnail and other information that the service's API may give.
 
@@ -140,9 +139,5 @@ echo $video->getEmbedCode(500,500);
 * Dailymotion
 * Facebook Videos
 
-# TODO List goals for release 1.0:
-
-* Fix the Exceptions Messages
-* Create PHPUnit Tests
 
 
