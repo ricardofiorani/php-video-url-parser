@@ -71,71 +71,23 @@ A Fully functional example can be found [Here](https://github.com/ricardofiorani
 PS: If you've made your awesome implementation of some well known service, feel free to send a Pull Request. All contributions are welcome :)
 
 ## Using your own framework's template engine
-In this project I've used a simple renderer (which just does an echo of an iframe) but you can use your own implementation. It must follow the RicardoFiorani\Renderer\EmbedRendererInterface and just like that. 
+A Fully functional example can be found [Here](https://github.com/ricardofiorani/php-video-url-parser/tree/master/documentation/IntegratingYourOwnRenderer.md).
 
-Here's an example:
-### My Example Renderer Class
-```php
-<?php
-namespace MyVendor\MyRenderer;
-
-class MyOwnRenderer implements \RicardoFiorani\Renderer\EmbedRendererInterface
-{
-
-    /**
-     * @param string $embedUrl
-     * @param integer $height
-     * @param integer $width
-     * @return string
-     */
-    public function render($embedUrl, $height, $width)
-    {
-        //Just for example porpoises
-        return sprintf("Hello, I'm embedding %s", addslashes($embedUrl));
-        
-        //A functional example would be like
-        //return '<iframe width="' . $width . '" height="' . $height . '" src="' . addslashes($embedUrl) . '" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
-    }
-}
-```
-### My Example Renderer Factory Class
-```php
-<?php
-namespace MyVendor\MyRenderer\Factory;
-
-class MyOwnRendererFactory implements RendererFactoryInterface
-{
-    /**
-     * @return EmbedRendererInterface
-     */
-    public function __invoke()
-    {
-        return new MyOwnRenderer();
-    }
-}
-```
-### Registering my renderer 
-
-```php
-<?php
-use RicardoFiorani\Matcher\VideoServiceMatcher;
-
-require __DIR__ . '/vendor/autoload.php';
-
-$vsm = new VideoServiceMatcher();
-
-//This is where the magic is done
-$vsm->getServiceContainer()->setRenderer('MyOwnRenderer', 'MyVendor\\MyRenderer\\Factory\\MyOwnRendererFactory');
-
-$video = $vsm->parse('https://www.youtube.com/watch?v=PkOcm_XaWrw');
-
-//This will output "Hello, I'm embedding http://www.youtube.com/embed/PkOcm_XaWrw"
-echo $video->getEmbedCode(500,500);
-
-```
 
 ### Currently Suported Services
 * Youtube
 * Vimeo
 * Dailymotion
 * Facebook Videos
+
+### Currently Supported PHP Versions
+* PHP 5.3
+* PHP 5.4
+* PHP 5.5
+* PHP 5.6
+* PHP 7.0
+* PHP 7.1
+* PHP 7.2
+
+> Please note that even this lib is not passing tests on HHVM, we can't guarantee. Please use it on your own risk.
+
