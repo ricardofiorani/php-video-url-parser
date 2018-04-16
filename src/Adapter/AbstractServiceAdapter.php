@@ -131,13 +131,17 @@ abstract class AbstractServiceAdapter implements VideoAdapterInterface
     }
 
     /**
-     * Switches the protocol scheme between http and https
+     * Switches the protocol scheme between http and https in case you want to force https
      *
      * @param bool|false $forceSecure
      * @return string
      */
     public function getScheme($forceSecure = false)
     {
-        return ($forceSecure ? 'https' : 'http');
+        if ($forceSecure) {
+            return 'https';
+        }
+
+        return parse_url($this->rawUrl, PHP_URL_SCHEME);
     }
 }

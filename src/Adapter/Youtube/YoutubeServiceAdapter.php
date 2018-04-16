@@ -5,6 +5,7 @@
  * Date: 29/08/2015
  * Time: 14:53.
  */
+
 namespace RicardoFiorani\Adapter\Youtube;
 
 use RicardoFiorani\Adapter\AbstractServiceAdapter;
@@ -94,7 +95,14 @@ class YoutubeServiceAdapter extends AbstractServiceAdapter
      */
     public function getEmbedUrl($forceAutoplay = false, $forceSecure = false)
     {
-        return $this->getScheme($forceSecure) . '://www.youtube.com/embed/' . $this->getVideoId() . ($forceAutoplay ? '?amp&autoplay=1' : '');
+        $queryString = $this->generateQuerystring($forceAutoplay);
+
+        return sprintf(
+            '%s://www.youtube.com/embed/%s?%s',
+            $this->getScheme($forceSecure),
+            $this->getVideoId(),
+            http_build_query($queryString)
+        );
     }
 
     /**
@@ -143,5 +151,21 @@ class YoutubeServiceAdapter extends AbstractServiceAdapter
     public function isEmbeddable()
     {
         return true;
+    }
+
+    /**
+     * @param bool $forceAutoplay
+     * @return array
+     */
+    private function generateQuerystring($forceAutoplay = false)
+    {
+        parse_str(parse_url($this->rawUrl, PHP_URL_QUERY), $queryString);
+        unset($queryString['v']);
+
+        if ($forceAutoplay) {
+            $queryString['autoplay'] = (int) $forceAutoplay;
+        }
+
+        return $queryString;
     }
 }
