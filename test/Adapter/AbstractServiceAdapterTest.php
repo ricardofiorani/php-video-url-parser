@@ -93,8 +93,10 @@ class AbstractServiceAdapterTest extends PHPUnit_Framework_TestCase
     public function testGetScheme($url)
     {
         $facebookVideo = $this->getMockingObject($url);
-        $schemeInsecure = $facebookVideo->getScheme(false);
-        $this->assertEquals('http', $schemeInsecure);
+
+        $originalScheme = $facebookVideo->getScheme(false);
+        $this->assertEquals(parse_url($url, PHP_URL_SCHEME), $originalScheme);
+
         $schemeSecure = $facebookVideo->getScheme(true);
         $this->assertEquals('https', $schemeSecure);
     }
