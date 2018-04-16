@@ -47,52 +47,52 @@ interface VideoAdapterInterface
     /**
      * Returns the small thumbnail's url.
      *
-     * @param bool $secure
+     * @param bool $forceSecure
      * @return string
      */
-    public function getSmallThumbnail($secure = false);
+    public function getSmallThumbnail($forceSecure = false);
 
     /**
      * Returns the medium thumbnail's url.
      *
-     * @param bool $secure
+     * @param bool $forceSecure
      * @return string
      */
-    public function getMediumThumbnail($secure = false);
+    public function getMediumThumbnail($forceSecure = false);
 
     /**
      * Returns the large thumbnail's url.
      *
-     * @param bool $secure
+     * @param bool $forceSecure
      * @return string
      */
-    public function getLargeThumbnail($secure = false);
+    public function getLargeThumbnail($forceSecure = false);
 
     /**
      * Returns the largest thumnbnail's url.
      *
-     * @param bool $secure
+     * @param bool $forceSecure
      * @return string
      */
-    public function getLargestThumbnail($secure = false);
+    public function getLargestThumbnail($forceSecure = false);
 
     /**
-     * @param bool $autoplay
-     * @param bool $secure
+     * @param bool $forceAutoplay
+     * @param bool $forceSecure
      *
      * @return string
      */
-    public function getEmbedUrl($autoplay = false, $secure = false);
+    public function getEmbedUrl($forceAutoplay = false, $forceSecure = false);
 
     /**
      * @param int $width
      * @param int $height
-     * @param bool $autoplay
-     * @param bool $secure
+     * @param bool $forceAutoplay
+     * @param bool $forceSecure
      *
      * @return string
      */
-    public function getEmbedCode($width, $height, $autoplay = false, $secure = false);
+    public function getEmbedCode($width, $height, $forceAutoplay = false, $forceSecure = false);
 
     /**
      * @return bool

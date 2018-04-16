@@ -66,7 +66,7 @@ echo $video->getLargestThumbnail();
 ## Registering your own service video (it's easy !)
 If you want to register an implementation of some service your class just needs to implement the "RicardoFiorani\Adapter\VideoAdapterInterface" or extend the RicardoFiorani\Adapter\AbstractServiceAdapter
 
-A Fully functional example can be found [Here](https://github.com/ricardofiorani/php-video-url-parser/tree/master/example/RegisteringANewService.md).
+A Fully functional example can be found [Here](https://github.com/ricardofiorani/php-video-url-parser/tree/master/documentation/RegisteringANewService.md).
 
 PS: If you've made your awesome implementation of some well known service, feel free to send a Pull Request. All contributions are welcome :)
 
@@ -76,8 +76,8 @@ In this project I've used a simple renderer (which just does an echo of an ifram
 Here's an example:
 ### My Example Renderer Class
 ```php
+<?php
 namespace MyVendor\MyRenderer;
-
 
 class MyOwnRenderer implements \RicardoFiorani\Renderer\EmbedRendererInterface
 {
@@ -91,7 +91,7 @@ class MyOwnRenderer implements \RicardoFiorani\Renderer\EmbedRendererInterface
     public function render($embedUrl, $height, $width)
     {
         //Just for example porpoises
-        return "Hell yeah baby, you've rendered: ".addslashes($embedUrl);
+        return sprintf("Hello, I'm embedding %s", addslashes($embedUrl));
         
         //A functional example would be like
         //return '<iframe width="' . $width . '" height="' . $height . '" src="' . addslashes($embedUrl) . '" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
@@ -100,6 +100,7 @@ class MyOwnRenderer implements \RicardoFiorani\Renderer\EmbedRendererInterface
 ```
 ### My Example Renderer Factory Class
 ```php
+<?php
 namespace MyVendor\MyRenderer\Factory;
 
 class MyOwnRendererFactory implements RendererFactoryInterface
@@ -128,7 +129,7 @@ $vsm->getServiceContainer()->setRenderer('MyOwnRenderer', 'MyVendor\\MyRenderer\
 
 $video = $vsm->parse('https://www.youtube.com/watch?v=PkOcm_XaWrw');
 
-//This will output "Hell yeah baby, you've rendered: http://www.youtube.com/embed/PkOcm_XaWrw"
+//This will output "Hello, I'm embedding http://www.youtube.com/embed/PkOcm_XaWrw"
 echo $video->getEmbedCode(500,500);
 
 ```
@@ -138,6 +139,3 @@ echo $video->getEmbedCode(500,500);
 * Vimeo
 * Dailymotion
 * Facebook Videos
-
-
-

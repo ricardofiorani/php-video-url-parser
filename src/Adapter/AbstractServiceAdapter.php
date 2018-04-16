@@ -115,29 +115,29 @@ abstract class AbstractServiceAdapter implements VideoAdapterInterface
     /**
      * @param int $width
      * @param int $height
-     * @param bool $autoplay
+     * @param bool $forceAutoplay
+     * @param bool $forceSecure
      *
      * @return string
-     *
      * @throws NotEmbeddableException
      */
-    public function getEmbedCode($width, $height, $autoplay = false, $secure = false)
+    public function getEmbedCode($width, $height, $forceAutoplay = false, $forceSecure = false)
     {
         if (false == $this->isEmbeddable()) {
             throw new NotEmbeddableException();
         }
 
-        return $this->getRenderer()->renderVideoEmbedCode($this->getEmbedUrl($autoplay, $secure), $width, $height);
+        return $this->getRenderer()->renderVideoEmbedCode($this->getEmbedUrl($forceAutoplay, $forceSecure), $width, $height);
     }
 
     /**
      * Switches the protocol scheme between http and https
      *
-     * @param bool|false $secure
+     * @param bool|false $forceSecure
      * @return string
      */
-    public function getScheme($secure = false)
+    public function getScheme($forceSecure = false)
     {
-        return ($secure ? 'https' : 'http');
+        return ($forceSecure ? 'https' : 'http');
     }
 }
