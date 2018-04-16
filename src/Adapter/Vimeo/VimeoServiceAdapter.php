@@ -125,23 +125,28 @@ class VimeoServiceAdapter extends AbstractServiceAdapter
      *
      * @throws InvalidThumbnailSizeException
      */
-    public function getThumbnail($size, $secure = false)
+    public function getThumbnail($size, $forceSecure = false)
     {
         if (false == in_array($size, $this->getThumbNailSizes())) {
             throw new InvalidThumbnailSizeException();
         }
 
-        return $this->getScheme($secure) . '://' . $this->thumbnails[$size]['host'] . $this->thumbnails[$size]['path'];
+        return sprintf(
+            '%s://%s%s',
+            $this->getScheme($forceSecure),
+            $this->thumbnails[$size]['host'],
+            $this->thumbnails[$size]['path']
+        );
     }
 
     /**
-     * @param bool $autoplay
+     * @param bool $forceAutoplay
      *
      * @return string
      */
-    public function getEmbedUrl($autoplay = false, $secure = false)
+    public function getEmbedUrl($forceAutoplay = false, $forceSecure = false)
     {
-        return $this->getScheme($secure) . '://player.vimeo.com/video/' . $this->getVideoId() . ($autoplay ? '?autoplay=1' : '');
+        return $this->getScheme($forceSecure) . '://player.vimeo.com/video/' . $this->getVideoId() . ($forceAutoplay ? '?autoplay=1' : '');
     }
 
     /**
@@ -161,51 +166,51 @@ class VimeoServiceAdapter extends AbstractServiceAdapter
     /**
      * Returns the small thumbnail's url.
      *
-     * @param bool $secure
+     * @param bool $forceSecure
      * @return string
      * @throws InvalidThumbnailSizeException
      */
-    public function getSmallThumbnail($secure = false)
+    public function getSmallThumbnail($forceSecure = false)
     {
-        return $this->getThumbnail(self::THUMBNAIL_SMALL,$secure);
+        return $this->getThumbnail(self::THUMBNAIL_SMALL,$forceSecure);
     }
 
     /**
      * Returns the medium thumbnail's url.
      *
-     * @param bool $secure
+     * @param bool $forceSecure
      * @return string
      * @throws InvalidThumbnailSizeException
      */
-    public function getMediumThumbnail($secure = false)
+    public function getMediumThumbnail($forceSecure = false)
     {
-        return $this->getThumbnail(self::THUMBNAIL_MEDIUM,$secure);
+        return $this->getThumbnail(self::THUMBNAIL_MEDIUM,$forceSecure);
     }
 
     /**
      * Returns the large thumbnail's url.
      *
-     * @param bool $secure
-     * @param $secure
+     * @param bool $forceSecure
+     * @param $forceSecure
      * @return string
      * @throws InvalidThumbnailSizeException
      */
-    public function getLargeThumbnail($secure = false)
+    public function getLargeThumbnail($forceSecure = false)
     {
-        return $this->getThumbnail(self::THUMBNAIL_LARGE,$secure);
+        return $this->getThumbnail(self::THUMBNAIL_LARGE,$forceSecure);
     }
 
     /**
      * Returns the largest thumnbnaail's url.
      *
-     * @param bool $secure
-     * @param $secure
+     * @param bool $forceSecure
+     * @param $forceSecure
      * @return string
      * @throws InvalidThumbnailSizeException
      */
-    public function getLargestThumbnail($secure = false)
+    public function getLargestThumbnail($forceSecure = false)
     {
-        return $this->getThumbnail(self::THUMBNAIL_LARGE,$secure);
+        return $this->getThumbnail(self::THUMBNAIL_LARGE,$forceSecure);
     }
 
     /**

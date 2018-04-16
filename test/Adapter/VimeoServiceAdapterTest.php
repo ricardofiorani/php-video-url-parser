@@ -112,7 +112,7 @@ class VimeoServiceAdapterTest extends PHPUnit_Framework_TestCase
         $this->assertContains('https', $embedUrl);
 
         $embedUrl = $videoObject->getEmbedUrl(false, false);
-        $this->assertNotContains('https', $embedUrl);
+        $this->assertEquals(parse_url($url, PHP_URL_SCHEME), parse_url($embedUrl, PHP_URL_SCHEME));
     }
 
     /**

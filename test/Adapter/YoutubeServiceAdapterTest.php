@@ -92,7 +92,7 @@ class YoutubeServiceAdapterTest extends PHPUnit_Framework_TestCase
         $this->assertContains('https', $embedUrl);
 
         $embedUrl = $videoObject->getEmbedUrl(false, false);
-        $this->assertNotContains('https', $embedUrl);
+        $this->assertEquals(parse_url($url, PHP_URL_SCHEME), parse_url($embedUrl, PHP_URL_SCHEME));
     }
 
     /**
@@ -114,6 +114,7 @@ class YoutubeServiceAdapterTest extends PHPUnit_Framework_TestCase
             array(
                 'https://www.youtube.com/watch?v=uarCDXc3BjU',
                 'https://youtu.be/uarCDXc3BjU',
+                'http://youtu.be/uarBDXc3BjU',
                 '<iframe width="560" height="315" src="https://www.youtube.com/embed/uarCDXc3BjU" frameborder="0" allowfullscreen></iframe>',
             ),
         );

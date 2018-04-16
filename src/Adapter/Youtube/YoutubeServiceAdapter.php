@@ -5,6 +5,7 @@
  * Date: 29/08/2015
  * Time: 14:53.
  */
+
 namespace RicardoFiorani\Adapter\Youtube;
 
 use RicardoFiorani\Adapter\AbstractServiceAdapter;
@@ -60,17 +61,17 @@ class YoutubeServiceAdapter extends AbstractServiceAdapter
 
     /**
      * @param string $size
-     * @param bool $secure
+     * @param bool $forceSecure
      * @return string
      * @throws InvalidThumbnailSizeException
      */
-    public function getThumbnail($size, $secure = false)
+    public function getThumbnail($size, $forceSecure = false)
     {
         if (false == in_array($size, $this->getThumbNailSizes())) {
             throw new InvalidThumbnailSizeException();
         }
 
-        return $this->getScheme($secure) . '://img.youtube.com/vi/' . $this->getVideoId() . '/' . $size . '.jpg';
+        return $this->getScheme($forceSecure) . '://img.youtube.com/vi/' . $this->getVideoId() . '/' . $size . '.jpg';
     }
 
     /**
@@ -88,13 +89,20 @@ class YoutubeServiceAdapter extends AbstractServiceAdapter
     }
 
     /**
-     * @param bool $autoplay
-     * @param bool $secure
+     * @param bool $forceAutoplay
+     * @param bool $forceSecure
      * @return string
      */
-    public function getEmbedUrl($autoplay = false, $secure = false)
+    public function getEmbedUrl($forceAutoplay = false, $forceSecure = false)
     {
-        return $this->getScheme($secure) . '://www.youtube.com/embed/' . $this->getVideoId() . ($autoplay ? '?amp&autoplay=1' : '');
+        $queryString = $this->generateQuerystring($forceAutoplay);
+
+        return sprintf(
+            '%s://www.youtube.com/embed/%s?%s',
+            $this->getScheme($forceSecure),
+            $this->getVideoId(),
+            http_build_query($queryString)
+        );
     }
 
     /**
@@ -102,9 +110,9 @@ class YoutubeServiceAdapter extends AbstractServiceAdapter
      *
      * @return string
      */
-    public function getSmallThumbnail($secure = false)
+    public function getSmallThumbnail($forceSecure = false)
     {
-        return $this->getThumbnail(self::THUMBNAIL_STANDARD_DEFINITION, $secure);
+        return $this->getThumbnail(self::THUMBNAIL_STANDARD_DEFINITION, $forceSecure);
     }
 
     /**
@@ -112,9 +120,9 @@ class YoutubeServiceAdapter extends AbstractServiceAdapter
      *
      * @return string
      */
-    public function getMediumThumbnail($secure = false)
+    public function getMediumThumbnail($forceSecure = false)
     {
-        return $this->getThumbnail(self::THUMBNAIL_MEDIUM_QUALITY, $secure);
+        return $this->getThumbnail(self::THUMBNAIL_MEDIUM_QUALITY, $forceSecure);
     }
 
     /**
@@ -122,9 +130,9 @@ class YoutubeServiceAdapter extends AbstractServiceAdapter
      *
      * @return string
      */
-    public function getLargeThumbnail($secure = false)
+    public function getLargeThumbnail($forceSecure = false)
     {
-        return $this->getThumbnail(self::THUMBNAIL_HIGH_QUALITY, $secure);
+        return $this->getThumbnail(self::THUMBNAIL_HIGH_QUALITY, $forceSecure);
     }
 
     /**
@@ -132,9 +140,9 @@ class YoutubeServiceAdapter extends AbstractServiceAdapter
      *
      * @return string
      */
-    public function getLargestThumbnail($secure = false)
+    public function getLargestThumbnail($forceSecure = false)
     {
-        return $this->getThumbnail(self::THUMBNAIL_MAX_QUALITY, $secure);
+        return $this->getThumbnail(self::THUMBNAIL_MAX_QUALITY, $forceSecure);
     }
 
     /**
@@ -143,5 +151,21 @@ class YoutubeServiceAdapter extends AbstractServiceAdapter
     public function isEmbeddable()
     {
         return true;
+    }
+
+    /**
+     * @param bool $forceAutoplay
+     * @return array
+     */
+    private function generateQuerystring($forceAutoplay = false)
+    {
+        parse_str(parse_url($this->rawUrl, PHP_URL_QUERY), $queryString);
+        unset($queryString['v']);
+
+        if ($forceAutoplay) {
+            $queryString['autoplay'] = (int) $forceAutoplay;
+        }
+
+        return $queryString;
     }
 }
