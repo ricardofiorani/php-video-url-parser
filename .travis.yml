@@ -11,6 +11,11 @@ php:
   - 7.0
   - hhvm
 
+matrix:
+  include:
+    - php: 5.3
+      dist: precise
+
 # Dependencies
 before_install:
   - composer self-update
