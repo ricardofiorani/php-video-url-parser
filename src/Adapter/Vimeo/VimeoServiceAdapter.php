@@ -131,7 +131,12 @@ class VimeoServiceAdapter extends AbstractServiceAdapter
             throw new InvalidThumbnailSizeException();
         }
 
-        return $this->getScheme($forceSecure) . '://' . $this->thumbnails[$size]['host'] . $this->thumbnails[$size]['path'];
+        return sprintf(
+            '%s://%s%s',
+            $this->getScheme($forceSecure),
+            $this->thumbnails[$size]['host'],
+            $this->thumbnails[$size]['path']
+        );
     }
 
     /**

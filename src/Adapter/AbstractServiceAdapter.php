@@ -127,7 +127,11 @@ abstract class AbstractServiceAdapter implements VideoAdapterInterface
             throw new NotEmbeddableException();
         }
 
-        return $this->getRenderer()->renderVideoEmbedCode($this->getEmbedUrl($forceAutoplay, $forceSecure), $width, $height);
+        return $this->getRenderer()->renderVideoEmbedCode(
+            $this->getEmbedUrl($forceAutoplay, $forceSecure),
+            $width,
+            $height
+        );
     }
 
     /**
