@@ -19,7 +19,7 @@ checks:
             minimum: '3'
         no_short_method_names:
             minimum: '3'
-        no_new_line_at_end_of_file: true
+        newline_at_end_of_file: true
         no_long_variable_names:
             maximum: '35'
         no_goto: true
