@@ -74,13 +74,13 @@ PS: If you've made your awesome implementation of some well known service, feel 
 A Fully functional example can be found [Here](https://github.com/ricardofiorani/php-video-url-parser/tree/master/documentation/IntegratingYourOwnRenderer.md).
 
 
-### Currently Suported Services
+## Currently Suported Services
 * Youtube
 * Vimeo
 * Dailymotion
 * Facebook Videos
 
-### Currently Supported PHP Versions
+## Currently Supported PHP Versions
 * PHP 5.3
 * PHP 5.4
 * PHP 5.5
