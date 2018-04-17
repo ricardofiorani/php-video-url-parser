@@ -8,8 +8,9 @@
 namespace RicardoFiorani\Adapter\Vimeo;
 
 use RicardoFiorani\Adapter\AbstractServiceAdapter;
-use RicardoFiorani\Exception\InvalidThumbnailSizeException;
-use RicardoFiorani\Exception\ServiceApiNotAvailable;
+use RicardoFiorani\Adapter\Exception\InvalidThumbnailSizeException;
+use RicardoFiorani\Adapter\Exception\InvalidUrlException;
+use RicardoFiorani\Adapter\Exception\ServiceApiNotAvailable;
 use RicardoFiorani\Renderer\EmbedRendererInterface;
 
 class VimeoServiceAdapter extends AbstractServiceAdapter
@@ -37,6 +38,7 @@ class VimeoServiceAdapter extends AbstractServiceAdapter
      * @param string $url
      * @param string $pattern
      * @param EmbedRendererInterface $renderer
+     * @throws ServiceApiNotAvailable
      */
     public function __construct($url, $pattern, EmbedRendererInterface $renderer)
     {
@@ -120,10 +122,11 @@ class VimeoServiceAdapter extends AbstractServiceAdapter
 
     /**
      * @param string $size
-     *
+     * @param bool $forceSecure
      * @return string
      *
      * @throws InvalidThumbnailSizeException
+     * @throws InvalidUrlException
      */
     public function getThumbnail($size, $forceSecure = false)
     {
@@ -143,6 +146,7 @@ class VimeoServiceAdapter extends AbstractServiceAdapter
      * @param bool $forceAutoplay
      *
      * @return string
+     * @throws InvalidUrlException
      */
     public function getEmbedUrl($forceAutoplay = false, $forceSecure = false)
     {
@@ -169,6 +173,7 @@ class VimeoServiceAdapter extends AbstractServiceAdapter
      * @param bool $forceSecure
      * @return string
      * @throws InvalidThumbnailSizeException
+     * @throws InvalidUrlException
      */
     public function getSmallThumbnail($forceSecure = false)
     {
@@ -181,6 +186,7 @@ class VimeoServiceAdapter extends AbstractServiceAdapter
      * @param bool $forceSecure
      * @return string
      * @throws InvalidThumbnailSizeException
+     * @throws InvalidUrlException
      */
     public function getMediumThumbnail($forceSecure = false)
     {
@@ -191,9 +197,9 @@ class VimeoServiceAdapter extends AbstractServiceAdapter
      * Returns the large thumbnail's url.
      *
      * @param bool $forceSecure
-     * @param $forceSecure
      * @return string
      * @throws InvalidThumbnailSizeException
+     * @throws InvalidUrlException
      */
     public function getLargeThumbnail($forceSecure = false)
     {
@@ -204,9 +210,9 @@ class VimeoServiceAdapter extends AbstractServiceAdapter
      * Returns the largest thumnbnaail's url.
      *
      * @param bool $forceSecure
-     * @param $forceSecure
      * @return string
      * @throws InvalidThumbnailSizeException
+     * @throws InvalidUrlException
      */
     public function getLargestThumbnail($forceSecure = false)
     {
@@ -249,7 +255,10 @@ class VimeoServiceAdapter extends AbstractServiceAdapter
     {
         $contents = file_get_contents('http://vimeo.com/api/v2/video/' . $this->getVideoId() . '.php');
         if (false === $contents) {
-            throw new ServiceApiNotAvailable('Vimeo Service Adapter could not reach Vimeo API Service. Check if your server has file_get_contents() function available.');
+            throw new ServiceApiNotAvailable(
+                'Service "%s" could not reach it\'s API. Check if file_get_contents() function is available.',
+                $this->getServiceName()
+            );
         }
         $hash = unserialize($contents);
 

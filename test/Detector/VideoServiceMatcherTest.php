@@ -11,7 +11,7 @@ namespace RicardoFiorani\Test\Detector;
 use PHPUnit_Framework_TestCase;
 use RicardoFiorani\Container\Factory\ServicesContainerFactory;
 use RicardoFiorani\Matcher\VideoServiceMatcher;
-use RicardoFiorani\Exception\ServiceNotAvailableException;
+use RicardoFiorani\Matcher\Exception\VideoServiceNotCompatibleException;
 
 class VideoServiceMatcherTest extends PHPUnit_Framework_TestCase
 {
@@ -19,7 +19,7 @@ class VideoServiceMatcherTest extends PHPUnit_Framework_TestCase
      * @dataProvider videoUrlProvider
      * @param $url
      * @param $expectedServiceName
-     * @throws ServiceNotAvailableException
+     * @throws VideoServiceNotCompatibleException
      */
     public function testCanParseUrl($url, $expectedServiceName)
     {
@@ -63,13 +63,13 @@ class VideoServiceMatcherTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @throws ServiceNotAvailableException
+     * @throws VideoServiceNotCompatibleException
      * @dataProvider invalidVideoUrlProvider
      */
     public function testThrowsExceptionOnInvalidUrl($url)
     {
         $detector = new VideoServiceMatcher();
-        $this->setExpectedException('\\RicardoFiorani\\Exception\\ServiceNotAvailableException');
+        $this->setExpectedException('\\RicardoFiorani\\Matcher\\Exception\\VideoServiceNotCompatibleException');
         $video = $detector->parse($url);
     }
 
@@ -94,7 +94,7 @@ class VideoServiceMatcherTest extends PHPUnit_Framework_TestCase
     /**
      * @dataProvider videoUrlProvider
      * @param $url
-     * @throws ServiceNotAvailableException
+     * @throws VideoServiceNotCompatibleException
      */
     public function testServiceDetectorDontReparseSameUrl($url)
     {

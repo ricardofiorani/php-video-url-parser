@@ -5,10 +5,10 @@
  * Date: 29/08/2015
  * Time: 23:44.
  */
-namespace RicardoFiorani\Exception;
+namespace RicardoFiorani\Matcher\Exception;
 
 use Exception;
 
-class ServiceNotAvailableException extends Exception
+class VideoServiceNotCompatibleException extends Exception
 {
 }

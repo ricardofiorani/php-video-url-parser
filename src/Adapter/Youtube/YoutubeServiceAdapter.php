@@ -9,7 +9,7 @@
 namespace RicardoFiorani\Adapter\Youtube;
 
 use RicardoFiorani\Adapter\AbstractServiceAdapter;
-use RicardoFiorani\Exception\InvalidThumbnailSizeException;
+use RicardoFiorani\Adapter\Exception\InvalidThumbnailSizeException;
 use RicardoFiorani\Renderer\EmbedRendererInterface;
 
 class YoutubeServiceAdapter extends AbstractServiceAdapter

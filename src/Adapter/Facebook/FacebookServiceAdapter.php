@@ -8,7 +8,7 @@
 namespace RicardoFiorani\Adapter\Facebook;
 
 use RicardoFiorani\Adapter\AbstractServiceAdapter;
-use RicardoFiorani\Exception\InvalidThumbnailSizeException;
+use RicardoFiorani\Adapter\Exception\InvalidThumbnailSizeException;
 use RicardoFiorani\Exception\ThumbnailSizeNotAvailable;
 use RicardoFiorani\Renderer\EmbedRendererInterface;
 

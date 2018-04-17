@@ -5,7 +5,7 @@ namespace RicardoFiorani\Matcher;
 use RicardoFiorani\Adapter\VideoAdapterInterface;
 use RicardoFiorani\Container\Factory\ServicesContainerFactory;
 use RicardoFiorani\Container\ServicesContainer;
-use RicardoFiorani\Exception\ServiceNotAvailableException;
+use RicardoFiorani\Matcher\Exception\VideoServiceNotCompatibleException;
 
 /**
  * @author Ricardo Fiorani
@@ -35,13 +35,14 @@ class VideoServiceMatcher
      *
      * @return VideoAdapterInterface
      *
-     * @throws ServiceNotAvailableException
+     * @throws VideoServiceNotCompatibleException
      */
     public function parse($url)
     {
         if (isset($this->parsedUrls[$url])) {
             return $this->parsedUrls[$url];
         }
+
         /** @var array $patterns */
         /** @var string $serviceName */
         foreach ($this->getServiceContainer()->getPatterns() as $serviceName => $patterns) {
@@ -55,8 +56,10 @@ class VideoServiceMatcher
                 }
             }
         }
-        throw new ServiceNotAvailableException(sprintf('The url "%s" could not be parsed by any of the services available.',
-            $url));
+
+        throw new VideoServiceNotCompatibleException(
+            sprintf('The url "%s" could not be parsed by any of the services available.', $url)
+        );
     }
 
     /**

@@ -8,7 +8,7 @@
 namespace RicardoFiorani\Container;
 
 use RicardoFiorani\Adapter\CallableServiceAdapterFactoryInterface;
-use RicardoFiorani\Exception\DuplicatedServiceNameException;
+use RicardoFiorani\Container\Exception\DuplicatedServiceNameException;
 use RicardoFiorani\Renderer\EmbedRendererInterface;
 
 class ServicesContainer
@@ -47,6 +47,7 @@ class ServicesContainer
      * ServicesContainer constructor.
      *
      * @param array $config
+     * @throws DuplicatedServiceNameException
      */
     public function __construct(array $config = array())
     {
@@ -82,7 +83,9 @@ class ServicesContainer
     public function registerService($serviceName, array $regex, $factory)
     {
         if ($this->hasService($serviceName)) {
-            throw new DuplicatedServiceNameException();
+            throw new DuplicatedServiceNameException(
+                'The service "%s" is already registered in the container.', $serviceName
+            );
         }
 
         $this->services[] = $serviceName;

@@ -10,7 +10,7 @@ namespace RicardoFiorani\Test\Adapter;
 
 use PHPUnit_Framework_TestCase;
 use RicardoFiorani\Adapter\Facebook\FacebookServiceAdapter;
-use RicardoFiorani\Exception\ServiceNotAvailableException;
+use RicardoFiorani\Matcher\Exception\VideoServiceNotCompatibleException;
 use RicardoFiorani\Matcher\VideoServiceMatcher;
 use RicardoFiorani\Renderer\DefaultRenderer;
 
@@ -116,7 +116,7 @@ class AbstractServiceAdapterTest extends PHPUnit_Framework_TestCase
     /**
      * @param $url
      * @return FacebookServiceAdapter
-     * @throws ServiceNotAvailableException
+     * @throws VideoServiceNotCompatibleException
      */
     public function getMockingObject($url)
     {

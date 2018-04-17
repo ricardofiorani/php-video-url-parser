@@ -5,7 +5,7 @@
  * Date: 29/08/2015
  * Time: 23:28.
  */
-namespace RicardoFiorani\Exception;
+namespace RicardoFiorani\Container\Exception;
 
 use Exception;
 

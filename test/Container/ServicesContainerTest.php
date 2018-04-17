@@ -31,7 +31,7 @@ class ServicesContainerTest extends PHPUnit_Framework_TestCase
         });
 
         $this->assertContains('TestService', $serviceContainer->getServiceNameList());
-        $this->setExpectedException('\\RicardoFiorani\\Exception\\DuplicatedServiceNameException');
+        $this->setExpectedException('\\RicardoFiorani\\Container\\Exception\\DuplicatedServiceNameException');
         $serviceContainer->registerService('TestService', array('#testPattern#'), function () {
         });
     }

@@ -12,7 +12,7 @@ namespace RicardoFiorani\Test\Adapter;
 use PHPUnit_Framework_TestCase;
 use RicardoFiorani\Adapter\Youtube\YoutubeServiceAdapter;
 use RicardoFiorani\Matcher\VideoServiceMatcher;
-use RicardoFiorani\Exception\ServiceNotAvailableException;
+use RicardoFiorani\Matcher\Exception\VideoServiceNotCompatibleException;
 
 class YoutubeServiceAdapterTest extends PHPUnit_Framework_TestCase
 {
@@ -67,7 +67,7 @@ class YoutubeServiceAdapterTest extends PHPUnit_Framework_TestCase
     public function testThrowsExceptionOnRequestThumbnailWithAnInvalidSize($url)
     {
         $youtubeVideo = $this->getMockingObject($url);
-        $this->setExpectedException('\\RicardoFiorani\\Exception\\InvalidThumbnailSizeException');
+        $this->setExpectedException('\\RicardoFiorani\\Adapter\\Exception\\InvalidThumbnailSizeException');
         $youtubeVideo->getThumbnail('This Size does not exists :)');
     }
 
@@ -123,7 +123,7 @@ class YoutubeServiceAdapterTest extends PHPUnit_Framework_TestCase
     /**
      * @param $url
      * @return YoutubeServiceAdapter
-     * @throws ServiceNotAvailableException
+     * @throws VideoServiceNotCompatibleException
      */
     public function getMockingObject($url)
     {

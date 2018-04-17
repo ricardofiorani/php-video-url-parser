@@ -11,7 +11,7 @@ namespace RicardoFiorani\Test\Adapter;
 use PHPUnit_Framework_TestCase;
 use RicardoFiorani\Adapter\Facebook\FacebookServiceAdapter;
 use RicardoFiorani\Matcher\VideoServiceMatcher;
-use RicardoFiorani\Exception\ServiceNotAvailableException;
+use RicardoFiorani\Matcher\Exception\VideoServiceNotCompatibleException;
 
 class FacebookServiceAdapterTest extends PHPUnit_Framework_TestCase
 {
@@ -67,7 +67,7 @@ class FacebookServiceAdapterTest extends PHPUnit_Framework_TestCase
     public function testThrowsExceptionOnRequestThumbnailWithAnInvalidSize($url)
     {
         $facebookVideo = $this->getMockingObject($url);
-        $this->setExpectedException('\\RicardoFiorani\\Exception\\InvalidThumbnailSizeException');
+        $this->setExpectedException('\\RicardoFiorani\\Adapter\\Exception\\InvalidThumbnailSizeException');
         $facebookVideo->getThumbnail('This Size does not exists :)');
     }
 
@@ -143,7 +143,7 @@ class FacebookServiceAdapterTest extends PHPUnit_Framework_TestCase
     /**
      * @param $url
      * @return FacebookServiceAdapter
-     * @throws ServiceNotAvailableException
+     * @throws VideoServiceNotCompatibleException
      */
     public function getMockingObject($url)
     {

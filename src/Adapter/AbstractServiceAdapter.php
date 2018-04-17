@@ -5,9 +5,11 @@
  * Date: 29/08/2015
  * Time: 19:37.
  */
+
 namespace RicardoFiorani\Adapter;
 
-use RicardoFiorani\Exception\NotEmbeddableException;
+use RicardoFiorani\Adapter\Exception\InvalidUrlException;
+use RicardoFiorani\Adapter\Exception\NotEmbeddableException;
 use RicardoFiorani\Renderer\EmbedRendererInterface;
 
 abstract class AbstractServiceAdapter implements VideoAdapterInterface
@@ -123,8 +125,10 @@ abstract class AbstractServiceAdapter implements VideoAdapterInterface
      */
     public function getEmbedCode($width, $height, $forceAutoplay = false, $forceSecure = false)
     {
-        if (false == $this->isEmbeddable()) {
-            throw new NotEmbeddableException();
+        if (false === $this->isEmbeddable()) {
+            throw new NotEmbeddableException(
+                sprintf('The service "%s" does not provide embeddable videos', $this->getServiceName())
+            );
         }
 
         return $this->getRenderer()->renderVideoEmbedCode(
@@ -139,6 +143,7 @@ abstract class AbstractServiceAdapter implements VideoAdapterInterface
      *
      * @param bool|false $forceSecure
      * @return string
+     * @throws InvalidUrlException
      */
     public function getScheme($forceSecure = false)
     {
@@ -146,6 +151,17 @@ abstract class AbstractServiceAdapter implements VideoAdapterInterface
             return 'https';
         }
 
-        return parse_url($this->rawUrl, PHP_URL_SCHEME);
+        $parsedUrlSchema = parse_url($this->rawUrl, PHP_URL_SCHEME);
+
+        if (false !== $parsedUrlSchema) {
+            return $parsedUrlSchema;
+        }
+
+        throw new InvalidUrlException(sprintf('The URL %s is not valid', $this->rawUrl));
+    }
+
+    public function isThumbnailSizeAvailable($intendedSize)
+    {
+        return in_array($intendedSize, $this->getThumbNailSizes());
     }
 }

@@ -8,7 +8,7 @@
 namespace RicardoFiorani\Adapter\Dailymotion;
 
 use RicardoFiorani\Adapter\AbstractServiceAdapter;
-use RicardoFiorani\Exception\InvalidThumbnailSizeException;
+use RicardoFiorani\Adapter\Exception\InvalidThumbnailSizeException;
 use RicardoFiorani\Renderer\EmbedRendererInterface;
 
 class DailymotionServiceAdapter extends AbstractServiceAdapter
@@ -68,6 +68,7 @@ class DailymotionServiceAdapter extends AbstractServiceAdapter
      *
      * @return string
      * @throws InvalidThumbnailSizeException
+     * @throws \RicardoFiorani\Adapter\Exception\InvalidUrlException
      */
     public function getThumbnail($size, $forceSecure = false)
     {
@@ -84,6 +85,7 @@ class DailymotionServiceAdapter extends AbstractServiceAdapter
      * @param bool $forceSecure
      * @return string
      * @throws InvalidThumbnailSizeException
+     * @throws \RicardoFiorani\Adapter\Exception\InvalidUrlException
      */
     public function getSmallThumbnail($forceSecure = false)
     {
@@ -97,6 +99,7 @@ class DailymotionServiceAdapter extends AbstractServiceAdapter
      * @param bool $forceSecure
      * @return string
      * @throws InvalidThumbnailSizeException
+     * @throws \RicardoFiorani\Adapter\Exception\InvalidUrlException
      */
     public function getMediumThumbnail($forceSecure = false)
     {
@@ -110,6 +113,7 @@ class DailymotionServiceAdapter extends AbstractServiceAdapter
      * @param bool $forceSecure
      * @return string
      * @throws InvalidThumbnailSizeException
+     * @throws \RicardoFiorani\Adapter\Exception\InvalidUrlException
      */
     public function getLargeThumbnail($forceSecure = false)
     {
@@ -122,6 +126,7 @@ class DailymotionServiceAdapter extends AbstractServiceAdapter
      * @param bool $forceSecure
      * @return string
      * @throws InvalidThumbnailSizeException
+     * @throws \RicardoFiorani\Adapter\Exception\InvalidUrlException
      */
     public function getLargestThumbnail($forceSecure = false)
     {
@@ -133,6 +138,7 @@ class DailymotionServiceAdapter extends AbstractServiceAdapter
      * @param bool $forceAutoplay
      * @param bool $forceSecure
      * @return string
+     * @throws \RicardoFiorani\Adapter\Exception\InvalidUrlException
      */
     public function getEmbedUrl($forceAutoplay = false, $forceSecure = false)
     {

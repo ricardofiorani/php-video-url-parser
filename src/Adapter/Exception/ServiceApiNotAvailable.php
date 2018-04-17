@@ -5,7 +5,7 @@
  * Date: 10/02/2016
  * Time: 18:13.
  */
-namespace RicardoFiorani\Exception;
+namespace RicardoFiorani\Adapter\Exception;
 
 use Exception;
 
