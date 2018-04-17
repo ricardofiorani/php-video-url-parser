@@ -89,5 +89,5 @@ A Fully functional example can be found [Here](https://github.com/ricardofiorani
 * PHP 7.1
 * PHP 7.2
 
-> Please note that even this lib is not passing tests on HHVM, we can't guarantee. Please use it on your own risk.
+> Please note that lib is not passing tests on HHVM, therefore, we can't guarantee it will work properly. Please use it on your own risk.
 
