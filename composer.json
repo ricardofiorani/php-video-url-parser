@@ -20,5 +20,8 @@
         "psr-4": {
             "RicardoFiorani\\": "src/"
         }
+    },
+    "scripts": {
+        "test": "php vendor/bin/phpunit"
     }
 }

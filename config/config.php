@@ -33,7 +33,6 @@ return array(
         ),
     ),
     'renderer' => array(
-        'name' => 'DefaultRenderer',
         'factory' => \RicardoFiorani\Renderer\Factory\DefaultRendererFactory::class,
     )
 );

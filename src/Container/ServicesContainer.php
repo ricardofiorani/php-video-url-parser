@@ -33,7 +33,7 @@ class ServicesContainer
             $this->registerService($serviceName, $serviceConfig['patterns'], new $serviceConfig['factory']);
         }
 
-        $this->setRenderer($config['renderer']['name'], new $config['renderer']['factory']);
+        $this->setRenderer(new $config['renderer']['factory']);
     }
 
     /**
