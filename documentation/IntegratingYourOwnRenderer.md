@@ -68,7 +68,7 @@ require __DIR__ . '/vendor/autoload.php';
 $vsm = new VideoServiceMatcher();
 
 //This is where you attach your own renderer to be used instead of the default one
-$vsm->getServiceContainer()->setRenderer('MyOwnRenderer', MyVendor\MyRenderer\Factory\MyOwnRendererFactory::class);
+$vsm->getServiceContainer()->setRenderer('MyOwnRenderer', new MyVendor\MyRenderer\Factory\MyOwnRendererFactory());
 
 $video = $vsm->parse('https://www.youtube.com/watch?v=PkOcm_XaWrw');
 

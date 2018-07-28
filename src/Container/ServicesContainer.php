@@ -34,7 +34,7 @@ class ServicesContainer
             $this->registerService($serviceName, $serviceConfig['patterns'], new $serviceConfig['factory']);
         }
 
-        $this->setRenderer($config['renderer']['name'], $config['renderer']['factory']);
+        $this->setRenderer($config['renderer']['name'], new $config['renderer']['factory']);
     }
 
     /**
@@ -56,11 +56,10 @@ class ServicesContainer
         $this->factories[$serviceName] = $factory;
     }
 
-    public function setRenderer(string $rendererName, string $rendererFactory)
+    public function setRenderer(string $rendererName, callable $rendererFactory)
     {
         $this->rendererName = $rendererName;
-        $factory = new $rendererFactory();
-        $this->renderer = $factory();
+        $this->renderer = $rendererFactory();
     }
 
     public function getRenderer(): EmbedRendererInterface
