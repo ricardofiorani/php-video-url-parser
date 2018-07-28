@@ -81,7 +81,7 @@ class FacebookServiceAdapter extends AbstractServiceAdapter
         return $this->getScheme($forceSecure) . '://www.facebook.com/video/embed?video_id=' . $this->getVideoId();
     }
 
-    public function isEmbeddable(): string
+    public function isEmbeddable(): bool
     {
         return true;
     }

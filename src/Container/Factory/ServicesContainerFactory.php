@@ -14,7 +14,7 @@ class ServicesContainerFactory
         return $servicesContainer;
     }
 
-    public static function createNewServiceMatcher(): ServicesContainerFactory
+    public static function createNewServiceMatcher(): ServicesContainer
     {
         $factory = new self();
 

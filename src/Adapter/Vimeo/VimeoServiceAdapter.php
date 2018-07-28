@@ -147,12 +147,12 @@ class VimeoServiceAdapter extends AbstractServiceAdapter
         return $this->getThumbnail(self::THUMBNAIL_LARGE,$forceSecure);
     }
 
-    public function isEmbeddable(): string
+    public function isEmbeddable(): bool
     {
         return true;
     }
 
-    private function getVideoIdByPattern(string $url, string $pattern): int
+    private function getVideoIdByPattern(string $url, string $pattern): string
     {
         $match = array();
         preg_match($pattern, $url, $match);
