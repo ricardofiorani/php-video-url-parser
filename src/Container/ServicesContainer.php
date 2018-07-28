@@ -13,7 +13,6 @@ class ServicesContainer
     private $factories = array();
     private $instantiatedFactories = array();
     private $renderer;
-    private $rendererName;
 
     /**
      * @throws DuplicatedServiceNameException
@@ -56,9 +55,8 @@ class ServicesContainer
         $this->factories[$serviceName] = $factory;
     }
 
-    public function setRenderer(string $rendererName, callable $rendererFactory)
+    public function setRenderer(callable $rendererFactory)
     {
-        $this->rendererName = $rendererName;
         $this->renderer = $rendererFactory();
     }
 
