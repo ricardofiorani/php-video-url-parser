@@ -81,11 +81,6 @@ A Fully functional example can be found [Here](https://github.com/ricardofiorani
 * Facebook Videos
 
 ## Currently Supported PHP Versions
-* PHP 5.3
-* PHP 5.4
-* PHP 5.5
-* PHP 5.6
-* PHP 7.0
 * PHP 7.1
 * PHP 7.2
 

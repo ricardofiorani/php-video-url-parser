@@ -3,7 +3,8 @@
     "description": "A Simple and efficient PHP Video URL Parser that gives you thumbnails and embed codes for various services as Youtube, Vimeo, DailyMotion and Facebook",
     "require-dev": {
         "phpunit/phpunit": "^7.2",
-        "fabpot/php-cs-fixer" : ">= 1.0"
+        "friendsofphp/php-cs-fixer": "^2.12",
+        "mockery/mockery": "^1.1"
     },
     "license": "MIT",
     "authors": [
@@ -13,8 +14,7 @@
         }
     ],
     "require": {
-        "php": ">=7.0",
-        "mockery/mockery": "^1.1"
+        "php": ">=7.1"
     },
     "autoload": {
         "psr-4": {
