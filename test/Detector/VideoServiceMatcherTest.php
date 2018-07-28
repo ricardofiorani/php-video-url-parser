@@ -8,12 +8,12 @@
 
 namespace RicardoFiorani\Test\Detector;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use RicardoFiorani\Container\Factory\ServicesContainerFactory;
 use RicardoFiorani\Matcher\VideoServiceMatcher;
 use RicardoFiorani\Matcher\Exception\VideoServiceNotCompatibleException;
 
-class VideoServiceMatcherTest extends PHPUnit_Framework_TestCase
+class VideoServiceMatcherTest extends TestCase
 {
     /**
      * @dataProvider videoUrlProvider

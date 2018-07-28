@@ -1,10 +1,4 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Ricardo Fiorani
- * Date: 29/08/2015
- * Time: 19:37.
- */
+<?php declare(strict_types=1);
 
 namespace RicardoFiorani\Adapter;
 
@@ -14,117 +8,67 @@ use RicardoFiorani\Renderer\EmbedRendererInterface;
 
 abstract class AbstractServiceAdapter implements VideoAdapterInterface
 {
-    /**
-     * @var string
-     */
     public $rawUrl;
-
-    /**
-     * @var string
-     */
     public $videoId;
-
-    /**
-     * @var string
-     */
     public $pattern;
-
-    /**
-     * @var EmbedRendererInterface
-     */
     public $renderer;
 
-    /**
-     * AbstractVideoAdapter constructor.
-     *
-     * @param string $url
-     * @param string $pattern
-     * @param EmbedRendererInterface $renderer
-     */
-    public function __construct($url, $pattern, EmbedRendererInterface $renderer)
+    public function __construct(string $url, string $pattern, EmbedRendererInterface $renderer)
     {
         $this->rawUrl = $url;
         $this->pattern = $pattern;
         $this->renderer = $renderer;
     }
 
-    /**
-     * Returns the input URL.
-     *
-     * @return string
-     */
-    public function getRawUrl()
+    public function getRawUrl(): string
     {
         return $this->rawUrl;
     }
 
-    /**
-     * @param string $rawUrl
-     */
-    public function setRawUrl($rawUrl)
+    public function setRawUrl(string $rawUrl)
     {
         $this->rawUrl = $rawUrl;
     }
 
-    /**
-     * @return string
-     */
-    public function getVideoId()
+    public function getVideoId(): string
     {
         return $this->videoId;
     }
 
-    /**
-     * @param string $videoId
-     */
-    public function setVideoId($videoId)
+    public function setVideoId(string $videoId)
     {
         $this->videoId = $videoId;
     }
 
-    /**
-     * @return string
-     */
-    public function getPattern()
+    public function getPattern(): string
     {
         return $this->pattern;
     }
 
-    /**
-     * @param string $pattern
-     */
-    public function setPattern($pattern)
+    public function setPattern(string $pattern)
     {
         $this->pattern = $pattern;
     }
 
-    /**
-     * @return EmbedRendererInterface
-     */
-    public function getRenderer()
+    public function getRenderer(): EmbedRendererInterface
     {
         return $this->renderer;
     }
 
-    /**
-     * @param EmbedRendererInterface $renderer
-     */
-    public function setRenderer($renderer)
+    public function setRenderer(EmbedRendererInterface $renderer)
     {
         $this->renderer = $renderer;
     }
 
     /**
-     * @param int $width
-     * @param int $height
-     * @param bool $forceAutoplay
-     * @param bool $forceSecure
-     *
-     * @return string
      * @throws NotEmbeddableException
      */
-    public function getEmbedCode($width, $height, $forceAutoplay = false, $forceSecure = false)
-    {
+    public function getEmbedCode(
+        int $width,
+        int $height,
+        bool $forceAutoplay = false,
+        bool $forceSecure = false
+    ): string {
         if (false === $this->isEmbeddable()) {
             throw new NotEmbeddableException(
                 sprintf('The service "%s" does not provide embeddable videos', $this->getServiceName())
@@ -139,13 +83,9 @@ abstract class AbstractServiceAdapter implements VideoAdapterInterface
     }
 
     /**
-     * Switches the protocol scheme between http and https in case you want to force https
-     *
-     * @param bool|false $forceSecure
-     * @return string
      * @throws InvalidUrlException
      */
-    public function getScheme($forceSecure = false)
+    public function getScheme(bool $forceSecure = false): string
     {
         if ($forceSecure) {
             return 'https';
@@ -160,7 +100,7 @@ abstract class AbstractServiceAdapter implements VideoAdapterInterface
         throw new InvalidUrlException(sprintf('The URL %s is not valid', $this->rawUrl));
     }
 
-    public function isThumbnailSizeAvailable($intendedSize)
+    public function isThumbnailSizeAvailable($intendedSize): bool
     {
         return in_array($intendedSize, $this->getThumbNailSizes());
     }

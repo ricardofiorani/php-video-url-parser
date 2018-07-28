@@ -8,12 +8,12 @@
 
 namespace RicardoFiorani\Test\Adapter;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use RicardoFiorani\Adapter\Facebook\FacebookServiceAdapter;
 use RicardoFiorani\Matcher\VideoServiceMatcher;
 use RicardoFiorani\Matcher\Exception\VideoServiceNotCompatibleException;
 
-class FacebookServiceAdapterTest extends PHPUnit_Framework_TestCase
+class FacebookServiceAdapterTest extends TestCase
 {
     /**
      * @dataProvider exampleUrlDataProvider

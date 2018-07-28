@@ -1,10 +1,5 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Ricardo Fiorani
- * Date: 02/09/2015
- * Time: 22:42.
- */
+<?php declare(strict_types=1);
+
 namespace RicardoFiorani\Adapter\Facebook;
 
 use RicardoFiorani\Adapter\AbstractServiceAdapter;
@@ -16,14 +11,7 @@ class FacebookServiceAdapter extends AbstractServiceAdapter
 {
     const THUMBNAIL_SIZE_DEFAULT = 'default';
 
-    /**
-     * AbstractVideoAdapter constructor.
-     *
-     * @param string $url
-     * @param string $pattern
-     * @param EmbedRendererInterface $renderer
-     */
-    public function __construct($url, $pattern, EmbedRendererInterface $renderer)
+    public function __construct(string $url, string $pattern, EmbedRendererInterface $renderer)
     {
         $match = array();
         preg_match($pattern, $url, $match);
@@ -32,44 +20,22 @@ class FacebookServiceAdapter extends AbstractServiceAdapter
         return parent::__construct($url, $pattern, $renderer);
     }
 
-    /**
-     * Returns the service name .
-     *
-     * @return string
-     */
-    public function getServiceName()
+    public function getServiceName(): string
     {
         return 'Facebook';
     }
 
-    /**
-     * Returns if the service has a thumbnail image.
-     *
-     * @return bool
-     */
-    public function hasThumbnail()
+    public function hasThumbnail(): bool
     {
         return true;
     }
 
-    /**
-     * Returns all thumbnails available sizes.
-     *
-     * @return array
-     */
-    public function getThumbNailSizes()
+    public function getThumbNailSizes(): array
     {
         return array(self::THUMBNAIL_SIZE_DEFAULT);
     }
 
-    /**
-     * @param string $size
-     *
-     * @param bool $forceSecure
-     * @return string
-     * @throws InvalidThumbnailSizeException
-     */
-    public function getThumbnail($size, $forceSecure = false)
+    public function getThumbnail(string $size, bool $forceSecure = false): string
     {
         if (false == in_array($size, $this->getThumbNailSizes())) {
             throw new InvalidThumbnailSizeException();
@@ -79,68 +45,43 @@ class FacebookServiceAdapter extends AbstractServiceAdapter
     }
 
     /**
-     * Returns the small thumbnail's url.
-     *
-     * @param bool $forceSecure
-     * @return string
      * @throws ThumbnailSizeNotAvailable
      */
-    public function getSmallThumbnail($forceSecure = false)
+    public function getSmallThumbnail(bool $forceSecure = false): string
     {
         throw new ThumbnailSizeNotAvailable();
     }
 
     /**
-     * Returns the medium thumbnail's url.
-     *
-     * @param bool $forceSecure
-     * @return string
      * @throws InvalidThumbnailSizeException
      */
-    public function getMediumThumbnail($forceSecure = false)
+    public function getMediumThumbnail(bool $forceSecure = false): string
     {
         return $this->getThumbnail(self::THUMBNAIL_SIZE_DEFAULT, $forceSecure);
     }
 
     /**
-     * Returns the large thumbnail's url.
-     *
-     * @param bool $forceSecure
-     * @return string
      * @throws ThumbnailSizeNotAvailable
      */
-    public function getLargeThumbnail($forceSecure = false)
+    public function getLargeThumbnail(bool $forceSecure = false): string
     {
         throw new ThumbnailSizeNotAvailable();
     }
 
     /**
-     * Returns the largest thumbnail's url.
-     *
-     * @param bool $forceSecure
-     * @return string
      * @throws InvalidThumbnailSizeException
      */
-    public function getLargestThumbnail($forceSecure = false)
+    public function getLargestThumbnail(bool $forceSecure = false): string
     {
         return $this->getThumbnail(self::THUMBNAIL_SIZE_DEFAULT, $forceSecure);
     }
 
-    /**
-     * @param bool $forceAutoplay
-     *
-     * @param bool $forceSecure
-     * @return string
-     */
-    public function getEmbedUrl($forceAutoplay = false, $forceSecure = false)
+    public function getEmbedUrl(bool $forceAutoplay = false, bool $forceSecure = false): string
     {
         return $this->getScheme($forceSecure) . '://www.facebook.com/video/embed?video_id=' . $this->getVideoId();
     }
 
-    /**
-     * @return bool
-     */
-    public function isEmbeddable()
+    public function isEmbeddable(): string
     {
         return true;
     }

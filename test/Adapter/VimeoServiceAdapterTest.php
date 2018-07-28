@@ -9,12 +9,12 @@
 namespace RicardoFiorani\Test\Adapter;
 
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use RicardoFiorani\Adapter\Vimeo\VimeoServiceAdapter;
 use RicardoFiorani\Matcher\VideoServiceMatcher;
 use RicardoFiorani\Matcher\Exception\VideoServiceNotCompatibleException;
 
-class VimeoServiceAdapterTest extends PHPUnit_Framework_TestCase
+class VimeoServiceAdapterTest extends TestCase
 {
 
     /**

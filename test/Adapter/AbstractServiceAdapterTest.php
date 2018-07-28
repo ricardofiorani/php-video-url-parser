@@ -1,20 +1,14 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Ricardo Fiorani
- * Date: 10/02/2016
- * Time: 18:55
- */
 
 namespace RicardoFiorani\Test\Adapter;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use RicardoFiorani\Adapter\Facebook\FacebookServiceAdapter;
 use RicardoFiorani\Matcher\Exception\VideoServiceNotCompatibleException;
 use RicardoFiorani\Matcher\VideoServiceMatcher;
 use RicardoFiorani\Renderer\DefaultRenderer;
 
-class AbstractServiceAdapterTest extends PHPUnit_Framework_TestCase
+class AbstractServiceAdapterTest extends TestCase
 {
 
     /**

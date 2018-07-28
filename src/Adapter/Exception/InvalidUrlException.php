@@ -1,7 +1,4 @@
-<?php
-/**
- * @author Ricardo Fiorani
- */
+<?php declare(strict_types=1);
 
 namespace RicardoFiorani\Adapter\Exception;
 

@@ -9,12 +9,12 @@
 namespace RicardoFiorani\Test\Adapter;
 
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use RicardoFiorani\Adapter\Youtube\YoutubeServiceAdapter;
 use RicardoFiorani\Matcher\VideoServiceMatcher;
 use RicardoFiorani\Matcher\Exception\VideoServiceNotCompatibleException;
 
-class YoutubeServiceAdapterTest extends PHPUnit_Framework_TestCase
+class YoutubeServiceAdapterTest extends TestCase
 {
 
     /**

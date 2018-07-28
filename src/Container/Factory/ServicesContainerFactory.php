@@ -1,17 +1,12 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Ricardo Fiorani
- * Date: 31/08/2015
- * Time: 21:07.
- */
+<?php declare(strict_types=1);
+
 namespace RicardoFiorani\Container\Factory;
 
 use RicardoFiorani\Container\ServicesContainer;
 
 class ServicesContainerFactory
 {
-    public function __invoke()
+    public function __invoke(): ServicesContainer
     {
         $configFile = require __DIR__.'/../../../config/config.php';
         $servicesContainer = new ServicesContainer($configFile);
@@ -19,7 +14,7 @@ class ServicesContainerFactory
         return $servicesContainer;
     }
 
-    public static function createNewServiceMatcher()
+    public static function createNewServiceMatcher(): ServicesContainerFactory
     {
         $factory = new self();
 

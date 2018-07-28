@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace RicardoFiorani\Matcher;
 
@@ -7,37 +7,20 @@ use RicardoFiorani\Container\Factory\ServicesContainerFactory;
 use RicardoFiorani\Container\ServicesContainer;
 use RicardoFiorani\Matcher\Exception\VideoServiceNotCompatibleException;
 
-/**
- * @author Ricardo Fiorani
- */
 class VideoServiceMatcher
 {
-    /**
-     * @var ServicesContainer
-     */
     private $serviceContainer;
-
-    /**
-     * @var array
-     */
     private $parsedUrls = array();
 
-    /**
-     * VideoServiceMatcher constructor.
-     */
     public function __construct()
     {
         $this->serviceContainer = ServicesContainerFactory::createNewServiceMatcher();
     }
 
     /**
-     * @param string $url
-     *
-     * @return VideoAdapterInterface
-     *
      * @throws VideoServiceNotCompatibleException
      */
-    public function parse($url)
+    public function parse($url): VideoAdapterInterface
     {
         if (isset($this->parsedUrls[$url])) {
             return $this->parsedUrls[$url];
@@ -62,17 +45,11 @@ class VideoServiceMatcher
         );
     }
 
-    /**
-     * @return ServicesContainer
-     */
-    public function getServiceContainer()
+    public function getServiceContainer(): ServicesContainer
     {
         return $this->serviceContainer;
     }
 
-    /**
-     * @param ServicesContainer $serviceContainer
-     */
     public function setServiceContainer(ServicesContainer $serviceContainer)
     {
         $this->serviceContainer = $serviceContainer;

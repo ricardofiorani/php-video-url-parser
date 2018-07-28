@@ -8,13 +8,13 @@
 
 namespace RicardoFiorani\Test\Adapter;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use RicardoFiorani\Adapter\Dailymotion\DailymotionServiceAdapter;
 use RicardoFiorani\Matcher\VideoServiceMatcher;
 use RicardoFiorani\Matcher\Exception\VideoServiceNotCompatibleException;
 
 
-class DailymotionServiceAdapterTest extends PHPUnit_Framework_TestCase
+class DailymotionServiceAdapterTest extends TestCase
 {
 
     /**

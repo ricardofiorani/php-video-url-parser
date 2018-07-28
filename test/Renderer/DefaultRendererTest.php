@@ -9,10 +9,10 @@
 namespace RicardoFiorani\Test\Renderer;
 
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use RicardoFiorani\Renderer\DefaultRenderer;
 
-class DefaultRendererTest extends PHPUnit_Framework_TestCase
+class DefaultRendererTest extends TestCase
 {
 
     private $embedUrl = 'http://test.unit';

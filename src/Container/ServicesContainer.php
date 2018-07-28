@@ -1,10 +1,5 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Ricardo Fiorani
- * Date: 31/08/2015
- * Time: 21:06.
- */
+<?php declare(strict_types=1);
+
 namespace RicardoFiorani\Container;
 
 use RicardoFiorani\Adapter\CallableServiceAdapterFactoryInterface;
@@ -13,43 +8,17 @@ use RicardoFiorani\Renderer\EmbedRendererInterface;
 
 class ServicesContainer
 {
-    /**
-     * @var array
-     */
     private $services = array();
-
-    /**
-     * @var array
-     */
     private $patterns = array();
-
-    /**
-     * @var array
-     */
     private $factories = array();
-
-    /**
-     * @var array
-     */
     private $instantiatedFactories = array();
-
-    /**
-     * @var EmbedRendererInterface
-     */
     private $renderer;
-
-    /**
-     * @var string
-     */
     private $rendererName;
 
     /**
-     * ServicesContainer constructor.
-     *
-     * @param array $config
      * @throws DuplicatedServiceNameException
      */
-    public function __construct(array $config = array())
+    public function __construct(array $config = [])
     {
         if (false == empty($config)) {
             $this->registerFromConfig($config);
@@ -57,10 +26,6 @@ class ServicesContainer
     }
 
     /**
-     * Loads de default config file.
-     *
-     * @param array $config
-     *
      * @throws DuplicatedServiceNameException
      */
     private function registerFromConfig(array $config)
@@ -68,19 +33,14 @@ class ServicesContainer
         foreach ($config['services'] as $serviceName => $serviceConfig) {
             $this->registerService($serviceName, $serviceConfig['patterns'], $serviceConfig['factory']);
         }
+
         $this->setRenderer($config['renderer']['name'], $config['renderer']['factory']);
     }
 
     /**
-     * Register a Service.
-     *
-     * @param string          $serviceName
-     * @param array           $regex
-     * @param string|callable $factory
-     *
      * @throws DuplicatedServiceNameException
      */
-    public function registerService($serviceName, array $regex, $factory)
+    public function registerService(string $serviceName, array $regex, string $factory)
     {
         if ($this->hasService($serviceName)) {
             throw new DuplicatedServiceNameException(
@@ -93,65 +53,39 @@ class ServicesContainer
         $this->factories[$serviceName] = $factory;
     }
 
-    /**
-     * @param string $rendererName
-     * @param string $rendererFactory
-     */
-    public function setRenderer($rendererName, $rendererFactory)
+    public function setRenderer(string $rendererName, string $rendererFactory)
     {
         $this->rendererName = $rendererName;
         $factory = new $rendererFactory();
         $this->renderer = $factory();
     }
 
-    /**
-     * @return EmbedRendererInterface
-     */
-    public function getRenderer()
+    public function getRenderer(): EmbedRendererInterface
     {
         return $this->renderer;
     }
 
-    /**
-     * @return array
-     */
-    public function getServiceNameList()
+    public function getServiceNameList(): array
     {
         return $this->services;
     }
 
-    /**
-     * @param string $serviceName
-     *
-     * @return bool
-     */
-    public function hasService($serviceName)
+    public function hasService($serviceName): bool
     {
         return in_array($serviceName, $this->services);
     }
 
-    /**
-     * @return array
-     */
-    public function getServices()
+    public function getServices(): array
     {
         return $this->services;
     }
 
-    /**
-     * @return array
-     */
-    public function getPatterns()
+    public function getPatterns(): array
     {
         return $this->patterns;
     }
 
-    /**
-     * @param string $serviceName
-     *
-     * @return CallableServiceAdapterFactoryInterface
-     */
-    public function getFactory($serviceName)
+    public function getFactory($serviceName): CallableServiceAdapterFactoryInterface
     {
         $factory = new $this->factories[$serviceName]();
         if (isset($this->instantiatedFactories[$serviceName])) {

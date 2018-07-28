@@ -9,11 +9,11 @@
 namespace RicardoFiorani\Test\Container;
 
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use RicardoFiorani\Container\ServicesContainer;
 use stdClass;
 
-class ServicesContainerTest extends PHPUnit_Framework_TestCase
+class ServicesContainerTest extends TestCase
 {
     public function testServiceContainerServiceRegistrationByArray()
     {
