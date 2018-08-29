@@ -5,12 +5,14 @@ namespace RicardoFiorani\Test\Detector;
 use PHPUnit\Framework\TestCase;
 use RicardoFiorani\Adapter\Dailymotion\DailymotionServiceAdapter;
 use RicardoFiorani\Adapter\Facebook\FacebookServiceAdapter;
+use RicardoFiorani\Adapter\VideoAdapterInterface;
 use RicardoFiorani\Adapter\Vimeo\VimeoServiceAdapter;
 use RicardoFiorani\Adapter\Youtube\YoutubeServiceAdapter;
 use RicardoFiorani\Container\Factory\ServicesContainerFactory;
 use RicardoFiorani\Container\ServicesContainer;
 use RicardoFiorani\Matcher\VideoServiceMatcher;
 use RicardoFiorani\Matcher\Exception\VideoServiceNotCompatibleException;
+use Zend\Diactoros\Uri;
 
 class VideoServiceMatcherTest extends TestCase
 {
@@ -123,4 +125,10 @@ class VideoServiceMatcherTest extends TestCase
         $this->assertSame($serviceContainer, $detector->getServiceContainer());
     }
 
+    public function testCanParsePsr7Uri()
+    {
+        $detector = new VideoServiceMatcher();
+        $video = $detector->parse(new Uri('https://www.youtube.com/watch?v=PkOcm_XaWrw'));
+        $this->assertInstanceOf(VideoAdapterInterface::class, $video);
+    }
 }
