@@ -18,10 +18,12 @@ class VideoServiceMatcher
     }
 
     /**
+     * @param string|\Psr\Http\Message\UriInterface $url
      * @throws VideoServiceNotCompatibleException
      */
     public function parse($url): VideoAdapterInterface
     {
+        $url = (string) $url;
         if (isset($this->parsedUrls[$url])) {
             return $this->parsedUrls[$url];
         }
