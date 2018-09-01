@@ -2,19 +2,28 @@
 
 namespace RicardoFiorani\Matcher;
 
+use Doctrine\Common\Cache\ArrayCache;
+use Psr\SimpleCache\CacheItemInterface;
 use RicardoFiorani\Adapter\VideoAdapterInterface;
 use RicardoFiorani\Container\Factory\ServicesContainerFactory;
 use RicardoFiorani\Container\ServicesContainer;
 use RicardoFiorani\Matcher\Exception\VideoServiceNotCompatibleException;
+use Roave\DoctrineSimpleCache\SimpleCacheAdapter;
 
 class VideoServiceMatcher
 {
     private $serviceContainer;
-    private $parsedUrls = array();
+    private $cache;
 
     public function __construct()
     {
         $this->serviceContainer = ServicesContainerFactory::createNewServiceMatcher();
+        $this->cache = new SimpleCacheAdapter(new ArrayCache());
+    }
+
+    public function setCache(CacheItemInterface $cache)
+    {
+        $this->cache = $cache;
     }
 
     /**
@@ -24,8 +33,9 @@ class VideoServiceMatcher
     public function parse($url): VideoAdapterInterface
     {
         $url = (string) $url;
-        if (isset($this->parsedUrls[$url])) {
-            return $this->parsedUrls[$url];
+        $cacheKey = hash('sha256',  $url);
+        if ($this->cache->has($cacheKey)) {
+            return $this->cache->get($cacheKey);
         }
 
         /** @var array $patterns */
@@ -35,9 +45,11 @@ class VideoServiceMatcher
             foreach ($patterns as $pattern) {
                 if (false != preg_match($pattern, $url)) {
                     $factory = $this->getServiceContainer()->getFactory($serviceName);
+                    $renderer = $this->getServiceContainer()->getRenderer();
+                    $adapter = $factory($url, $pattern, $renderer);
+                    $this->cache->set($cacheKey, $adapter);
 
-                    return $this->parsedUrls[$url] = $factory($url, $pattern,
-                        $this->getServiceContainer()->getRenderer());
+                    return $adapter;
                 }
             }
         }
