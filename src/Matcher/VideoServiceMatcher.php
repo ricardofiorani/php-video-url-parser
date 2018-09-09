@@ -33,7 +33,7 @@ class VideoServiceMatcher
     public function parse($url): VideoAdapterInterface
     {
         $url = (string) $url;
-        $cacheKey = (string) crc32($url);
+        $cacheKey = hash('md5', $url);
         if ($this->cache->has($cacheKey)) {
             return $this->cache->get($cacheKey);
         }
