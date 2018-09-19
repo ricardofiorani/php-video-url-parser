@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Ricardo Fiorani
- * Date: 31/08/2015
- * Time: 21:06.
- */
+
 namespace RicardoFiorani\Container;
 
 use RicardoFiorani\Adapter\CallableServiceAdapterFactoryInterface;
@@ -68,14 +63,15 @@ class ServicesContainer
         foreach ($config['services'] as $serviceName => $serviceConfig) {
             $this->registerService($serviceName, $serviceConfig['patterns'], $serviceConfig['factory']);
         }
+
         $this->setRenderer($config['renderer']['name'], $config['renderer']['factory']);
     }
 
     /**
      * Register a Service.
      *
-     * @param string          $serviceName
-     * @param array           $regex
+     * @param string $serviceName
+     * @param array $regex
      * @param string|callable $factory
      *
      * @throws DuplicatedServiceNameException
@@ -84,7 +80,10 @@ class ServicesContainer
     {
         if ($this->hasService($serviceName)) {
             throw new DuplicatedServiceNameException(
-                'The service "%s" is already registered in the container.', $serviceName
+                sprintf(
+                    'The service "%s" is already registered in the container.',
+                    $serviceName
+                )
             );
         }
 

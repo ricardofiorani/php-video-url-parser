@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Ricardo Fiorani
- * Date: 10/02/2016
- * Time: 19:58
- */
 
 namespace RicardoFiorani\Test\Container;
-
 
 use PHPUnit_Framework_TestCase;
 use RicardoFiorani\Container\ServicesContainer;
@@ -31,8 +24,11 @@ class ServicesContainerTest extends PHPUnit_Framework_TestCase
         });
 
         $this->assertContains('TestService', $serviceContainer->getServiceNameList());
+
         $this->setExpectedException('\\RicardoFiorani\\Container\\Exception\\DuplicatedServiceNameException');
+
         $serviceContainer->registerService('TestService', array('#testPattern#'), function () {
+            // @todo test the injected service maybe ?
         });
     }
 
@@ -44,14 +40,15 @@ class ServicesContainerTest extends PHPUnit_Framework_TestCase
         $this->assertContains('Youtube', $serviceContainer->getServices());
     }
 
-    public function testIfReturnsAlreadyInstantiatedFactory(){
+    public function testIfReturnsAlreadyInstantiatedFactory()
+    {
         $config = $this->getMockConfig();
         $serviceContainer = $this->createServiceContainer($config);
         $factory = $serviceContainer->getFactory('Youtube');
-        $this->assertInstanceOf('\\RicardoFiorani\\Adapter\\Youtube\\Factory\\YoutubeServiceAdapterFactory',$factory);
+        $this->assertInstanceOf('\\RicardoFiorani\\Adapter\\Youtube\\Factory\\YoutubeServiceAdapterFactory', $factory);
 
         $alreadyInstantiatedFactory = $serviceContainer->getFactory('Youtube');
-        $this->assertEquals($factory,$alreadyInstantiatedFactory);
+        $this->assertEquals($factory, $alreadyInstantiatedFactory);
     }
 
     /**
