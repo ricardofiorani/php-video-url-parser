@@ -228,7 +228,7 @@ class VimeoServiceAdapter extends AbstractServiceAdapter
      *
      * @todo make this better by using guzzle
      *
-     * @return array
+     * @return \stdClass
      *
      * @throws ServiceApiNotAvailable
      */
