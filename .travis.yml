@@ -3,6 +3,7 @@ sudo: false
 
 # Setup build matrix
 language: php
+dist: trusty
 php:
   - 5.4
   - 5.5
@@ -10,6 +11,7 @@ php:
   - 7.0
   - 7.1
   - 7.2
+  - 7.3
 
 matrix:
   include:
@@ -23,7 +25,7 @@ before_install:
 install:
   - travis_retry composer update --no-interaction --prefer-source
 
-script: phpunit --coverage-clover=coverage.clover
+script: phpunit --verbose --coverage-clover=coverage.clover
 
 after_script:
   - wget https://scrutinizer-ci.com/ocular.phar
