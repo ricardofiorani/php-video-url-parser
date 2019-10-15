@@ -101,7 +101,11 @@ class DailymotionServiceAdapter extends AbstractServiceAdapter
 
     public function getEmbedUrl(bool $forceAutoplay = false, bool $forceSecure = false): string
     {
-        return $this->getScheme($forceSecure) . '://www.dailymotion.com/embed/video/' . $this->videoId . ($forceAutoplay ? '?amp&autoplay=1' : '');
+        $scheme = $this->getScheme($forceSecure);
+        $autoPlay = ($forceAutoplay ? '?amp&autoplay=1' : '');
+        return <<<STRING
+{$scheme}://www.dailymotion.com/embed/video/{$this->videoId}{$autoPlay}
+STRING;
     }
 
     public function isEmbeddable(): bool

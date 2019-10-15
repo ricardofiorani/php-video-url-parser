@@ -94,7 +94,11 @@ class VimeoServiceAdapter extends AbstractServiceAdapter
 
     public function getEmbedUrl(bool $forceAutoplay = false, bool $forceSecure = false): string
     {
-        return $this->getScheme($forceSecure) . '://player.vimeo.com/video/' . $this->getVideoId() . ($forceAutoplay ? '?autoplay=1' : '');
+        $scheme = $this->getScheme($forceSecure);
+        $autoPlay = ($forceAutoplay ? '?autoplay=1' : '');
+        return <<<STRING
+{$scheme}://player.vimeo.com/video/{$this->getVideoId()}{$autoPlay}
+STRING;
     }
 
     public function getThumbNailSizes(): array
@@ -155,7 +159,12 @@ class VimeoServiceAdapter extends AbstractServiceAdapter
     {
         $contents = file_get_contents('http://vimeo.com/api/v2/video/' . $this->getVideoId() . '.php');
         if (false === $contents) {
-            throw new ServiceApiNotAvailable('Vimeo Service Adapter could not reach Vimeo API Service. Check if your server has file_get_contents() function available.');
+            throw new ServiceApiNotAvailable(
+                <<<STRING
+'Vimeo Service Adapter could not reach Vimeo API Service. 
+Check if your server has file_get_contents() function available.'
+STRING
+            );
         }
         $hash = unserialize($contents);
 
