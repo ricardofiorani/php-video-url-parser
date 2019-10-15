@@ -1,10 +1,5 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Ricardo Fiorani
- * Date: 29/08/2015
- * Time: 14:56.
- */
+<?php declare(strict_types=1);
+
 namespace RicardoFiorani\Adapter\Vimeo;
 
 use RicardoFiorani\Adapter\AbstractServiceAdapter;
@@ -14,104 +9,66 @@ use RicardoFiorani\Renderer\EmbedRendererInterface;
 
 class VimeoServiceAdapter extends AbstractServiceAdapter
 {
-    const THUMBNAIL_SMALL = 'thumbnail_small';
-    const THUMBNAIL_MEDIUM = 'thumbnail_medium';
-    const THUMBNAIL_LARGE = 'thumbnail_large';
+    public const THUMBNAIL_SMALL = 'thumbnail_small';
+    public const THUMBNAIL_MEDIUM = 'thumbnail_medium';
+    public const THUMBNAIL_LARGE = 'thumbnail_large';
+    public const SERVICE_NAME = 'Vimeo';
 
-    /**
-     * @var string
-     */
-    public $title;
+    public string $title;
 
-    /**
-     * @var string
-     */
-    public $description;
+    public string $description;
 
-    /**
-     * @var array
-     */
-    public $thumbnails;
+    public array $thumbnails;
 
-    /**
-     * @param string $url
-     * @param string $pattern
-     * @param EmbedRendererInterface $renderer
-     */
-    public function __construct($url, $pattern, EmbedRendererInterface $renderer)
+    public function __construct(string $url, string $pattern, EmbedRendererInterface $renderer)
     {
-        $videoId = $this->getVideoIdByPattern($url, $pattern);
+        $videoId = (string)$this->getVideoIdByPattern($url, $pattern);
         $this->setVideoId($videoId);
         $videoData = $this->getVideoDataFromServiceApi();
 
-        $this->setThumbnails(array(
+        $this->setThumbnails([
             self::THUMBNAIL_SMALL => $videoData[self::THUMBNAIL_SMALL],
             self::THUMBNAIL_MEDIUM => $videoData[self::THUMBNAIL_MEDIUM],
             self::THUMBNAIL_LARGE => $videoData[self::THUMBNAIL_LARGE],
-        ));
+        ]);
 
         $this->setTitle($videoData['title']);
         $this->setDescription($videoData['description']);
 
-        return parent::__construct($url, $pattern, $renderer);
+        parent::__construct($url, $pattern, $renderer);
     }
 
-    /**
-     * Returns the service name (ie: "Youtube" or "Vimeo").
-     *
-     * @return string
-     */
-    public function getServiceName()
+    public function getServiceName(): string
     {
-        return 'Vimeo';
+        return self::SERVICE_NAME;
     }
 
-    /**
-     * Returns if the service has a thumbnail image.
-     *
-     * @return bool
-     */
-    public function hasThumbnail()
+    public function hasThumbnail(): bool
     {
-        return false == empty($this->thumbnails);
+        return false === empty($this->thumbnails);
     }
 
-    /**
-     * @return string
-     */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * @param string $title
-     */
-    public function setTitle($title)
+    public function setTitle(string $title): void
     {
         $this->title = $title;
     }
 
-    /**
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
 
-    /**
-     * @param string $description
-     */
-    public function setDescription($description)
+    public function setDescription(string $description): void
     {
         $this->description = $description;
     }
 
-    /**
-     * @param array $thumbnails
-     */
-    private function setThumbnails(array $thumbnails)
+    private function setThumbnails(array $thumbnails): void
     {
         foreach ($thumbnails as $key => $thumbnail) {
             $this->thumbnails[$key] = parse_url($thumbnail);
@@ -119,16 +76,12 @@ class VimeoServiceAdapter extends AbstractServiceAdapter
     }
 
     /**
-     * @param string $size
-     *
-     * @return string
-     *
      * @throws InvalidThumbnailSizeException
      */
-    public function getThumbnail($size, $forceSecure = false)
+    public function getThumbnail(string $size, bool $forceSecure = false): string
     {
-        if (false == in_array($size, $this->getThumbNailSizes())) {
-            throw new InvalidThumbnailSizeException();
+        if (false === in_array($size, $this->getThumbNailSizes(), false)) {
+            throw new InvalidThumbnailSizeException("The size {$size} is invalid.");
         }
 
         return sprintf(
@@ -139,113 +92,66 @@ class VimeoServiceAdapter extends AbstractServiceAdapter
         );
     }
 
-    /**
-     * @param bool $forceAutoplay
-     *
-     * @return string
-     */
-    public function getEmbedUrl($forceAutoplay = false, $forceSecure = false)
+    public function getEmbedUrl(bool $forceAutoplay = false, bool $forceSecure = false): string
     {
         return $this->getScheme($forceSecure) . '://player.vimeo.com/video/' . $this->getVideoId() . ($forceAutoplay ? '?autoplay=1' : '');
     }
 
-    /**
-     * Returns all thumbnails available sizes.
-     *
-     * @return array
-     */
-    public function getThumbNailSizes()
+    public function getThumbNailSizes(): array
     {
-        return array(
+        return [
             self::THUMBNAIL_SMALL,
             self::THUMBNAIL_MEDIUM,
             self::THUMBNAIL_LARGE,
-        );
+        ];
+    }
+
+    public function getSmallThumbnail(bool $forceSecure = false): string
+    {
+        return $this->getThumbnail(self::THUMBNAIL_SMALL, $forceSecure);
     }
 
     /**
-     * Returns the small thumbnail's url.
-     *
-     * @param bool $forceSecure
-     * @return string
      * @throws InvalidThumbnailSizeException
      */
-    public function getSmallThumbnail($forceSecure = false)
+    public function getMediumThumbnail(bool $forceSecure = false): string
     {
-        return $this->getThumbnail(self::THUMBNAIL_SMALL,$forceSecure);
+        return $this->getThumbnail(self::THUMBNAIL_MEDIUM, $forceSecure);
     }
 
     /**
-     * Returns the medium thumbnail's url.
-     *
-     * @param bool $forceSecure
-     * @return string
      * @throws InvalidThumbnailSizeException
      */
-    public function getMediumThumbnail($forceSecure = false)
+    public function getLargeThumbnail(bool $forceSecure = false): string
     {
-        return $this->getThumbnail(self::THUMBNAIL_MEDIUM,$forceSecure);
+        return $this->getThumbnail(self::THUMBNAIL_LARGE, $forceSecure);
     }
 
     /**
-     * Returns the large thumbnail's url.
-     *
-     * @param bool $forceSecure
-     * @param $forceSecure
-     * @return string
      * @throws InvalidThumbnailSizeException
      */
-    public function getLargeThumbnail($forceSecure = false)
+    public function getLargestThumbnail(bool $forceSecure = false): string
     {
-        return $this->getThumbnail(self::THUMBNAIL_LARGE,$forceSecure);
+        return $this->getThumbnail(self::THUMBNAIL_LARGE, $forceSecure);
     }
 
-    /**
-     * Returns the largest thumnbnaail's url.
-     *
-     * @param bool $forceSecure
-     * @param $forceSecure
-     * @return string
-     * @throws InvalidThumbnailSizeException
-     */
-    public function getLargestThumbnail($forceSecure = false)
-    {
-        return $this->getThumbnail(self::THUMBNAIL_LARGE,$forceSecure);
-    }
-
-    /**
-     * @return bool
-     */
-    public function isEmbeddable()
+    public function isEmbeddable(): bool
     {
         return true;
     }
 
-    /**
-     * @param string $url
-     * @param string $pattern
-     *
-     * @return int
-     */
-    private function getVideoIdByPattern($url, $pattern)
+    private function getVideoIdByPattern(string $url, string $pattern): int
     {
-        $match = array();
+        $match = [];
         preg_match($pattern, $url, $match);
-        $videoId = $match[2];
 
-        return $videoId;
+        return (int)$match[2];
     }
 
     /**
-     * Uses the Vimeo video API to get video info.
-     *
-     * @todo make this better by using guzzle
-     *
-     * @return array
-     *
      * @throws ServiceApiNotAvailable
      */
-    private function getVideoDataFromServiceApi()
+    private function getVideoDataFromServiceApi(): array
     {
         $contents = file_get_contents('http://vimeo.com/api/v2/video/' . $this->getVideoId() . '.php');
         if (false === $contents) {

@@ -1,25 +1,37 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Ricardo Fiorani
- * Date: 31/08/2015
- * Time: 21:07.
- */
+<?php declare(strict_types=1);
+
 namespace RicardoFiorani\Container\Factory;
 
 use RicardoFiorani\Container\ServicesContainer;
+use RicardoFiorani\Exception\DuplicatedServiceNameException;
 
 class ServicesContainerFactory
 {
-    public function __invoke()
-    {
-        $configFile = require __DIR__.'/../../../config/config.php';
-        $servicesContainer = new ServicesContainer($configFile);
+    private array $config;
 
-        return $servicesContainer;
+    public function __construct(array $config = [])
+    {
+        if (empty($config)) {
+            $config = require __DIR__ . '/../../../config/config.php';
+        }
+
+        $this->config = $config;
     }
 
-    public static function createNewServiceMatcher()
+    /**
+     * @return ServicesContainer
+     * @throws DuplicatedServiceNameException
+     */
+    public function __invoke(): ServicesContainer
+    {
+        return new ServicesContainer($this->config);
+    }
+
+    /**
+     * @return ServicesContainer
+     * @throws DuplicatedServiceNameException
+     */
+    public static function createNewServiceMatcher(): ServicesContainer
     {
         $factory = new self();
 

@@ -1,88 +1,52 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Ricardo Fiorani
- * Date: 31/08/2015
- * Time: 21:06.
- */
+<?php declare(strict_types=1);
+
 namespace RicardoFiorani\Container;
 
+use LogicException;
 use RicardoFiorani\Adapter\CallableServiceAdapterFactoryInterface;
 use RicardoFiorani\Exception\DuplicatedServiceNameException;
 use RicardoFiorani\Renderer\EmbedRendererInterface;
 
 class ServicesContainer
 {
-    /**
-     * @var array
-     */
-    private $services = array();
+    private array $services = [];
+    private array $patterns = [];
+    private array $factories = [];
+    private array $instantiatedFactories = [];
+    private EmbedRendererInterface $renderer;
+    private string $rendererName;
 
     /**
-     * @var array
+     * @throws DuplicatedServiceNameException
      */
-    private $patterns = array();
-
-    /**
-     * @var array
-     */
-    private $factories = array();
-
-    /**
-     * @var array
-     */
-    private $instantiatedFactories = array();
-
-    /**
-     * @var EmbedRendererInterface
-     */
-    private $renderer;
-
-    /**
-     * @var string
-     */
-    private $rendererName;
-
-    /**
-     * ServicesContainer constructor.
-     *
-     * @param array $config
-     */
-    public function __construct(array $config = array())
+    public function __construct(array $config = [])
     {
-        if (false == empty($config)) {
-            $this->registerFromConfig($config);
+        if (empty($config)) {
+            throw new LogicException('A config must be provided for constructing a container');
         }
+
+        $this->registerFromConfig($config);
     }
 
     /**
-     * Loads de default config file.
-     *
-     * @param array $config
-     *
      * @throws DuplicatedServiceNameException
      */
-    private function registerFromConfig(array $config)
+    private function registerFromConfig(array $config): void
     {
         foreach ($config['services'] as $serviceName => $serviceConfig) {
             $this->registerService($serviceName, $serviceConfig['patterns'], $serviceConfig['factory']);
         }
+
         $this->setRenderer($config['renderer']['name'], $config['renderer']['factory']);
     }
 
     /**
-     * Register a Service.
-     *
-     * @param string          $serviceName
-     * @param array           $regex
-     * @param string|callable $factory
-     *
      * @throws DuplicatedServiceNameException
      */
-    public function registerService($serviceName, array $regex, $factory)
+    public function registerService(string $serviceName, array $regex, $factory): void
     {
         if ($this->hasService($serviceName)) {
-            throw new DuplicatedServiceNameException();
+            throw new DuplicatedServiceNameException("{$serviceName} is already registered.");
         }
 
         $this->services[] = $serviceName;
@@ -90,67 +54,55 @@ class ServicesContainer
         $this->factories[$serviceName] = $factory;
     }
 
-    /**
-     * @param string $rendererName
-     * @param string $rendererFactory
-     */
-    public function setRenderer($rendererName, $rendererFactory)
+    public function setRenderer(string $rendererName, string $rendererFactory): void
     {
         $this->rendererName = $rendererName;
         $factory = new $rendererFactory();
         $this->renderer = $factory();
     }
 
-    /**
-     * @return EmbedRendererInterface
-     */
-    public function getRenderer()
+    public function getRenderer(): EmbedRendererInterface
     {
         return $this->renderer;
     }
 
-    /**
-     * @return array
-     */
-    public function getServiceNameList()
+    public function getServiceNameList(): array
     {
         return $this->services;
     }
 
-    /**
-     * @param string $serviceName
-     *
-     * @return bool
-     */
-    public function hasService($serviceName)
+    public function hasService(string $serviceName): bool
     {
-        return in_array($serviceName, $this->services);
+        return in_array($serviceName, $this->services, false);
     }
 
-    /**
-     * @return array
-     */
-    public function getServices()
+    public function getServices(): array
     {
         return $this->services;
     }
 
-    /**
-     * @return array
-     */
-    public function getPatterns()
+    public function getPatterns(): array
     {
         return $this->patterns;
     }
 
-    /**
-     * @param string $serviceName
-     *
-     * @return CallableServiceAdapterFactoryInterface
-     */
-    public function getFactory($serviceName)
+    public function getFactory(string $serviceName): CallableServiceAdapterFactoryInterface
     {
-        $factory = new $this->factories[$serviceName]();
+        $factory = $this->factories[$serviceName];
+
+        switch (true) {
+            case is_callable($factory):
+            case is_object($factory):
+                break;
+            case class_exists($factory):
+                $factory = new $factory();
+                break;
+            default:
+                throw new LogicException(
+                    'The Service Factory must be either a callable, an invokable object or a class name'
+                );
+        }
+
         if (isset($this->instantiatedFactories[$serviceName])) {
             return $this->instantiatedFactories[$serviceName];
         }

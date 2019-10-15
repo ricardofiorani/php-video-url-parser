@@ -1,10 +1,5 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Ricardo Fiorani
- * Date: 29/08/2015
- * Time: 19:37.
- */
+<?php declare(strict_types=1);
+
 namespace RicardoFiorani\Adapter;
 
 use RicardoFiorani\Exception\NotEmbeddableException;
@@ -12,119 +7,70 @@ use RicardoFiorani\Renderer\EmbedRendererInterface;
 
 abstract class AbstractServiceAdapter implements VideoAdapterInterface
 {
-    /**
-     * @var string
-     */
-    public $rawUrl;
+    public string $rawUrl;
+    public string $videoId;
+    public string $pattern;
 
-    /**
-     * @var string
-     */
-    public $videoId;
+    public EmbedRendererInterface $renderer;
 
-    /**
-     * @var string
-     */
-    public $pattern;
-
-    /**
-     * @var EmbedRendererInterface
-     */
-    public $renderer;
-
-    /**
-     * AbstractVideoAdapter constructor.
-     *
-     * @param string $url
-     * @param string $pattern
-     * @param EmbedRendererInterface $renderer
-     */
-    public function __construct($url, $pattern, EmbedRendererInterface $renderer)
+    public function __construct(string $url, string $pattern, EmbedRendererInterface $renderer)
     {
         $this->rawUrl = $url;
         $this->pattern = $pattern;
         $this->renderer = $renderer;
     }
 
-    /**
-     * Returns the input URL.
-     *
-     * @return string
-     */
-    public function getRawUrl()
+    public function getRawUrl(): string
     {
         return $this->rawUrl;
     }
 
-    /**
-     * @param string $rawUrl
-     */
-    public function setRawUrl($rawUrl)
+    public function setRawUrl($rawUrl): void
     {
         $this->rawUrl = $rawUrl;
     }
 
-    /**
-     * @return string
-     */
-    public function getVideoId()
+    public function getVideoId(): string
     {
         return $this->videoId;
     }
 
-    /**
-     * @param string $videoId
-     */
-    public function setVideoId($videoId)
+    public function setVideoId(string $videoId): void
     {
         $this->videoId = $videoId;
     }
 
-    /**
-     * @return string
-     */
-    public function getPattern()
+    public function getPattern(): string
     {
         return $this->pattern;
     }
 
-    /**
-     * @param string $pattern
-     */
-    public function setPattern($pattern)
+    public function setPattern(string $pattern): void
     {
         $this->pattern = $pattern;
     }
 
-    /**
-     * @return EmbedRendererInterface
-     */
-    public function getRenderer()
+    public function getRenderer(): EmbedRendererInterface
     {
         return $this->renderer;
     }
 
-    /**
-     * @param EmbedRendererInterface $renderer
-     */
-    public function setRenderer($renderer)
+    public function setRenderer(EmbedRendererInterface $renderer): void
     {
         $this->renderer = $renderer;
     }
 
     /**
-     * @param int $width
-     * @param int $height
-     * @param bool $forceAutoplay
-     * @param bool $forceSecure
-     *
-     * @return string
      * @throws NotEmbeddableException
      */
-    public function getEmbedCode($width, $height, $forceAutoplay = false, $forceSecure = false)
-    {
-        if (false == $this->isEmbeddable()) {
-            throw new NotEmbeddableException();
+    public function getEmbedCode(
+        int $width,
+        int $height,
+        bool $forceAutoplay = false,
+        bool $forceSecure = false
+    ): string {
+        if (false === $this->isEmbeddable()) {
+            throw new NotEmbeddableException('This video type is not embeddable.');
         }
 
         return $this->getRenderer()->renderVideoEmbedCode(
@@ -134,13 +80,7 @@ abstract class AbstractServiceAdapter implements VideoAdapterInterface
         );
     }
 
-    /**
-     * Switches the protocol scheme between http and https in case you want to force https
-     *
-     * @param bool|false $forceSecure
-     * @return string
-     */
-    public function getScheme($forceSecure = false)
+    public function getScheme(bool $forceSecure = false): string
     {
         if ($forceSecure) {
             return 'https';

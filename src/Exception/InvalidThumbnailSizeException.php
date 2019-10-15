@@ -1,10 +1,5 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Ricardo Fiorani
- * Date: 29/08/2015
- * Time: 20:17.
- */
+<?php declare(strict_types=1);
+
 namespace RicardoFiorani\Exception;
 
 use Exception;

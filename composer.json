@@ -1,23 +1,28 @@
 {
-    "name": "ricardofiorani/php-video-url-parser",
-    "description": "A Simple and efficient PHP Video URL Parser that gives you thumbnails and embed codes for various services as Youtube, Vimeo, DailyMotion and Facebook",
-    "require-dev": {
-        "phpunit/phpunit": "^4.8",
-        "fabpot/php-cs-fixer" : ">= 1.0"
-    },
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Ricardo Fiorani",
-            "email": "ricardo.fiorani@gmail.com"
-        }
-    ],
-    "require": {
-        "php": ">=5.3"
-    },
-    "autoload": {
-        "psr-4": {
-            "RicardoFiorani\\": "src/"
-        }
+  "name": "ricardofiorani/php-video-url-parser",
+  "description": "A Simple and efficient PHP Video URL Parser that gives you thumbnails and embed codes for various services such as Youtube, Vimeo, DailyMotion and Facebook",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Ricardo Fiorani",
+      "email": "ricardo.fiorani@gmail.com"
     }
+  ],
+  "require": {
+    "php": "^7.4"
+  },
+  "require-dev": {
+    "squizlabs/php_codesniffer": "^3.5",
+    "phpunit/phpunit": "^8.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "RicardoFiorani\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "RicardoFioraniTests\\": "tests/"
+    }
+  }
 }

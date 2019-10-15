@@ -1,10 +1,5 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Ricardo Fiorani
- * Date: 30/08/2015
- * Time: 14:38.
- */
+<?php declare(strict_types=1);
+
 namespace RicardoFiorani\Adapter\Dailymotion;
 
 use RicardoFiorani\Adapter\AbstractServiceAdapter;
@@ -13,21 +8,15 @@ use RicardoFiorani\Renderer\EmbedRendererInterface;
 
 class DailymotionServiceAdapter extends AbstractServiceAdapter
 {
-    const THUMBNAIL_DEFAULT = 'thumbnail';
+    public const THUMBNAIL_DEFAULT = 'thumbnail';
+    public const SERVICE_NAME = 'Dailymotion';
 
-    /**
-     * AbstractVideoAdapter constructor.
-     *
-     * @param string $url
-     * @param string $pattern
-     * @param EmbedRendererInterface $renderer
-     */
-    public function __construct($url, $pattern, EmbedRendererInterface $renderer)
+    public function __construct(string $url, string $pattern, EmbedRendererInterface $renderer)
     {
         $videoId = strtok(basename($url), '_');
         $this->setVideoId($videoId);
 
-        return parent::__construct($url, $pattern, $renderer);
+        parent::__construct($url, $pattern, $renderer);
     }
 
     /**
@@ -35,9 +24,9 @@ class DailymotionServiceAdapter extends AbstractServiceAdapter
      *
      * @return string
      */
-    public function getServiceName()
+    public function getServiceName(): string
     {
-        return 'Dailymotion';
+        return self::SERVICE_NAME;
     }
 
     /**
@@ -45,7 +34,7 @@ class DailymotionServiceAdapter extends AbstractServiceAdapter
      *
      * @return bool
      */
-    public function hasThumbnail()
+    public function hasThumbnail(): bool
     {
         return true;
     }
@@ -55,94 +44,67 @@ class DailymotionServiceAdapter extends AbstractServiceAdapter
      *
      * @return array
      */
-    public function getThumbNailSizes()
+    public function getThumbNailSizes(): array
     {
-        return array(
+        return [
             self::THUMBNAIL_DEFAULT,
-        );
+        ];
     }
 
     /**
-     * @param string $size
-     * @param bool $forceSecure
-     *
-     * @return string
      * @throws InvalidThumbnailSizeException
      */
-    public function getThumbnail($size, $forceSecure = false)
+    public function getThumbnail(string $size, bool $forceSecure = false): string
     {
-        if (false == in_array($size, $this->getThumbNailSizes())) {
-            throw new InvalidThumbnailSizeException();
+        if (false === in_array($size, $this->getThumbNailSizes(), false)) {
+            throw new InvalidThumbnailSizeException("{$size} is not a valid size.");
         }
 
         return $this->getScheme($forceSecure) . '://www.dailymotion.com/' . $size . '/video/' . $this->videoId;
     }
 
     /**
-     * Returns the small thumbnail's url.
-     *
-     * @param bool $forceSecure
-     * @return string
      * @throws InvalidThumbnailSizeException
      */
-    public function getSmallThumbnail($forceSecure = false)
+    public function getSmallThumbnail(bool $forceSecure = false): string
     {
         //Since this service does not provide other thumbnails sizes we just return the default size
         return $this->getThumbnail(self::THUMBNAIL_DEFAULT, $forceSecure);
     }
 
     /**
-     * Returns the medium thumbnail's url.
-     *
-     * @param bool $forceSecure
-     * @return string
      * @throws InvalidThumbnailSizeException
      */
-    public function getMediumThumbnail($forceSecure = false)
+    public function getMediumThumbnail(bool $forceSecure = false): string
     {
         //Since this service does not provide other thumbnails sizes we just return the default size
         return $this->getThumbnail(self::THUMBNAIL_DEFAULT, $forceSecure);
     }
 
     /**
-     * Returns the large thumbnail's url.
-     *
-     * @param bool $forceSecure
-     * @return string
      * @throws InvalidThumbnailSizeException
      */
-    public function getLargeThumbnail($forceSecure = false)
+    public function getLargeThumbnail(bool $forceSecure = false): string
     {
         //Since this service does not provide other thumbnails sizes we just return the default size
         return $this->getThumbnail(self::THUMBNAIL_DEFAULT, $forceSecure);
     }
 
     /**
-     * Returns the largest thumnbnaail's url.
-     * @param bool $forceSecure
-     * @return string
      * @throws InvalidThumbnailSizeException
      */
-    public function getLargestThumbnail($forceSecure = false)
+    public function getLargestThumbnail(bool $forceSecure = false): string
     {
         //Since this service does not provide other thumbnails sizes we just return the default size
         return $this->getThumbnail(self::THUMBNAIL_DEFAULT, $forceSecure);
     }
 
-    /**
-     * @param bool $forceAutoplay
-     * @param bool $forceSecure
-     * @return string
-     */
-    public function getEmbedUrl($forceAutoplay = false, $forceSecure = false)
+    public function getEmbedUrl(bool $forceAutoplay = false, bool $forceSecure = false): string
     {
         return $this->getScheme($forceSecure) . '://www.dailymotion.com/embed/video/' . $this->videoId . ($forceAutoplay ? '?amp&autoplay=1' : '');
     }
 
-    /**
-     * @return bool
-     */
-    public function isEmbeddable()
+    public function isEmbeddable(): bool
     {
         return true;
     }

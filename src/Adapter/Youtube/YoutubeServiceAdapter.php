@@ -1,10 +1,4 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Ricardo Fiorani
- * Date: 29/08/2015
- * Time: 14:53.
- */
+<?php declare(strict_types=1);
 
 namespace RicardoFiorani\Adapter\Youtube;
 
@@ -14,86 +8,64 @@ use RicardoFiorani\Renderer\EmbedRendererInterface;
 
 class YoutubeServiceAdapter extends AbstractServiceAdapter
 {
-    const THUMBNAIL_DEFAULT = 'default';
-    const THUMBNAIL_STANDARD_DEFINITION = 'sddefault';
-    const THUMBNAIL_MEDIUM_QUALITY = 'mqdefault';
-    const THUMBNAIL_HIGH_QUALITY = 'hqdefault';
-    const THUMBNAIL_MAX_QUALITY = 'maxresdefault';
+    public const THUMBNAIL_DEFAULT = 'default';
+    public const THUMBNAIL_STANDARD_DEFINITION = 'sddefault';
+    public const THUMBNAIL_MEDIUM_QUALITY = 'mqdefault';
+    public const THUMBNAIL_HIGH_QUALITY = 'hqdefault';
+    public const THUMBNAIL_MAX_QUALITY = 'maxresdefault';
+    public const SERVICE_NAME = 'Youtube';
 
-    /**
-     * @param string $url
-     * @param string $pattern
-     * @param EmbedRendererInterface $renderer
-     */
-    public function __construct($url, $pattern, EmbedRendererInterface $renderer)
+    public function __construct(string $url, string $pattern, EmbedRendererInterface $renderer)
     {
         preg_match($pattern, $url, $match);
+
         if (isset($match[2])) {
             $videoId = $match[2];
         }
+
         if (empty($videoId)) {
             $videoId = $match[1];
         }
+
         $this->setVideoId($videoId);
 
-        return parent::__construct($url, $pattern, $renderer);
+        parent::__construct($url, $pattern, $renderer);
     }
 
-    /**
-     * Returns the service name (ie: "Youtube" or "Vimeo").
-     *
-     * @return string
-     */
-    public function getServiceName()
+    public function getServiceName(): string
     {
-        return 'Youtube';
+        return self::SERVICE_NAME;
     }
 
-    /**
-     * Returns if the service has a thumbnail image.
-     *
-     * @return bool
-     */
-    public function hasThumbnail()
+    public function hasThumbnail(): bool
     {
         return true;
     }
 
     /**
-     * @param string $size
-     * @param bool $forceSecure
-     * @return string
      * @throws InvalidThumbnailSizeException
      */
-    public function getThumbnail($size, $forceSecure = false)
+    public function getThumbnail(string $size, bool $forceSecure = false): string
     {
-        if (false == in_array($size, $this->getThumbNailSizes())) {
-            throw new InvalidThumbnailSizeException();
+        if (false === in_array($size, $this->getThumbNailSizes(), false)) {
+            throw new InvalidThumbnailSizeException("The size {$size} is not a valid thumbnail size");
         }
 
         return $this->getScheme($forceSecure) . '://img.youtube.com/vi/' . $this->getVideoId() . '/' . $size . '.jpg';
     }
 
-    /**
-     * @return array
-     */
-    public function getThumbNailSizes()
+    public function getThumbNailSizes(): array
     {
-        return array(
+        return [
             self::THUMBNAIL_DEFAULT,
             self::THUMBNAIL_STANDARD_DEFINITION,
             self::THUMBNAIL_MEDIUM_QUALITY,
             self::THUMBNAIL_HIGH_QUALITY,
             self::THUMBNAIL_MAX_QUALITY,
-        );
+        ];
     }
 
-    /**
-     * @param bool $forceAutoplay
-     * @param bool $forceSecure
-     * @return string
-     */
-    public function getEmbedUrl($forceAutoplay = false, $forceSecure = false)
+    public function getEmbedUrl(bool $forceAutoplay = false, bool $forceSecure = false): string
     {
         $queryString = $this->generateQuerystring($forceAutoplay);
 
@@ -106,64 +78,49 @@ class YoutubeServiceAdapter extends AbstractServiceAdapter
     }
 
     /**
-     * Returns the small thumbnail's url.
-     *
-     * @return string
+     * @throws InvalidThumbnailSizeException
      */
-    public function getSmallThumbnail($forceSecure = false)
+    public function getSmallThumbnail(bool $forceSecure = false): string
     {
         return $this->getThumbnail(self::THUMBNAIL_STANDARD_DEFINITION, $forceSecure);
     }
 
     /**
-     * Returns the medium thumbnail's url.
-     *
-     * @return string
+     * @throws InvalidThumbnailSizeException
      */
-    public function getMediumThumbnail($forceSecure = false)
+    public function getMediumThumbnail(bool $forceSecure = false): string
     {
         return $this->getThumbnail(self::THUMBNAIL_MEDIUM_QUALITY, $forceSecure);
     }
 
     /**
-     * Returns the large thumbnail's url.
-     *
-     * @return string
+     * @throws InvalidThumbnailSizeException
      */
-    public function getLargeThumbnail($forceSecure = false)
+    public function getLargeThumbnail(bool $forceSecure = false): string
     {
         return $this->getThumbnail(self::THUMBNAIL_HIGH_QUALITY, $forceSecure);
     }
 
     /**
-     * Returns the largest thumnbnaail's url.
-     *
-     * @return string
+     * @throws InvalidThumbnailSizeException
      */
-    public function getLargestThumbnail($forceSecure = false)
+    public function getLargestThumbnail(bool $forceSecure = false): string
     {
         return $this->getThumbnail(self::THUMBNAIL_MAX_QUALITY, $forceSecure);
     }
 
-    /**
-     * @return bool
-     */
-    public function isEmbeddable()
+    public function isEmbeddable(): bool
     {
         return true;
     }
 
-    /**
-     * @param bool $forceAutoplay
-     * @return array
-     */
-    private function generateQuerystring($forceAutoplay = false)
+    private function generateQuerystring(bool $forceAutoplay = false): array
     {
         parse_str(parse_url($this->rawUrl, PHP_URL_QUERY), $queryString);
         unset($queryString['v']);
 
         if ($forceAutoplay) {
-            $queryString['autoplay'] = (int) $forceAutoplay;
+            $queryString['autoplay'] = (int)$forceAutoplay;
         }
 
         return $queryString;

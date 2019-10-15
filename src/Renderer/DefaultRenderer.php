@@ -1,7 +1,4 @@
-<?php
-/**
- * @author Ricardo Fiorani
- */
+<?php declare(strict_types=1);
 
 namespace RicardoFiorani\Renderer;
 
@@ -13,17 +10,21 @@ class DefaultRenderer implements EmbedRendererInterface
      * to make it not dependant of some html element generator
      * and I'm too lazy/unnecessary to make one of these on my own.
      * Edit: The best I could do is do an sprintf, so...
-     *
-     * @param string $embedUrl
-     * @param int $width
-     * @param int $height
-     *
-     * @return string
      */
-    public function renderVideoEmbedCode($embedUrl, $width, $height)
+    public function renderVideoEmbedCode(string $embedUrl, int $width, int $height): string
     {
+        $format = <<<HTML
+<iframe 
+    width="%s" 
+    height="%s" 
+    src="%s" 
+    frameborder="0" 
+    webkitAllowFullScreen mozallowfullscreen allowFullScreen>
+</iframe>
+HTML;
+
         return sprintf(
-            '<iframe width="%s" height="%s" src="%s" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>',
+            $format,
             $width,
             $height,
             addslashes($embedUrl)

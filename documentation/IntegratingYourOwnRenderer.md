@@ -9,24 +9,19 @@ Basically you need two classes:
 
 The examples can be seem below:
 
-### My Renderer Implementation Class
+### CustomRenderer Implementation Class
 This is the concrete implementation on how your renderer is going to handle the embed URL to give you an embed code.
 In here you can inject any dependency you might need by the constructor and add any logic you need.
 Please note that it should implement the interface "\RicardoFiorani\Renderer\EmbedRendererInterface".
 ```php
-<?php
-namespace MyVendor\MyRenderer;
+<?php declare(strict_types=1);
+
+namespace MyVendor\Renderer;
 use \RicardoFiorani\Renderer\EmbedRendererInterface;
 
-class MyOwnRenderer implements EmbedRendererInterface
+class CustomRenderer implements EmbedRendererInterface
 {
-    /**
-     * @param string $embedUrl
-     * @param integer $height
-     * @param integer $width
-     * @return string
-     */
-    public function renderVideoEmbedCode($embedUrl, $height, $width)
+    public function renderVideoEmbedCode(string $embedUrl, int $height, int $width): string
     {
         //Just for example porpoises
         return sprintf("Hello, I'm embedding %s", addslashes($embedUrl));
@@ -39,28 +34,30 @@ class MyOwnRenderer implements EmbedRendererInterface
 ### My Renderer Implementation Factory Class
 This is the Factory of your renderer, basically all it must do is to implement the interface RicardoFiorani\Renderer\Factory\RendererFactoryInterface
 ```php
-<?php
-namespace MyVendor\MyRenderer\Factory;
+<?php declare(strict_types=1);
+
+namespace MyVendor\Renderer\Factory;
 use RicardoFiorani\Renderer\EmbedRendererInterface;
 use RicardoFiorani\Renderer\Factory\RendererFactoryInterface;
 
-class MyOwnRendererFactory implements RendererFactoryInterface
+class CustomRendererFactory implements RendererFactoryInterface
 {
     /**
      * @return EmbedRendererInterface
      */
-    public function __invoke()
+    public function __invoke(): EmbedRendererInterface
     {
-        return new MyOwnRenderer();
+        return new CustomRenderer();
     }
 }
 ```
-### Registering my renderer 
+### Registering the renderer 
 
 The last part is attaching your own renderer service to the VideoServiceMatcher, which can be done as the example that follows:
 
 ```php
-<?php
+<?php declare(strict_types=1);
+
 use RicardoFiorani\Matcher\VideoServiceMatcher;
 
 require __DIR__ . '/vendor/autoload.php';
@@ -68,7 +65,7 @@ require __DIR__ . '/vendor/autoload.php';
 $vsm = new VideoServiceMatcher();
 
 //This is where you attach your own renderer to be used instead of the default one
-$vsm->getServiceContainer()->setRenderer('MyOwnRenderer', MyVendor\MyRenderer\Factory\MyOwnRendererFactory::class);
+$vsm->getServiceContainer()->setRenderer('CustomRenderer', MyVendor\Renderer\Factory\CustomRendererFactory::class);
 
 $video = $vsm->parse('https://www.youtube.com/watch?v=PkOcm_XaWrw');
 

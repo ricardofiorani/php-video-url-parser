@@ -4,3 +4,6 @@ index.php
 composer.lock
 Dockerfile
 vendor
+.phpunit.result.cache
+docker-compose.yml
+ultimate-test.php

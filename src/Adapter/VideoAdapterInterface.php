@@ -1,101 +1,40 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Ricardo Fiorani
- * Date: 29/08/2015
- * Time: 14:15.
- */
+<?php declare(strict_types=1);
+
 namespace RicardoFiorani\Adapter;
+
+use RicardoFiorani\Exception\NotEmbeddableException;
 
 interface VideoAdapterInterface
 {
-    /**
-     * Returns the service name (ie: "Youtube" or "Vimeo").
-     *
-     * @return string
-     */
-    public function getServiceName();
+    public function getServiceName(): string;
+
+    public function getRawUrl(): string;
+
+    public function hasThumbnail(): bool;
+
+    public function getThumbNailSizes(): array;
+
+    public function getThumbnail(string $size): string;
+
+    public function getSmallThumbnail(bool $forceSecure = false): string;
+
+    public function getMediumThumbnail(bool $forceSecure = false): string;
+
+    public function getLargeThumbnail(bool $forceSecure = false): string;
+
+    public function getLargestThumbnail(bool $forceSecure = false): string;
+
+    public function getEmbedUrl(bool $forceAutoplay = false, bool $forceSecure = false): string;
 
     /**
-     * Returns the input URL.
-     *
-     * @return string
+     * @throws NotEmbeddableException
      */
-    public function getRawUrl();
+    public function getEmbedCode(
+        int $width,
+        int $height,
+        bool $forceAutoplay = false,
+        bool $forceSecure = false
+    ): string;
 
-    /**
-     * Returns if the service has a thumbnail image.
-     *
-     * @return bool
-     */
-    public function hasThumbnail();
-
-    /**
-     * Returns all thumbnails available sizes.
-     *
-     * @return array
-     */
-    public function getThumbNailSizes();
-
-    /**
-     * @param string $size
-     *
-     * @return string
-     */
-    public function getThumbnail($size);
-
-    /**
-     * Returns the small thumbnail's url.
-     *
-     * @param bool $forceSecure
-     * @return string
-     */
-    public function getSmallThumbnail($forceSecure = false);
-
-    /**
-     * Returns the medium thumbnail's url.
-     *
-     * @param bool $forceSecure
-     * @return string
-     */
-    public function getMediumThumbnail($forceSecure = false);
-
-    /**
-     * Returns the large thumbnail's url.
-     *
-     * @param bool $forceSecure
-     * @return string
-     */
-    public function getLargeThumbnail($forceSecure = false);
-
-    /**
-     * Returns the largest thumnbnail's url.
-     *
-     * @param bool $forceSecure
-     * @return string
-     */
-    public function getLargestThumbnail($forceSecure = false);
-
-    /**
-     * @param bool $forceAutoplay
-     * @param bool $forceSecure
-     *
-     * @return string
-     */
-    public function getEmbedUrl($forceAutoplay = false, $forceSecure = false);
-
-    /**
-     * @param int $width
-     * @param int $height
-     * @param bool $forceAutoplay
-     * @param bool $forceSecure
-     *
-     * @return string
-     */
-    public function getEmbedCode($width, $height, $forceAutoplay = false, $forceSecure = false);
-
-    /**
-     * @return bool
-     */
-    public function isEmbeddable();
+    public function isEmbeddable(): bool;
 }
