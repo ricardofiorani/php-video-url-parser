@@ -2,7 +2,7 @@
     "name": "ricardofiorani/php-video-url-parser",
     "description": "A Simple and efficient PHP Video URL Parser that gives you thumbnails and embed codes for various services as Youtube, Vimeo, DailyMotion and Facebook",
     "require-dev": {
-        "phpunit/phpunit": "^4.8 || ^8.*",
+        "phpunit/phpunit": "^4.8 || ^8",
         "fabpot/php-cs-fixer" : ">= 1.0"
     },
     "license": "MIT",
