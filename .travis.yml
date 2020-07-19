@@ -19,11 +19,12 @@ jobs:
       dist: precise
 
 # Dependencies
-#before_install:
-#  - composer self-update
+before_install:
+  - phpenv config-rm xdebug.ini
+  - composer self-update
+  - php -r "echo ini_get('memory_limit').PHP_EOL;"
 
 install:
-  - phpenv config-rm xdebug.ini
   - travis_retry composer update --no-interaction
 
 script:
