@@ -19,8 +19,8 @@ jobs:
       dist: precise
 
 # Dependencies
-before_install:
-  - composer self-update
+#before_install:
+#  - composer self-update
 
 install:
   - phpenv config-rm xdebug.ini
