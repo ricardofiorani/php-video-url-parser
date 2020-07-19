@@ -23,7 +23,7 @@ jobs:
 #  - composer self-update
 
 install:
-  - travis_retry composer update --no-interaction --prefer-source
+  - travis_retry composer update --no-interaction
 
 script:
   - phpunit --verbose --coverage-clover=coverage.clover
