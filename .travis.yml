@@ -25,7 +25,7 @@ before_install:
   - php -r "echo ini_get('memory_limit').PHP_EOL;"
 
 install:
-  - travis_retry composer update --no-interaction
+  - COMPOSER_MEMORY_LIMIT=-1 travis_retry composer install --prefer-dist --no-interaction
 
 script:
   - phpenv config-add xdebug.ini
