@@ -19,13 +19,15 @@ jobs:
       dist: precise
 
 # Dependencies
-#before_install:
-#  - composer self-update
+before_install:
+  - composer self-update
 
 install:
+  - phpenv config-rm xdebug.ini
   - travis_retry composer update --no-interaction
 
 script:
+  - phpenv config-add xdebug.ini
   - phpunit --verbose --coverage-clover=coverage.clover
 
 after_script:
