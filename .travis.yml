@@ -3,32 +3,29 @@ sudo: false
 
 # Setup build matrix
 language: php
-#dist: trusty
-#php:
+dist: trusty
+php:
 #  - 5.4
 #  - 5.5
 #  - 5.6
 #  - 7.0
 #  - 7.1
-#  - 7.2
+  - 7.2
 #  - 7.3
 #  - 7.4
-jobs:
-  include:
-    - php: 5.3
-      dist: precise
+#jobs:
+#  include:
+#    - php: 5.3
+#      dist: precise
 
 # Dependencies
 before_install:
-  - phpenv config-rm xdebug.ini
   - composer self-update
-  - php -r "echo ini_get('memory_limit').PHP_EOL;"
 
 install:
   - COMPOSER_MEMORY_LIMIT=-1 travis_retry composer install --prefer-dist --no-interaction
 
 script:
-  - phpenv config-add xdebug.ini
   - phpunit --verbose --coverage-clover=coverage.clover
 
 after_script:
