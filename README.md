@@ -1,7 +1,3 @@
-# DEPRECATED !
-If you have PHP 7.4 or newer then please use https://github.com/ricardofiorani/oembed instead.  
-This lib will receive only small bugfixes, not new features anymore.
-
 # PHP Video URL Parser
 [![Build Status](https://api.travis-ci.org/ricardofiorani/php-video-url-parser.svg?branch=master)](http://travis-ci.org/ricardofiorani/php-video-url-parser)
 [![Minimum PHP Version](http://img.shields.io/badge/php-%3E%3D%205.3-8892BF.svg)](https://php.net/)
@@ -23,7 +19,7 @@ $ composer require ricardofiorani/php-video-url-parser
 
 ## Requirements
 
-* PHP 5.3
+* PHP 5.3 (PHP 7+ is advised)
 * cURL (Or at least file_get_contents() enabled if you want to use it with Vimeo, otherwise it's not required)
 
 ## Basic Usage
@@ -92,6 +88,8 @@ A Fully functional example can be found [Here](https://github.com/ricardofiorani
 * PHP 7.0
 * PHP 7.1
 * PHP 7.2
+* PHP 7.3
+* PHP 7.4
 
 > Please note that lib is not passing tests on HHVM, therefore, we can't guarantee it will work properly. Please use it on your own risk.
 
