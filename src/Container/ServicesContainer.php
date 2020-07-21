@@ -1,37 +1,31 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Ricardo Fiorani
- * Date: 31/08/2015
- * Time: 21:06.
- */
-namespace RicardoFiorani\Container;
+<?php declare(strict_types = 1);
+namespace RicardoFiorani\VideoUrlParser\Container;
 
-use RicardoFiorani\Adapter\CallableServiceAdapterFactoryInterface;
-use RicardoFiorani\Exception\DuplicatedServiceNameException;
-use RicardoFiorani\Renderer\EmbedRendererInterface;
+use RicardoFiorani\VideoUrlParser\Adapter\CallableServiceAdapterFactoryInterface;
+use RicardoFiorani\VideoUrlParser\Exception\DuplicatedServiceNameException;
+use RicardoFiorani\VideoUrlParser\Renderer\EmbedRendererInterface;
 
 class ServicesContainer
 {
     /**
      * @var array
      */
-    private $services = array();
+    private $services = [];
 
     /**
      * @var array
      */
-    private $patterns = array();
+    private $patterns = [];
 
     /**
      * @var array
      */
-    private $factories = array();
+    private $factories = [];
 
     /**
      * @var array
      */
-    private $instantiatedFactories = array();
+    private $instantiatedFactories = [];
 
     /**
      * @var EmbedRendererInterface
@@ -48,7 +42,7 @@ class ServicesContainer
      *
      * @param array $config
      */
-    public function __construct(array $config = array())
+    public function __construct(array $config = [])
     {
         if (false == empty($config)) {
             $this->registerFromConfig($config);

@@ -5,6 +5,10 @@
 <?php
 namespace MyVendor\ServiceAdapter;
 
+use RicardoFiorani\VideoUrlParser\Adapter\AbstractServiceAdapter;
+use RicardoFiorani\VideoUrlParser\Renderer\EmbedRendererInterface;
+use RicardoFiorani\VideoUrlParser\Exception\InvalidThumbnailSizeException;
+
 //Your service Adapter must implement VideoAdapterInterface or Extend AbstractServiceAdapter
 class DailymotionServiceAdapter extends AbstractServiceAdapter
 {
@@ -90,8 +94,6 @@ class DailymotionServiceAdapter extends AbstractServiceAdapter
      * Returns the medium thumbnail's url.
      *
      * @param bool $forceSecure
-     * @return string
-     * @throws InvalidThumbnailSizeException
      */
     public function getMediumThumbnail($forceSecure = false)
     {
@@ -103,8 +105,6 @@ class DailymotionServiceAdapter extends AbstractServiceAdapter
      * Returns the large thumbnail's url.
      *
      * @param bool $forceSecure
-     * @return string
-     * @throws InvalidThumbnailSizeException
      */
     public function getLargeThumbnail($forceSecure = false)
     {
@@ -115,8 +115,6 @@ class DailymotionServiceAdapter extends AbstractServiceAdapter
     /**
      * Returns the largest thumnbnaail's url.
      * @param bool $forceSecure
-     * @return string
-     * @throws InvalidThumbnailSizeException
      */
     public function getLargestThumbnail($forceSecure = false)
     {
@@ -148,11 +146,11 @@ class DailymotionServiceAdapter extends AbstractServiceAdapter
 <?php
 namespace MyVendor\ServiceAdapter\Factory;
 
-use MyVendor\ServiceAdapter\DailymotionServiceAdapter;
-use RicardoFiorani\Adapter\VideoAdapterInterface;
-use RicardoFiorani\Renderer\EmbedRendererInterface;
+use MyVendor\ServiceAdapter\MyOwnServiceAdapter;
+use RicardoFiorani\VideoUrlParser\Renderer\EmbedRendererInterface;
+use RicardoFiorani\VideoUrlParser\Adapter\VideoAdapterInterface;
 
-class DailymotionServiceAdapterFactory implements \RicardoFiorani\Adapter\CallableServiceAdapterFactoryInterface
+class MyOwnServiceAdapterFactory implements \RicardoFiorani\Adapter\CallableServiceAdapterFactoryInterface
 {
     /**
      * @param string $url
@@ -162,9 +160,7 @@ class DailymotionServiceAdapterFactory implements \RicardoFiorani\Adapter\Callab
      */
     public function __invoke($url, $pattern, EmbedRendererInterface $renderer)
     {
-        $dailyMotionServiceAdapter = new DailymotionServiceAdapter($url, $pattern, $renderer);
-
-        return $dailyMotionServiceAdapter;
+        return new MyOwnServiceAdapter($url, $pattern, $renderer);
     }
 }
 ```
@@ -179,18 +175,18 @@ require __DIR__ . '/vendor/autoload.php';
 
 $vsd = new VideoServiceMatcher();
 //The Service Name
-$serviceName = 'Dailymotion';
+$serviceName = 'MyOwnService';
 
 //The Pattern used to identify this service
 //You can use multiple, but make sure your ServiceAdapter can handle it properly
 $patterns = array(
-    '#https?://www.dailymotion.com/video/([A-Za-z0-9]+)#s'
+    '#https?://www.myownwebsite.com/video/([A-Za-z0-9]+)#s'
 );
 
 //Register the new service
-$vsd->getServiceContainer()->registerService($serviceName, $patterns, MyVendor\ServiceAdapter\Factory\DailymotionServiceAdapterFactory::class);
+$vsd->getServiceContainer()->registerService($serviceName, $patterns, MyVendor\ServiceAdapter\Factory\MyOwnServiceAdapterFactory::class);
 
-//This will get you an DailymotionServiceAdapter
+//This will get you an MyVendor\ServiceAdapter\MyOwnServiceAdapter
 $video = $vsd->parse('http://www.dailymotion.com/video/x33ncwc_kittens-fight-in-tiny-boxing-ring_animals');
 
 ```

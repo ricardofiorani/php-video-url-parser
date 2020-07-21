@@ -1,19 +1,15 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Ricardo Fiorani
- * Date: 10/02/2016
- * Time: 15:47
- */
+<?php declare(strict_types=1);
 
-namespace RicardoFiorani\Test\Adapter;
+namespace RicardoFiorani\Tests\VideoUrlParser\Adapter;
 
-use PHPUnit_Framework_TestCase;
-use RicardoFiorani\Adapter\Facebook\FacebookServiceAdapter;
-use RicardoFiorani\Matcher\VideoServiceMatcher;
-use RicardoFiorani\Exception\ServiceNotAvailableException;
+use PHPUnit\Framework\TestCase;
+use RicardoFiorani\VideoUrlParser\Adapter\Facebook\FacebookServiceAdapter;
+use RicardoFiorani\VideoUrlParser\Exception\InvalidThumbnailSizeException;
+use RicardoFiorani\VideoUrlParser\Exception\ServiceNotAvailableException;
+use RicardoFiorani\VideoUrlParser\Exception\ThumbnailSizeNotAvailable;
+use RicardoFiorani\VideoUrlParser\Matcher\VideoServiceMatcher;
 
-class FacebookServiceAdapterTest extends PHPUnit_Framework_TestCase
+class FacebookServiceAdapterTest extends TestCase
 {
     /**
      * @dataProvider exampleUrlDataProvider
@@ -22,7 +18,7 @@ class FacebookServiceAdapterTest extends PHPUnit_Framework_TestCase
     public function testServiceNameIsString($url)
     {
         $facebookVideo = $this->getMockingObject($url);
-        $this->assertInternalType('string', $facebookVideo->getServiceName());
+        $this->assertIsString($facebookVideo->getServiceName());
     }
 
     /**
@@ -32,7 +28,7 @@ class FacebookServiceAdapterTest extends PHPUnit_Framework_TestCase
     public function testHasThumbnailIsBoolean($url)
     {
         $facebookVideo = $this->getMockingObject($url);
-        $this->assertInternalType('bool', $facebookVideo->hasThumbnail());
+        $this->assertIsBool($facebookVideo->hasThumbnail());
     }
 
     /**
@@ -42,7 +38,7 @@ class FacebookServiceAdapterTest extends PHPUnit_Framework_TestCase
     public function testGetThumbnailSizesIsArray($url)
     {
         $facebookVideo = $this->getMockingObject($url);
-        $this->assertInternalType('array', $facebookVideo->getThumbNailSizes());
+        $this->assertIsArray($facebookVideo->getThumbNailSizes());
     }
 
     /**
@@ -52,12 +48,10 @@ class FacebookServiceAdapterTest extends PHPUnit_Framework_TestCase
     public function testIfGetThumbnailIsString($url)
     {
         $facebookVideo = $this->getMockingObject($url);
-        $this->assertInternalType('string',
+        $this->assertIsString(
             $facebookVideo->getThumbnail(FacebookServiceAdapter::THUMBNAIL_SIZE_DEFAULT));
-
-        $this->assertInternalType('string', $facebookVideo->getMediumThumbnail());
-
-        $this->assertInternalType('string', $facebookVideo->getLargestThumbnail());
+        $this->assertIsString($facebookVideo->getMediumThumbnail());
+        $this->assertIsString($facebookVideo->getLargestThumbnail());
     }
 
     /**
@@ -67,7 +61,7 @@ class FacebookServiceAdapterTest extends PHPUnit_Framework_TestCase
     public function testThrowsExceptionOnRequestThumbnailWithAnInvalidSize($url)
     {
         $facebookVideo = $this->getMockingObject($url);
-        $this->setExpectedException('\\RicardoFiorani\\Exception\\InvalidThumbnailSizeException');
+        $this->expectException(InvalidThumbnailSizeException::class);
         $facebookVideo->getThumbnail('This Size does not exists :)');
     }
 
@@ -78,7 +72,7 @@ class FacebookServiceAdapterTest extends PHPUnit_Framework_TestCase
     public function testGetSmallThumbnailThrowsException($url)
     {
         $facebookVideo = $this->getMockingObject($url);
-        $this->setExpectedException('\\RicardoFiorani\\Exception\\ThumbnailSizeNotAvailable');
+        $this->expectException(ThumbnailSizeNotAvailable::class);
         $facebookVideo->getSmallThumbnail();
     }
 
@@ -89,7 +83,7 @@ class FacebookServiceAdapterTest extends PHPUnit_Framework_TestCase
     public function testGetLargeThumbnailThrowsException($url)
     {
         $facebookVideo = $this->getMockingObject($url);
-        $this->setExpectedException('\\RicardoFiorani\\Exception\\ThumbnailSizeNotAvailable');
+        $this->expectException(ThumbnailSizeNotAvailable::class);
         $facebookVideo->getLargeThumbnail();
     }
 
@@ -101,7 +95,7 @@ class FacebookServiceAdapterTest extends PHPUnit_Framework_TestCase
     public function testIfEmbedUrlIsString($url)
     {
         $facebookVideo = $this->getMockingObject($url);
-        $this->assertInternalType('string', $facebookVideo->getEmbedUrl());
+        $this->assertIsString($facebookVideo->getEmbedUrl());
     }
 
     /**
@@ -112,7 +106,7 @@ class FacebookServiceAdapterTest extends PHPUnit_Framework_TestCase
     {
         $videoObject = $this->getMockingObject($url);
         $embedUrl = $videoObject->getEmbedUrl(false, true);
-        $this->assertContains('https', $embedUrl);
+        $this->assertStringContainsStringIgnoringCase('https', $embedUrl);
 
         $embedUrl = $videoObject->getEmbedUrl(false, false);
         $this->assertEquals(parse_url($url, PHP_URL_SCHEME), parse_url($embedUrl, PHP_URL_SCHEME));
@@ -133,11 +127,11 @@ class FacebookServiceAdapterTest extends PHPUnit_Framework_TestCase
      */
     public function exampleUrlDataProvider()
     {
-        return array(
-            array(
+        return [
+            [
                 'https://www.facebook.com/zuck/videos/10102367711349271'
-            ),
-        );
+            ],
+        ];
     }
 
     /**

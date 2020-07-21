@@ -1,11 +1,11 @@
-<?php
+<?php declare(strict_types = 1);
 
-namespace RicardoFiorani\Matcher;
+namespace RicardoFiorani\VideoUrlParser\Matcher;
 
-use RicardoFiorani\Adapter\VideoAdapterInterface;
-use RicardoFiorani\Container\Factory\ServicesContainerFactory;
-use RicardoFiorani\Container\ServicesContainer;
-use RicardoFiorani\Exception\ServiceNotAvailableException;
+use RicardoFiorani\VideoUrlParser\Adapter\VideoAdapterInterface;
+use RicardoFiorani\VideoUrlParser\Container\Factory\ServicesContainerFactory;
+use RicardoFiorani\VideoUrlParser\Container\ServicesContainer;
+use RicardoFiorani\VideoUrlParser\Exception\ServiceNotAvailableException;
 
 /**
  * @author Ricardo Fiorani
@@ -20,7 +20,7 @@ class VideoServiceMatcher
     /**
      * @var array
      */
-    private $parsedUrls = array();
+    private $parsedUrls = [];
 
     /**
      * VideoServiceMatcher constructor.

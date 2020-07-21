@@ -1,11 +1,5 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Ricardo Fiorani
- * Date: 29/08/2015
- * Time: 23:44.
- */
-namespace RicardoFiorani\Exception;
+<?php declare(strict_types = 1);
+namespace RicardoFiorani\VideoUrlParser\Exception;
 
 use Exception;
 

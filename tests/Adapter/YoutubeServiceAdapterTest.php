@@ -1,95 +1,81 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Ricardo Fiorani
- * Date: 10/02/2016
- * Time: 16:10
- */
+<?php declare(strict_types=1);
 
-namespace RicardoFiorani\Test\Adapter;
+namespace RicardoFiorani\Tests\VideoUrlParser\Adapter;
 
+use PHPUnit\Framework\TestCase;
+use RicardoFiorani\VideoUrlParser\Adapter\Youtube\YoutubeServiceAdapter;
+use RicardoFiorani\VideoUrlParser\Exception\InvalidThumbnailSizeException;
+use RicardoFiorani\VideoUrlParser\Matcher\VideoServiceMatcher;
+use RicardoFiorani\VideoUrlParser\Exception\ServiceNotAvailableException;
 
-use PHPUnit_Framework_TestCase;
-use RicardoFiorani\Adapter\Youtube\YoutubeServiceAdapter;
-use RicardoFiorani\Matcher\VideoServiceMatcher;
-use RicardoFiorani\Exception\ServiceNotAvailableException;
-
-class YoutubeServiceAdapterTest extends PHPUnit_Framework_TestCase
+class YoutubeServiceAdapterTest extends TestCase
 {
-
     /**
      * @dataProvider exampleUrlDataProvider
-     * @param string $url
      */
     public function testServiceNameIsString($url)
     {
         $youtubeVideo = $this->getMockingObject($url);
-        $this->assertInternalType('string', $youtubeVideo->getServiceName());
+        $this->assertIsString($youtubeVideo->getServiceName());
     }
 
     /**
      * @dataProvider exampleUrlDataProvider
-     * @param string $url
      */
     public function testHasThumbnailIsBoolean($url)
     {
         $youtubeVideo = $this->getMockingObject($url);
-        $this->assertInternalType('bool', $youtubeVideo->hasThumbnail());
+        $this->assertIsBool($youtubeVideo->hasThumbnail());
     }
 
     /**
      * @dataProvider exampleUrlDataProvider
-     * @param string $url
      */
     public function testGetThumbnailSizesIsArray($url)
     {
         $youtubeVideo = $this->getMockingObject($url);
-        $this->assertInternalType('array', $youtubeVideo->getThumbNailSizes());
+        $this->assertIsArray($youtubeVideo->getThumbNailSizes());
     }
 
     /**
      * @dataProvider exampleUrlDataProvider
-     * @param string $url
      */
     public function testIfGetThumbnailIsString($url)
     {
         $youtubeVideo = $this->getMockingObject($url);
-        $this->assertInternalType('string', $youtubeVideo->getSmallThumbnail());
-        $this->assertInternalType('string', $youtubeVideo->getMediumThumbnail());
-        $this->assertInternalType('string', $youtubeVideo->getLargeThumbnail());
-        $this->assertInternalType('string', $youtubeVideo->getLargestThumbnail());
+        $this->assertIsString($youtubeVideo->getSmallThumbnail());
+        $this->assertIsString($youtubeVideo->getMediumThumbnail());
+        $this->assertIsString($youtubeVideo->getLargeThumbnail());
+        $this->assertIsString($youtubeVideo->getLargestThumbnail());
     }
 
     /**
      * @dataProvider exampleUrlDataProvider
-     * @param string $url
      */
     public function testThrowsExceptionOnRequestThumbnailWithAnInvalidSize($url)
     {
         $youtubeVideo = $this->getMockingObject($url);
-        $this->setExpectedException('\\RicardoFiorani\\Exception\\InvalidThumbnailSizeException');
+        $this->expectException(InvalidThumbnailSizeException::class);
         $youtubeVideo->getThumbnail('This Size does not exists :)');
     }
 
     /**
      * @dataProvider exampleUrlDataProvider
-     * @param string $url
      */
     public function testIfEmbedUrlIsString($url)
     {
         $youtubeVideo = $this->getMockingObject($url);
-        $this->assertInternalType('string', $youtubeVideo->getEmbedUrl());
+        $this->assertIsString($youtubeVideo->getEmbedUrl());
     }
 
     /**
      * @dataProvider exampleUrlDataProvider
-     * @param string $url
      */
     public function testIfGetEmbedUrlUsesRightScheme($url)
     {
         $videoObject = $this->getMockingObject($url);
         $embedUrl = $videoObject->getEmbedUrl(false, true);
-        $this->assertContains('https', $embedUrl);
+        $this->assertStringContainsStringIgnoringCase('https', $embedUrl);
 
         $embedUrl = $videoObject->getEmbedUrl(false, false);
         $this->assertEquals(parse_url($url, PHP_URL_SCHEME), parse_url($embedUrl, PHP_URL_SCHEME));
@@ -110,14 +96,14 @@ class YoutubeServiceAdapterTest extends PHPUnit_Framework_TestCase
      */
     public function exampleUrlDataProvider()
     {
-        return array(
-            array(
+        return [
+            [
                 'https://www.youtube.com/watch?v=uarCDXc3BjU',
                 'https://youtu.be/uarCDXc3BjU',
                 'http://youtu.be/uarBDXc3BjU',
-                '<iframe width="560" height="315" src="https://www.youtube.com/embed/uarCDXc3BjU" frameborder="0" allowfullscreen></iframe>',
-            ),
-        );
+                '<iframe width="560" height="315" src="https://www.youtube.com/embed/uarCDXc3BjU" allowfullscreen></iframe>',
+            ],
+        ];
     }
 
     /**

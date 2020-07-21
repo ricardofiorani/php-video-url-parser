@@ -1,16 +1,16 @@
-<?php
+<?php declare(strict_types = 1);
 /**
  * Created by PhpStorm.
  * User: Ricardo Fiorani
  * Date: 02/09/2015
  * Time: 22:42.
  */
-namespace RicardoFiorani\Adapter\Facebook;
+namespace RicardoFiorani\VideoUrlParser\Adapter\Facebook;
 
-use RicardoFiorani\Adapter\AbstractServiceAdapter;
-use RicardoFiorani\Exception\InvalidThumbnailSizeException;
-use RicardoFiorani\Exception\ThumbnailSizeNotAvailable;
-use RicardoFiorani\Renderer\EmbedRendererInterface;
+use RicardoFiorani\VideoUrlParser\Adapter\AbstractServiceAdapter;
+use RicardoFiorani\VideoUrlParser\Exception\InvalidThumbnailSizeException;
+use RicardoFiorani\VideoUrlParser\Exception\ThumbnailSizeNotAvailable;
+use RicardoFiorani\VideoUrlParser\Renderer\EmbedRendererInterface;
 
 class FacebookServiceAdapter extends AbstractServiceAdapter
 {
@@ -25,7 +25,7 @@ class FacebookServiceAdapter extends AbstractServiceAdapter
      */
     public function __construct($url, $pattern, EmbedRendererInterface $renderer)
     {
-        $match = array();
+        $match = [];
         preg_match($pattern, $url, $match);
         $this->setVideoId($match[1]);
 
@@ -59,7 +59,7 @@ class FacebookServiceAdapter extends AbstractServiceAdapter
      */
     public function getThumbNailSizes()
     {
-        return array(self::THUMBNAIL_SIZE_DEFAULT);
+        return [self::THUMBNAIL_SIZE_DEFAULT];
     }
 
     /**

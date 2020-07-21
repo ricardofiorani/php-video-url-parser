@@ -1,11 +1,5 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Ricardo Fiorani
- * Date: 29/08/2015
- * Time: 14:15.
- */
-namespace RicardoFiorani\Adapter;
+<?php declare(strict_types = 1);
+namespace RicardoFiorani\VideoUrlParser\Adapter;
 
 interface VideoAdapterInterface
 {

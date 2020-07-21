@@ -1,9 +1,9 @@
-<?php
+<?php declare(strict_types = 1);
 /**
  * @author Ricardo Fiorani
  */
 
-namespace RicardoFiorani\Renderer;
+namespace RicardoFiorani\VideoUrlParser\Renderer;
 
 class DefaultRenderer implements EmbedRendererInterface
 {
@@ -23,7 +23,7 @@ class DefaultRenderer implements EmbedRendererInterface
     public function renderVideoEmbedCode($embedUrl, $width, $height)
     {
         return sprintf(
-            '<iframe width="%s" height="%s" src="%s" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>',
+            '<iframe width="%s" height="%s" src="%s" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>',
             $width,
             $height,
             addslashes($embedUrl)

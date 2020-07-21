@@ -1,16 +1,10 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Ricardo Fiorani
- * Date: 30/08/2015
- * Time: 14:40.
- */
-namespace RicardoFiorani\Adapter\Dailymotion\Factory;
+<?php declare(strict_types = 1);
+namespace RicardoFiorani\VideoUrlParser\Adapter\Dailymotion\Factory;
 
-use RicardoFiorani\Adapter\Dailymotion\DailymotionServiceAdapter;
-use RicardoFiorani\Adapter\CallableServiceAdapterFactoryInterface;
-use RicardoFiorani\Adapter\VideoAdapterInterface;
-use RicardoFiorani\Renderer\EmbedRendererInterface;
+use RicardoFiorani\VideoUrlParser\Adapter\Dailymotion\DailymotionServiceAdapter;
+use RicardoFiorani\VideoUrlParser\Adapter\CallableServiceAdapterFactoryInterface;
+use RicardoFiorani\VideoUrlParser\Adapter\VideoAdapterInterface;
+use RicardoFiorani\VideoUrlParser\Renderer\EmbedRendererInterface;
 
 class DailymotionServiceAdapterFactory implements CallableServiceAdapterFactoryInterface
 {

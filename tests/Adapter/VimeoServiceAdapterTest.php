@@ -1,115 +1,98 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Ricardo Fiorani
- * Date: 10/02/2016
- * Time: 17:27
- */
+<?php declare(strict_types = 1);
+namespace RicardoFiorani\Tests\VideoUrlParser\Adapter;
 
-namespace RicardoFiorani\Test\Adapter;
+use PHPUnit\Framework\TestCase;
+use RicardoFiorani\VideoUrlParser\Adapter\Vimeo\VimeoServiceAdapter;
+use RicardoFiorani\VideoUrlParser\Exception\InvalidThumbnailSizeException;
+use RicardoFiorani\VideoUrlParser\Matcher\VideoServiceMatcher;
+use RicardoFiorani\VideoUrlParser\Exception\ServiceNotAvailableException;
 
-
-use PHPUnit_Framework_TestCase;
-use RicardoFiorani\Adapter\Vimeo\VimeoServiceAdapter;
-use RicardoFiorani\Matcher\VideoServiceMatcher;
-use RicardoFiorani\Exception\ServiceNotAvailableException;
-
-class VimeoServiceAdapterTest extends PHPUnit_Framework_TestCase
+class VimeoServiceAdapterTest extends TestCase
 {
-
     /**
      * @dataProvider exampleUrlDataProvider
-     * @param string $url
      */
     public function testServiceNameIsString($url)
     {
         $vimeoVideo = $this->getMockingObject($url);
-        $this->assertInternalType('string', $vimeoVideo->getServiceName());
+        $this->assertIsString( $vimeoVideo->getServiceName());
     }
 
     /**
      * @dataProvider exampleUrlDataProvider
-     * @param string $url
      */
     public function testVideoTitleIsString($url)
     {
         $vimeoVideo = $this->getMockingObject($url);
-        $this->assertInternalType('string', $vimeoVideo->getTitle());
+        $this->assertIsString( $vimeoVideo->getTitle());
     }
 
     /**
      * @dataProvider exampleUrlDataProvider
-     * @param string $url
      */
     public function testVideoDescriptionIsString($url)
     {
         $vimeoVideo = $this->getMockingObject($url);
-        $this->assertInternalType('string', $vimeoVideo->getDescription());
+        $this->assertIsString( $vimeoVideo->getDescription());
     }
 
     /**
      * @dataProvider exampleUrlDataProvider
-     * @param string $url
      */
     public function testHasThumbnailIsBoolean($url)
     {
         $vimeoVideo = $this->getMockingObject($url);
-        $this->assertInternalType('bool', $vimeoVideo->hasThumbnail());
+        $this->assertIsBool($vimeoVideo->hasThumbnail());
     }
 
     /**
      * @dataProvider exampleUrlDataProvider
-     * @param string $url
      */
     public function testGetThumbnailSizesIsArray($url)
     {
         $vimeoVideo = $this->getMockingObject($url);
-        $this->assertInternalType('array', $vimeoVideo->getThumbNailSizes());
+        $this->assertIsArray($vimeoVideo->getThumbNailSizes());
     }
 
     /**
      * @dataProvider exampleUrlDataProvider
-     * @param string $url
      */
     public function testIfGetThumbnailIsString($url)
     {
         $vimeoVideo = $this->getMockingObject($url);
-        $this->assertInternalType('string', $vimeoVideo->getSmallThumbnail());
-        $this->assertInternalType('string', $vimeoVideo->getMediumThumbnail());
-        $this->assertInternalType('string', $vimeoVideo->getLargeThumbnail());
-        $this->assertInternalType('string', $vimeoVideo->getLargestThumbnail());
+        $this->assertIsString( $vimeoVideo->getSmallThumbnail());
+        $this->assertIsString( $vimeoVideo->getMediumThumbnail());
+        $this->assertIsString( $vimeoVideo->getLargeThumbnail());
+        $this->assertIsString( $vimeoVideo->getLargestThumbnail());
     }
 
     /**
      * @dataProvider exampleUrlDataProvider
-     * @param string $url
      */
     public function testThrowsExceptionOnRequestThumbnailWithAnInvalidSize($url)
     {
         $vimeoVideo = $this->getMockingObject($url);
-        $this->setExpectedException('\\RicardoFiorani\\Exception\\InvalidThumbnailSizeException');
+        $this->expectException(InvalidThumbnailSizeException::class);
         $vimeoVideo->getThumbnail('This Size does not exists :)');
     }
 
     /**
      * @dataProvider exampleUrlDataProvider
-     * @param string $url
      */
     public function testGetEmbedUrl($url)
     {
         $vimeoVideo = $this->getMockingObject($url);
-        $this->assertInternalType('string', $vimeoVideo->getEmbedUrl());
+        $this->assertIsString( $vimeoVideo->getEmbedUrl());
     }
 
     /**
      * @dataProvider exampleUrlDataProvider
-     * @param string $url
      */
     public function testIfGetEmbedUrlUsesRightScheme($url)
     {
         $videoObject = $this->getMockingObject($url);
         $embedUrl = $videoObject->getEmbedUrl(false, true);
-        $this->assertContains('https', $embedUrl);
+        $this->assertStringContainsStringIgnoringCase('https', $embedUrl);
 
         $embedUrl = $videoObject->getEmbedUrl(false, false);
         $this->assertEquals(parse_url($url, PHP_URL_SCHEME), parse_url($embedUrl, PHP_URL_SCHEME));
@@ -117,7 +100,6 @@ class VimeoServiceAdapterTest extends PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider exampleUrlDataProvider
-     * @param string $url
      */
     public function testIfIsEmbeddable($url)
     {
@@ -130,12 +112,12 @@ class VimeoServiceAdapterTest extends PHPUnit_Framework_TestCase
      */
     public function exampleUrlDataProvider()
     {
-        return array(
-            array(
+        return [
+            [
                 'https://vimeo.com/8733915',
                 'https://vimeo.com/channels/staffpicks/154766467',
-            ),
-        );
+            ],
+        ];
     }
 
     /**

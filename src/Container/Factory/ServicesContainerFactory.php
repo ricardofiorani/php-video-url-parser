@@ -1,22 +1,14 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Ricardo Fiorani
- * Date: 31/08/2015
- * Time: 21:07.
- */
-namespace RicardoFiorani\Container\Factory;
+<?php declare(strict_types = 1);
+namespace RicardoFiorani\VideoUrlParser\Container\Factory;
 
-use RicardoFiorani\Container\ServicesContainer;
+use RicardoFiorani\VideoUrlParser\Container\ServicesContainer;
 
 class ServicesContainerFactory
 {
     public function __invoke()
     {
         $configFile = require __DIR__.'/../../../config/config.php';
-        $servicesContainer = new ServicesContainer($configFile);
-
-        return $servicesContainer;
+        return new ServicesContainer($configFile);
     }
 
     public static function createNewServiceMatcher()

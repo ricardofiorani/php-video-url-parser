@@ -1,16 +1,9 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Ricardo Fiorani
- * Date: 29/08/2015
- * Time: 14:53.
- */
+<?php declare(strict_types = 1);
+namespace RicardoFiorani\VideoUrlParser\Adapter\Youtube;
 
-namespace RicardoFiorani\Adapter\Youtube;
-
-use RicardoFiorani\Adapter\AbstractServiceAdapter;
-use RicardoFiorani\Exception\InvalidThumbnailSizeException;
-use RicardoFiorani\Renderer\EmbedRendererInterface;
+use RicardoFiorani\VideoUrlParser\Adapter\AbstractServiceAdapter;
+use RicardoFiorani\VideoUrlParser\Exception\InvalidThumbnailSizeException;
+use RicardoFiorani\VideoUrlParser\Renderer\EmbedRendererInterface;
 
 class YoutubeServiceAdapter extends AbstractServiceAdapter
 {
@@ -79,13 +72,13 @@ class YoutubeServiceAdapter extends AbstractServiceAdapter
      */
     public function getThumbNailSizes()
     {
-        return array(
+        return [
             self::THUMBNAIL_DEFAULT,
             self::THUMBNAIL_STANDARD_DEFINITION,
             self::THUMBNAIL_MEDIUM_QUALITY,
             self::THUMBNAIL_HIGH_QUALITY,
             self::THUMBNAIL_MAX_QUALITY,
-        );
+        ];
     }
 
     /**

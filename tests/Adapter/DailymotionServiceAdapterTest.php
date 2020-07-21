@@ -1,20 +1,14 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Ricardo Fiorani
- * Date: 02/09/2015
- * Time: 23:55
- */
+<?php declare(strict_types = 1);
+namespace RicardoFiorani\Tests\VideoUrlParser\Adapter;
 
-namespace RicardoFiorani\Test\Adapter;
-
-use PHPUnit_Framework_TestCase;
-use RicardoFiorani\Adapter\Dailymotion\DailymotionServiceAdapter;
-use RicardoFiorani\Matcher\VideoServiceMatcher;
-use RicardoFiorani\Exception\ServiceNotAvailableException;
+use PHPUnit\Framework\TestCase;
+use RicardoFiorani\VideoUrlParser\Adapter\Dailymotion\DailymotionServiceAdapter;
+use RicardoFiorani\VideoUrlParser\Exception\InvalidThumbnailSizeException;
+use RicardoFiorani\VideoUrlParser\Exception\ServiceNotAvailableException;
+use RicardoFiorani\VideoUrlParser\Matcher\VideoServiceMatcher;
 
 
-class DailymotionServiceAdapterTest extends PHPUnit_Framework_TestCase
+class DailymotionServiceAdapterTest extends TestCase
 {
 
     /**
@@ -24,7 +18,7 @@ class DailymotionServiceAdapterTest extends PHPUnit_Framework_TestCase
     public function testServiceNameIsString($url)
     {
         $dailymotionVideo = $this->getMockingObject($url);
-        $this->assertInternalType('string', $dailymotionVideo->getServiceName());
+        $this->assertIsString( $dailymotionVideo->getServiceName());
     }
 
     /**
@@ -34,7 +28,7 @@ class DailymotionServiceAdapterTest extends PHPUnit_Framework_TestCase
     public function testHasThumbnailIsBoolean($url)
     {
         $dailymotionVideo = $this->getMockingObject($url);
-        $this->assertInternalType('bool', $dailymotionVideo->hasThumbnail());
+        $this->assertIsBool( $dailymotionVideo->hasThumbnail());
     }
 
     /**
@@ -44,7 +38,7 @@ class DailymotionServiceAdapterTest extends PHPUnit_Framework_TestCase
     public function testGetThumbnailSizesIsArray($url)
     {
         $dailymotionVideo = $this->getMockingObject($url);
-        $this->assertInternalType('array', $dailymotionVideo->getThumbNailSizes());
+        $this->assertIsArray($dailymotionVideo->getThumbNailSizes());
     }
 
     /**
@@ -54,12 +48,12 @@ class DailymotionServiceAdapterTest extends PHPUnit_Framework_TestCase
     public function testIfGetThumbnailIsString($url)
     {
         $dailymotionVideo = $this->getMockingObject($url);
-        $this->assertInternalType('string',
+        $this->assertIsString(
             $dailymotionVideo->getThumbnail(DailymotionServiceAdapter::THUMBNAIL_DEFAULT));
-        $this->assertInternalType('string', $dailymotionVideo->getSmallThumbnail());
-        $this->assertInternalType('string', $dailymotionVideo->getMediumThumbnail());
-        $this->assertInternalType('string', $dailymotionVideo->getLargeThumbnail());
-        $this->assertInternalType('string', $dailymotionVideo->getLargestThumbnail());
+        $this->assertIsString( $dailymotionVideo->getSmallThumbnail());
+        $this->assertIsString( $dailymotionVideo->getMediumThumbnail());
+        $this->assertIsString( $dailymotionVideo->getLargeThumbnail());
+        $this->assertIsString( $dailymotionVideo->getLargestThumbnail());
     }
 
     /**
@@ -69,7 +63,7 @@ class DailymotionServiceAdapterTest extends PHPUnit_Framework_TestCase
     public function testThrowsExceptionOnRequestThumbnailWithAnInvalidSize($url)
     {
         $dailymotionVideo = $this->getMockingObject($url);
-        $this->setExpectedException('\\RicardoFiorani\\Exception\\InvalidThumbnailSizeException');
+        $this->expectException(InvalidThumbnailSizeException::class);
         $dailymotionVideo->getThumbnail('This Size does not exists :)');
     }
 
@@ -80,7 +74,7 @@ class DailymotionServiceAdapterTest extends PHPUnit_Framework_TestCase
     public function testIfGetEmbedUrl($url)
     {
         $dailymotionVideo = $this->getMockingObject($url);
-        $this->assertInternalType('string', $dailymotionVideo->getEmbedUrl());
+        $this->assertIsString( $dailymotionVideo->getEmbedUrl());
     }
 
     /**
@@ -91,7 +85,7 @@ class DailymotionServiceAdapterTest extends PHPUnit_Framework_TestCase
     {
         $videoObject = $this->getMockingObject($url);
         $embedUrl = $videoObject->getEmbedUrl(false, true);
-        $this->assertContains('https', $embedUrl);
+        $this->assertStringContainsStringIgnoringCase('https', $embedUrl);
 
         $embedUrl = $videoObject->getEmbedUrl(false, false);
         $this->assertEquals(parse_url($url, PHP_URL_SCHEME), parse_url($embedUrl, PHP_URL_SCHEME));
@@ -112,11 +106,11 @@ class DailymotionServiceAdapterTest extends PHPUnit_Framework_TestCase
      */
     public function exampleUrlDataProvider()
     {
-        return array(
-            array(
+        return [
+            [
                 'http://www.dailymotion.com/video/x332a71_que-categoria-jogador-lucas-lima-faz-golaco-em-treino-do-santos_sport'
-            ),
-        );
+            ],
+        ];
     }
 
     /**

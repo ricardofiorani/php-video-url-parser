@@ -1,20 +1,13 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Ricardo Fiorani
- * Date: 10/02/2016
- * Time: 18:55
- */
+<?php declare(strict_types = 1);
+namespace RicardoFiorani\Tests\VideoUrlParser\Adapter;
 
-namespace RicardoFiorani\Test\Adapter;
+use PHPUnit\Framework\TestCase;
+use RicardoFiorani\VideoUrlParser\Adapter\Facebook\FacebookServiceAdapter;
+use RicardoFiorani\VideoUrlParser\Exception\ServiceNotAvailableException;
+use RicardoFiorani\VideoUrlParser\Matcher\VideoServiceMatcher;
+use RicardoFiorani\VideoUrlParser\Renderer\DefaultRenderer;
 
-use PHPUnit_Framework_TestCase;
-use RicardoFiorani\Adapter\Facebook\FacebookServiceAdapter;
-use RicardoFiorani\Exception\ServiceNotAvailableException;
-use RicardoFiorani\Matcher\VideoServiceMatcher;
-use RicardoFiorani\Renderer\DefaultRenderer;
-
-class AbstractServiceAdapterTest extends PHPUnit_Framework_TestCase
+class AbstractServiceAdapterTest extends TestCase
 {
 
     /**
@@ -24,7 +17,7 @@ class AbstractServiceAdapterTest extends PHPUnit_Framework_TestCase
     public function testGetRawUrl($url)
     {
         $facebookVideo = $this->getMockingObject($url);
-        $this->assertInternalType('string', $facebookVideo->getRawUrl());
+        $this->assertIsString($facebookVideo->getRawUrl());
     }
 
     /**
@@ -34,7 +27,7 @@ class AbstractServiceAdapterTest extends PHPUnit_Framework_TestCase
     public function testSetRawUrl($url)
     {
         $facebookVideo = $this->getMockingObject($url);
-        $testUrl = 'http://test.unit';
+        $testUrl = 'http://tests.unit';
         $facebookVideo->setRawUrl($testUrl);
         $this->assertEquals($testUrl, $facebookVideo->getRawUrl());
     }
@@ -46,7 +39,7 @@ class AbstractServiceAdapterTest extends PHPUnit_Framework_TestCase
     public function testGetPattern($url)
     {
         $facebookVideo = $this->getMockingObject($url);
-        $this->assertInternalType('string', $facebookVideo->getPattern());
+        $this->assertIsString( $facebookVideo->getPattern());
     }
 
     /**
@@ -56,7 +49,7 @@ class AbstractServiceAdapterTest extends PHPUnit_Framework_TestCase
     public function testSetPattern($url)
     {
         $facebookVideo = $this->getMockingObject($url);
-        $pattern = '##test.unit##';
+        $pattern = '##tests.unit##';
         $facebookVideo->setPattern($pattern);
         $this->assertEquals($pattern, $facebookVideo->getPattern());
     }
@@ -81,9 +74,9 @@ class AbstractServiceAdapterTest extends PHPUnit_Framework_TestCase
     {
         $facebookVideo = $this->getMockingObject($url);
         $embedCode = $facebookVideo->getEmbedCode(1920, 1080);
-        $this->assertInternalType('string', $embedCode);
-        $this->assertContains('1920', $embedCode);
-        $this->assertContains('1080', $embedCode);
+        $this->assertIsString( $embedCode);
+        $this->assertStringContainsString('1920', $embedCode);
+        $this->assertStringContainsString('1080', $embedCode);
     }
 
     /**
@@ -106,11 +99,11 @@ class AbstractServiceAdapterTest extends PHPUnit_Framework_TestCase
      */
     public function exampleUrlDataProvider()
     {
-        return array(
-            array(
+        return [
+            [
                 'https://www.facebook.com/zuck/videos/10102367711349271'
-            ),
-        );
+            ],
+        ];
     }
 
     /**

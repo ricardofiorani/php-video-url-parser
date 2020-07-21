@@ -1,15 +1,9 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Ricardo Fiorani
- * Date: 30/08/2015
- * Time: 14:38.
- */
-namespace RicardoFiorani\Adapter\Dailymotion;
+<?php declare(strict_types = 1);
+namespace RicardoFiorani\VideoUrlParser\Adapter\Dailymotion;
 
-use RicardoFiorani\Adapter\AbstractServiceAdapter;
-use RicardoFiorani\Exception\InvalidThumbnailSizeException;
-use RicardoFiorani\Renderer\EmbedRendererInterface;
+use RicardoFiorani\VideoUrlParser\Adapter\AbstractServiceAdapter;
+use RicardoFiorani\VideoUrlParser\Exception\InvalidThumbnailSizeException;
+use RicardoFiorani\VideoUrlParser\Renderer\EmbedRendererInterface;
 
 class DailymotionServiceAdapter extends AbstractServiceAdapter
 {
@@ -57,9 +51,9 @@ class DailymotionServiceAdapter extends AbstractServiceAdapter
      */
     public function getThumbNailSizes()
     {
-        return array(
+        return [
             self::THUMBNAIL_DEFAULT,
-        );
+        ];
     }
 
     /**

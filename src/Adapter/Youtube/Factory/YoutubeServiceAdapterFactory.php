@@ -1,15 +1,9 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Ricardo Fiorani
- * Date: 29/08/2015
- * Time: 19:24.
- */
-namespace RicardoFiorani\Adapter\Youtube\Factory;
+<?php declare(strict_types = 1);
+namespace RicardoFiorani\VideoUrlParser\Adapter\Youtube\Factory;
 
-use RicardoFiorani\Adapter\CallableServiceAdapterFactoryInterface;
-use RicardoFiorani\Adapter\Youtube\YoutubeServiceAdapter;
-use RicardoFiorani\Renderer\EmbedRendererInterface;
+use RicardoFiorani\VideoUrlParser\Adapter\CallableServiceAdapterFactoryInterface;
+use RicardoFiorani\VideoUrlParser\Adapter\Youtube\YoutubeServiceAdapter;
+use RicardoFiorani\VideoUrlParser\Renderer\EmbedRendererInterface;
 
 class YoutubeServiceAdapterFactory implements CallableServiceAdapterFactoryInterface
 {

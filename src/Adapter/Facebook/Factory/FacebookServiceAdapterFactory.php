@@ -1,16 +1,10 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Ricardo Fiorani
- * Date: 02/09/2015
- * Time: 22:41.
- */
-namespace RicardoFiorani\Adapter\Facebook\Factory;
+<?php declare(strict_types = 1);
+namespace RicardoFiorani\VideoUrlParser\Adapter\Facebook\Factory;
 
-use RicardoFiorani\Adapter\Facebook\FacebookServiceAdapter;
-use RicardoFiorani\Adapter\CallableServiceAdapterFactoryInterface;
-use RicardoFiorani\Adapter\VideoAdapterInterface;
-use RicardoFiorani\Renderer\EmbedRendererInterface;
+use RicardoFiorani\VideoUrlParser\Adapter\Facebook\FacebookServiceAdapter;
+use RicardoFiorani\VideoUrlParser\Adapter\CallableServiceAdapterFactoryInterface;
+use RicardoFiorani\VideoUrlParser\Adapter\VideoAdapterInterface;
+use RicardoFiorani\VideoUrlParser\Renderer\EmbedRendererInterface;
 
 class FacebookServiceAdapterFactory implements CallableServiceAdapterFactoryInterface
 {

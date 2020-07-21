@@ -1,37 +1,33 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Ricardo Fiorani
- * Date: 10/02/2016
- * Time: 19:58
- */
+<?php declare(strict_types=1);
 
-namespace RicardoFiorani\Test\Container;
+namespace RicardoFiorani\Tests\VideoUrlParser\Container;
 
+use PHPUnit\Framework\TestCase;
+use RicardoFiorani\VideoUrlParser\Adapter\Youtube\Factory\YoutubeServiceAdapterFactory;
+use RicardoFiorani\VideoUrlParser\Container\ServicesContainer;
+use RicardoFiorani\VideoUrlParser\Exception\DuplicatedServiceNameException;
+use RicardoFiorani\VideoUrlParser\Renderer\DefaultRenderer;
+use RicardoFiorani\VideoUrlParser\Renderer\Factory\DefaultRendererFactory;
 
-use PHPUnit_Framework_TestCase;
-use RicardoFiorani\Container\ServicesContainer;
-use stdClass;
-
-class ServicesContainerTest extends PHPUnit_Framework_TestCase
+class ServicesContainerTest extends TestCase
 {
     public function testServiceContainerServiceRegistrationByArray()
     {
         $config = $this->getMockConfig();
         $serviceContainer = $this->createServiceContainer($config);
         $this->assertTrue($serviceContainer->hasService('Youtube'));
-        $this->assertInstanceOf('\\RicardoFiorani\\Renderer\\DefaultRenderer', $serviceContainer->getRenderer());
+        $this->assertInstanceOf(DefaultRenderer::class, $serviceContainer->getRenderer());
     }
 
     public function testServiceContainerServiceRegistrationByInjection()
     {
         $serviceContainer = $this->createServiceContainer();
         $serviceContainer->registerService('TestService', array('#testPattern#'), function () {
-            // @todo test the injected service maybe ?
+            // @todo tests the injected service maybe ?
         });
 
         $this->assertContains('TestService', $serviceContainer->getServiceNameList());
-        $this->setExpectedException('\\RicardoFiorani\\Exception\\DuplicatedServiceNameException');
+        $this->expectException(DuplicatedServiceNameException::class);
         $serviceContainer->registerService('TestService', array('#testPattern#'), function () {
         });
     }
@@ -40,28 +36,27 @@ class ServicesContainerTest extends PHPUnit_Framework_TestCase
     {
         $config = $this->getMockConfig();
         $serviceContainer = $this->createServiceContainer($config);
-        $this->assertInternalType('array', $serviceContainer->getServices());
+        $this->assertIsArray($serviceContainer->getServices());
         $this->assertContains('Youtube', $serviceContainer->getServices());
     }
 
-    public function testIfReturnsAlreadyInstantiatedFactory(){
+    public function testIfReturnsAlreadyInstantiatedFactory()
+    {
         $config = $this->getMockConfig();
         $serviceContainer = $this->createServiceContainer($config);
         $factory = $serviceContainer->getFactory('Youtube');
-        $this->assertInstanceOf('\\RicardoFiorani\\Adapter\\Youtube\\Factory\\YoutubeServiceAdapterFactory',$factory);
+        $this->assertInstanceOf(YoutubeServiceAdapterFactory::class, $factory);
 
         $alreadyInstantiatedFactory = $serviceContainer->getFactory('Youtube');
-        $this->assertEquals($factory,$alreadyInstantiatedFactory);
+        $this->assertEquals($factory, $alreadyInstantiatedFactory);
     }
 
     /**
      * @return ServicesContainer
      */
-    private function createServiceContainer(array $constructArray = array())
+    private function createServiceContainer(array $constructArray = [])
     {
-        $serviceContainer = new ServicesContainer($constructArray);
-
-        return $serviceContainer;
+        return new ServicesContainer($constructArray);
     }
 
     /**
@@ -69,20 +64,20 @@ class ServicesContainerTest extends PHPUnit_Framework_TestCase
      */
     private function getMockConfig()
     {
-        return array(
-            'services' => array(
-                'Youtube' => array(
-                    'patterns' => array(
+        return [
+            'services' => [
+                'Youtube' => [
+                    'patterns' => [
                         '#(?:<\>]+href=\")?(?:http://)?((?:[a-zA-Z]{1,4}\.)?youtube.com/(?:watch)?\?v=(.{11}?))[^"]*(?:\"[^\<\>]*>)?([^\<\>]*)(?:)?#',
                         '%(?:youtube\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i',
-                    ),
-                    'factory' => '\\RicardoFiorani\\Adapter\\Youtube\\Factory\\YoutubeServiceAdapterFactory',
-                ),
-            ),
-            'renderer' => array(
+                    ],
+                    'factory' => YoutubeServiceAdapterFactory::class,
+                ],
+            ],
+            'renderer' => [
                 'name' => 'DefaultRenderer',
-                'factory' => '\\RicardoFiorani\\Renderer\\Factory\\DefaultRendererFactory',
-            )
-        );
+                'factory' => DefaultRendererFactory::class,
+            ]
+        ];
     }
 }

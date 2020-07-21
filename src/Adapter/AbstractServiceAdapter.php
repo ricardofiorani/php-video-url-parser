@@ -1,14 +1,8 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Ricardo Fiorani
- * Date: 29/08/2015
- * Time: 19:37.
- */
-namespace RicardoFiorani\Adapter;
+<?php declare(strict_types = 1);
+namespace RicardoFiorani\VideoUrlParser\Adapter;
 
-use RicardoFiorani\Exception\NotEmbeddableException;
-use RicardoFiorani\Renderer\EmbedRendererInterface;
+use RicardoFiorani\VideoUrlParser\Exception\NotEmbeddableException;
+use RicardoFiorani\VideoUrlParser\Renderer\EmbedRendererInterface;
 
 abstract class AbstractServiceAdapter implements VideoAdapterInterface
 {

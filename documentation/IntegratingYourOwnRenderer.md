@@ -16,7 +16,7 @@ Please note that it should implement the interface "\RicardoFiorani\Renderer\Emb
 ```php
 <?php
 namespace MyVendor\MyRenderer;
-use \RicardoFiorani\Renderer\EmbedRendererInterface;
+use RicardoFiorani\VideoUrlParser\Renderer\EmbedRendererInterface;
 
 class MyOwnRenderer implements EmbedRendererInterface
 {
@@ -32,7 +32,7 @@ class MyOwnRenderer implements EmbedRendererInterface
         return sprintf("Hello, I'm embedding %s", addslashes($embedUrl));
         
         //A functional example would be like
-        //return '<iframe width="' . $width . '" height="' . $height . '" src="' . addslashes($embedUrl) . '" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
+        //return '<iframe width="' . $width . '" height="' . $height . '" src="' . addslashes($embedUrl) . '" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
     }
 }
 ```
@@ -41,8 +41,8 @@ This is the Factory of your renderer, basically all it must do is to implement t
 ```php
 <?php
 namespace MyVendor\MyRenderer\Factory;
-use RicardoFiorani\Renderer\EmbedRendererInterface;
-use RicardoFiorani\Renderer\Factory\RendererFactoryInterface;
+use RicardoFiorani\VideoUrlParser\Renderer\EmbedRendererInterface
+use RicardoFiorani\VideoUrlParser\Renderer\Factory\RendererFactoryInterface
 
 class MyOwnRendererFactory implements RendererFactoryInterface
 {
@@ -51,7 +51,7 @@ class MyOwnRendererFactory implements RendererFactoryInterface
      */
     public function __invoke()
     {
-        return new MyOwnRenderer();
+        return new Namespace/ForMy/OwnRenderer();
     }
 }
 ```
@@ -61,7 +61,7 @@ The last part is attaching your own renderer service to the VideoServiceMatcher,
 
 ```php
 <?php
-use RicardoFiorani\Matcher\VideoServiceMatcher;
+use RicardoFiorani\VideoUrlParser\Matcher\VideoServiceMatcher;
 
 require __DIR__ . '/vendor/autoload.php';
 
